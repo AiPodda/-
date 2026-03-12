@@ -22,6 +22,9 @@
             --glass-border: rgba(255, 255, 255, 0.2);
             --text-dark: #1a1a2e;
             --text-light: #ffffff;
+            --accent-gold: #ffd700;
+            --neon-cyan: #00ffff;
+            --neon-pink: #ff00ff;
         }
 
         body {
@@ -32,7 +35,7 @@
             min-height: 100vh;
         }
 
-        /* Animated Background with AI Video */
+        /* Animated Background */
         .bg-video-container {
             position: fixed;
             top: 0;
@@ -47,7 +50,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            opacity: 0.25;
+            opacity: 0.3;
             filter: blur(1px) brightness(0.8);
         }
 
@@ -57,7 +60,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(0,102,204,0.15) 0%, rgba(0,0,0,0.5) 100%);
+            background: linear-gradient(135deg, rgba(0,102,204,0.2) 0%, rgba(0,0,0,0.6) 100%);
             z-index: -1;
         }
 
@@ -89,42 +92,66 @@
             100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
         }
 
-        /* Header Section */
+        /* Header with Auto-play Video */
         .header {
             text-align: center;
-            padding: 40px 20px;
+            padding: 20px;
             position: relative;
         }
 
-        .logo-container {
+        .header-video-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto 20px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 102, 204, 0.4);
+            border: 2px solid var(--light-blue);
             position: relative;
-            display: inline-block;
-            margin-bottom: 20px;
         }
 
-        .logo-img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
+        .header-video {
+            width: 100%;
+            height: 300px;
             object-fit: cover;
-            border: 4px solid var(--light-blue);
-            box-shadow: 0 0 30px rgba(77, 166, 255, 0.5);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { box-shadow: 0 0 30px rgba(77, 166, 255, 0.5); }
-            50% { box-shadow: 0 0 50px rgba(77, 166, 255, 0.8); }
+            display: block;
         }
 
         .brand-title {
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: 800;
-            background: linear-gradient(45deg, #fff, var(--light-blue));
+            background: linear-gradient(45deg, #fff, var(--light-blue), var(--neon-cyan));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-top: 15px;
-            text-shadow: 0 0 30px rgba(77, 166, 255, 0.3);
+            text-shadow: 0 0 30px rgba(77, 166, 255, 0.5);
+            animation: titleGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.3); }
+        }
+
+        /* Sinhala Text Animations */
+        .sinhala-text {
+            display: inline-block;
+            position: relative;
+        }
+
+        .sinhala-text::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--light-blue), var(--neon-cyan));
+            transition: width 0.3s ease;
+        }
+
+        .sinhala-text:hover::after {
+            width: 100%;
         }
 
         .welcome-text {
@@ -152,7 +179,7 @@
             50% { border-color: var(--light-blue); }
         }
 
-        /* WhatsApp Button - SMALLER & RED/BLACK ANIMATION */
+        /* WhatsApp Button */
         .whatsapp-float {
             position: fixed;
             top: 20px;
@@ -170,35 +197,17 @@
             box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4);
             transition: all 0.3s ease;
             z-index: 1000;
-            animation: redBlackPulse 2s infinite, slideIn 0.5s ease;
+            animation: redBlackPulse 2s infinite;
             border: 2px solid #ff0000;
         }
 
         @keyframes redBlackPulse {
-            0%, 100% { 
-                background: #000; 
-                color: #ff0000;
-                box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4);
-            }
-            50% { 
-                background: #ff0000; 
-                color: #000;
-                box-shadow: 0 4px 25px rgba(255, 0, 0, 0.8);
-            }
-        }
-
-        @keyframes slideIn {
-            from { transform: translateX(100px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+            0%, 100% { background: #000; color: #ff0000; box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4); }
+            50% { background: #ff0000; color: #000; box-shadow: 0 4px 25px rgba(255, 0, 0, 0.8); }
         }
 
         .whatsapp-float:hover {
             transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 6px 30px rgba(255, 0, 0, 0.8);
-        }
-
-        .whatsapp-float i {
-            font-size: 1.1rem;
         }
 
         /* Voice Button */
@@ -223,18 +232,8 @@
         }
 
         .voice-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 102, 204, 0.6);
-        }
-
-        .voice-btn.playing {
-            animation: pulse-ring 1.5s infinite;
-        }
-
-        @keyframes pulse-ring {
-            0% { box-shadow: 0 0 0 0 rgba(0, 102, 204, 0.7); }
-            70% { box-shadow: 0 0 0 20px rgba(0, 102, 204, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(0, 102, 204, 0); }
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 25px rgba(0, 102, 204, 0.6);
         }
 
         /* Glassmorphism Cards */
@@ -246,6 +245,12 @@
             padding: 25px;
             margin: 20px;
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            animation: cardFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes cardFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         /* Social Media Section */
@@ -260,6 +265,26 @@
             background: linear-gradient(45deg, #fff, var(--light-blue));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--light-blue), var(--neon-cyan));
+            border-radius: 2px;
+            animation: lineExpand 2s ease-in-out infinite;
+        }
+
+        @keyframes lineExpand {
+            0%, 100% { width: 60px; }
+            50% { width: 100px; }
         }
 
         .social-grid {
@@ -282,26 +307,33 @@
             flex-direction: column;
             align-items: center;
             gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .social-card:hover::before {
+            left: 100%;
         }
 
         .social-card:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px) scale(1.05);
             box-shadow: 0 10px 30px rgba(0, 102, 204, 0.3);
         }
 
-        .social-card i {
-            font-size: 2.5rem;
-        }
-
-        .social-card.tiktok:hover { color: #ff0050; }
-        .social-card.facebook:hover { color: #1877f2; }
-        .social-card.youtube:hover { color: #ff0000; }
-        .social-card.whatsapp:hover { color: #25D366; }
-
         /* Auth Section */
         .auth-container {
-            max-width: 400px;
+            max-width: 500px;
             margin: 40px auto;
             display: none;
         }
@@ -341,7 +373,8 @@
         .form-group input:focus {
             outline: none;
             border-color: var(--light-blue);
-            box-shadow: 0 0 10px rgba(77, 166, 255, 0.3);
+            box-shadow: 0 0 15px rgba(77, 166, 255, 0.5);
+            transform: scale(1.02);
         }
 
         .btn-primary {
@@ -355,6 +388,23 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
         }
 
         .btn-primary:hover {
@@ -362,19 +412,67 @@
             box-shadow: 0 5px 20px rgba(0, 102, 204, 0.4);
         }
 
-        .auth-toggle {
+        /* Payment Receipt Upload Section */
+        .payment-section {
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid var(--light-blue);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
             text-align: center;
+        }
+
+        .upload-area {
+            border: 3px dashed var(--light-blue);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(0, 102, 204, 0.1);
+        }
+
+        .upload-area:hover {
+            background: rgba(0, 102, 204, 0.2);
+            transform: scale(1.02);
+        }
+
+        .upload-area.dragover {
+            background: rgba(0, 102, 204, 0.3);
+            border-color: var(--neon-cyan);
+        }
+
+        .upload-preview {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 10px;
             margin-top: 20px;
-            color: rgba(255, 255, 255, 0.7);
+            display: none;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
         }
 
-        .auth-toggle a {
-            color: var(--light-blue);
-            text-decoration: none;
-            font-weight: 600;
+        .upload-status {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 10px;
+            display: none;
         }
 
-        /* 2FA Section - Google Authenticator Integration */
+        .upload-status.success {
+            background: rgba(0, 255, 0, 0.2);
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            display: block;
+        }
+
+        .upload-status.pending {
+            background: rgba(255, 165, 0, 0.2);
+            border: 1px solid orange;
+            color: orange;
+            display: block;
+        }
+
+        /* 2FA Section */
         .twofa-section {
             display: none;
             text-align: center;
@@ -393,28 +491,12 @@
             margin-bottom: 25px;
             font-size: 1.3rem;
             color: #fff;
+            animation: borderGlow 2s ease-in-out infinite;
         }
 
-        .student-name-display i {
-            color: var(--light-blue);
-            margin-right: 10px;
-        }
-
-        .student-name-display .name {
-            color: #00ff88;
-            font-weight: bold;
-            font-size: 1.5rem;
-            display: block;
-            margin-top: 10px;
-        }
-
-        .qr-container {
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            display: inline-block;
-            margin: 20px 0;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        @keyframes borderGlow {
+            0%, 100% { box-shadow: 0 0 10px rgba(77, 166, 255, 0.5); }
+            50% { box-shadow: 0 0 25px rgba(77, 166, 255, 0.8); }
         }
 
         .secret-key-section {
@@ -424,12 +506,17 @@
             padding: 20px;
             margin: 20px 0;
             text-align: left;
+            display: none;
         }
 
-        .secret-key-section h4 {
-            color: #00ff88;
-            margin-bottom: 15px;
-            text-align: center;
+        .secret-key-section.show {
+            display: block;
+            animation: slideDown 0.5s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .secret-key-box {
@@ -451,13 +538,6 @@
             background: rgba(0,102,204,0.3);
             border-color: #00ff88;
             transform: scale(1.02);
-        }
-
-        .copy-instruction {
-            color: rgba(255,255,255,0.7);
-            font-size: 0.9rem;
-            margin-top: 10px;
-            text-align: center;
         }
 
         .code-inputs {
@@ -485,22 +565,6 @@
             transform: scale(1.1);
         }
 
-        .admin-notice {
-            background: linear-gradient(45deg, rgba(255,0,0,0.2), rgba(0,0,0,0.3));
-            border: 2px solid #ff0000;
-            border-radius: 10px;
-            padding: 15px;
-            margin: 20px 0;
-            color: #ff6b6b;
-            font-weight: 600;
-            animation: noticePulse 2s infinite;
-        }
-
-        @keyframes noticePulse {
-            0%, 100% { box-shadow: 0 0 10px rgba(255,0,0,0.3); }
-            50% { box-shadow: 0 0 25px rgba(255,0,0,0.6); }
-        }
-
         /* Dashboard */
         .dashboard {
             display: none;
@@ -514,11 +578,135 @@
             animation: fadeIn 0.5s ease;
         }
 
-        .dashboard-header {
-            text-align: center;
-            margin-bottom: 40px;
+        /* Student Profile Section */
+        .profile-section {
+            background: linear-gradient(135deg, rgba(0,102,204,0.2), rgba(0,0,0,0.3));
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .profile-avatar-container {
+            position: relative;
+            width: 120px;
+            height: 120px;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--light-blue);
+            box-shadow: 0 0 30px rgba(77, 166, 255, 0.5);
+        }
+
+        .profile-avatar-upload {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: var(--light-blue);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .profile-avatar-upload:hover {
+            transform: scale(1.1);
+            background: var(--neon-cyan);
+        }
+
+        .profile-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--light-blue);
+        }
+
+        .profile-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn-secondary {
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid var(--light-blue);
+            border-radius: 25px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-secondary:hover {
+            background: var(--light-blue);
+            transform: translateY(-2px);
+        }
+
+        /* Password Change Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border: 2px solid var(--light-blue);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 400px;
+            width: 90%;
+            position: relative;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Tools Grid */
         .tools-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -567,173 +755,61 @@
             box-shadow: 0 10px 30px rgba(0, 102, 204, 0.3);
         }
 
-        .tool-icon {
-            font-size: 3rem;
-            margin-bottom: 15px;
-        }
-
-        /* Scrolling Ticker */
-        .ticker-container {
-            background: rgba(0, 0, 0, 0.3);
-            border-top: 2px solid var(--light-blue);
-            border-bottom: 2px solid var(--light-blue);
-            padding: 15px 0;
-            overflow: hidden;
+        /* Robot Tech Video Section */
+        .robot-video-section {
             margin: 40px 0;
-        }
-
-        .ticker-wrap {
-            display: flex;
-            animation: ticker 30s linear infinite;
-        }
-
-        .ticker-item {
-            white-space: nowrap;
-            padding: 0 50px;
-            font-size: 1.1rem;
-            color: var(--light-blue);
-        }
-
-        @keyframes ticker {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        /* News Section */
-        .news-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .news-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .news-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 102, 204, 0.2);
-        }
-
-        .news-image {
-            width: 100%;
-            height: 150px;
-            background: linear-gradient(45deg, var(--primary-blue), var(--deep-blue));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-        }
-
-        .news-content {
-            padding: 20px;
-        }
-
-        .news-date {
-            color: var(--light-blue);
-            font-size: 0.9rem;
-            margin-bottom: 10px;
-        }
-
-        /* Course Videos */
-        .video-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .video-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            padding: 20px;
             text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .video-card:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: scale(1.05);
-        }
-
-        .video-placeholder {
+        .robot-video-container {
             width: 100%;
-            height: 150px;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 15px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .play-btn {
-            width: 60px;
-            height: 60px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary-blue);
-            font-size: 1.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .video-card:hover .play-btn {
-            transform: scale(1.1);
-            background: var(--light-blue);
-            color: white;
-        }
-
-        /* AI Chat Section */
-        .chat-container {
-            max-width: 800px;
-            margin: 40px auto;
-            background: rgba(0, 0, 0, 0.3);
+            max-width: 900px;
+            margin: 0 auto;
             border-radius: 20px;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 40px rgba(0, 102, 204, 0.4);
+            border: 3px solid var(--light-blue);
+            position: relative;
         }
 
-        .chat-header {
-            background: linear-gradient(45deg, var(--primary-blue), var(--deep-blue));
+        .robot-video {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Gemini AI Chat Section */
+        .gemini-section {
+            margin: 40px 0;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 20px;
+            border: 2px solid var(--neon-cyan);
+            overflow: hidden;
+        }
+
+        .gemini-header {
+            background: linear-gradient(45deg, #1a1a2e, #0f3460);
             padding: 20px;
             display: flex;
             align-items: center;
             gap: 15px;
+            border-bottom: 2px solid var(--neon-cyan);
         }
 
-        .robot-avatar {
-            width: 50px;
-            height: 50px;
-            background: white;
+        .gemini-avatar {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--light-blue));
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-            animation: bounce 2s infinite;
+            font-size: 2rem;
+            animation: pulse 2s infinite;
         }
 
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .robot-avatar.speaking {
-            animation: pulse 0.5s infinite;
-        }
-
-        .chat-messages {
+        .gemini-messages {
             height: 400px;
             overflow-y: auto;
             padding: 20px;
@@ -756,7 +832,7 @@
 
         .message.user {
             align-self: flex-end;
-            background: var(--primary-blue);
+            background: linear-gradient(135deg, var(--primary-blue), var(--deep-blue));
             border-bottom-right-radius: 5px;
         }
 
@@ -764,74 +840,78 @@
             align-self: flex-start;
             background: rgba(255, 255, 255, 0.1);
             border-bottom-left-radius: 5px;
+            border: 1px solid rgba(0, 255, 255, 0.3);
         }
 
-        .chat-input-container {
+        .gemini-input-container {
             padding: 20px;
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.3);
             display: flex;
             gap: 10px;
+            flex-wrap: wrap;
         }
 
-        .chat-input {
+        .gemini-input {
             flex: 1;
+            min-width: 200px;
             padding: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(0, 255, 255, 0.3);
             border-radius: 25px;
             background: rgba(255, 255, 255, 0.05);
             color: white;
             font-size: 1rem;
         }
 
-        .chat-input:focus {
+        .gemini-input:focus {
             outline: none;
-            border-color: var(--light-blue);
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
         }
 
-        .send-btn {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: var(--primary-blue);
+        .gemini-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .gemini-btn {
+            padding: 12px 20px;
             border: none;
-            color: white;
+            border-radius: 25px;
             cursor: pointer;
             transition: all 0.3s ease;
-        }
-
-        .send-btn:hover {
-            background: var(--light-blue);
-            transform: scale(1.1);
-        }
-
-        /* Robot Mascot */
-        .robot-mascot {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, var(--primary-blue), var(--light-blue));
-            border-radius: 50%;
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            cursor: pointer;
-            box-shadow: 0 5px 20px rgba(0, 102, 204, 0.4);
-            animation: float-robot 3s ease-in-out infinite;
-            z-index: 999;
-            transition: all 0.3s ease;
+            gap: 5px;
         }
 
-        @keyframes float-robot {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+        .btn-send {
+            background: linear-gradient(135deg, var(--neon-cyan), var(--light-blue));
+            color: #000;
+            font-weight: 600;
         }
 
-        .robot-mascot:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 30px rgba(0, 102, 204, 0.6);
+        .btn-media {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 1px solid var(--light-blue);
+        }
+
+        .gemini-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.4);
+        }
+
+        /* Generated Media Preview */
+        .media-preview {
+            margin-top: 15px;
+            border-radius: 10px;
+            overflow: hidden;
+            max-width: 100%;
+        }
+
+        .media-preview img, .media-preview video {
+            max-width: 100%;
+            border-radius: 10px;
         }
 
         /* Loading Animation */
@@ -865,30 +945,7 @@
             to { transform: rotate(360deg); }
         }
 
-        .loader-text {
-            margin-top: 20px;
-            color: var(--light-blue);
-            font-size: 1.2rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .brand-title { font-size: 2rem; }
-            .welcome-text { font-size: 1.2rem; }
-            .whatsapp-float {
-                padding: 6px 12px;
-                font-size: 0.8rem;
-                top: 10px;
-                right: 10px;
-            }
-            .whatsapp-float i {
-                font-size: 1rem;
-            }
-            .tools-grid { grid-template-columns: repeat(2, 1fr); }
-            .social-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-
-        /* Scrollbar Styling */
+        /* Scrollbar */
         ::-webkit-scrollbar {
             width: 10px;
         }
@@ -902,150 +959,78 @@
             border-radius: 5px;
         }
 
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--light-blue);
+        /* Responsive */
+        @media (max-width: 768px) {
+            .brand-title { font-size: 2rem; }
+            .header-video { height: 200px; }
+            .robot-video { height: 250px; }
+            .profile-header { flex-direction: column; text-align: center; }
+            .tools-grid { grid-template-columns: repeat(2, 1fr); }
         }
 
-        /* Tech Section */
-        .tech-section {
-            text-align: center;
-            padding: 60px 20px;
-            background: rgba(0, 0, 0, 0.2);
-            margin: 40px 0;
+        /* Animations for Sinhala Text */
+        .sinhala-wave {
+            display: inline-block;
+            animation: wave 2s ease-in-out infinite;
         }
 
-        .tech-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            max-width: 1000px;
-            margin: 40px auto;
+        @keyframes wave {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
-        .tech-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 30px;
-            transition: all 0.3s ease;
+        .glow-text {
+            animation: textGlow 2s ease-in-out infinite alternate;
         }
 
-        .tech-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 102, 204, 0.2);
-            border-color: var(--light-blue);
-        }
-
-        .tech-icon {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            color: var(--light-blue);
-        }
-
-        /* Video Ads Section */
-        .ads-section {
-            padding: 40px 20px;
-            text-align: center;
-        }
-
-        .ad-showcase {
-            background: linear-gradient(135deg, rgba(0, 102, 204, 0.2), rgba(0, 0, 0, 0.3));
-            border-radius: 20px;
-            padding: 40px;
-            margin: 30px auto;
-            max-width: 800px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .logout-btn {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background: rgba(255, 0, 0, 0.7);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 25px;
-            cursor: pointer;
-            z-index: 1000;
-            display: none;
-        }
-
-        .logout-btn.active {
-            display: block;
-        }
-
-        /* Copy notification */
-        .copy-toast {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(0,0,0,0.9);
-            color: #00ff00;
-            padding: 20px 40px;
-            border-radius: 10px;
-            border: 2px solid #00ff00;
-            font-weight: bold;
-            z-index: 10000;
-            display: none;
-            animation: toastIn 0.3s ease;
-        }
-
-        @keyframes toastIn {
-            from { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
-            to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-        }
-
-        .copy-toast.show {
-            display: block;
+        @keyframes textGlow {
+            from { text-shadow: 0 0 10px var(--light-blue); }
+            to { text-shadow: 0 0 20px var(--neon-cyan), 0 0 30px var(--light-blue); }
         }
     </style>
-<base target="_blank">
 </head>
 <body>
     <!-- Loading Screen -->
     <div class="loader" id="loader">
         <div class="loader-robot">🤖</div>
-        <div class="loader-text">Initializing AI Systems...</div>
+        <div style="margin-top: 20px; color: var(--light-blue); font-size: 1.2rem;">Initializing AI Systems...</div>
     </div>
 
-    <!-- Background Elements -->
+    <!-- Background -->
     <div class="bg-video-container">
         <video class="bg-video" autoplay muted loop playsinline>
             <source src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-futuristic-devices-99786-large.mp4" type="video/mp4">
-            <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-technology-network-connections-27611-large.mp4" type="video/mp4">
         </video>
     </div>
     <div class="bg-overlay"></div>
     <div class="particles" id="particles"></div>
 
-    <!-- Copy Toast -->
-    <div class="copy-toast" id="copyToast">✅ Secret Key Copied!</div>
-
-    <!-- WhatsApp Float - SMALLER & RED/BLACK ANIMATION -->
+    <!-- WhatsApp Float -->
     <a href="https://wa.me/94762196055" class="whatsapp-float" target="_blank">
         <i class="fab fa-whatsapp"></i>
         <span>0762196055</span>
     </a>
 
     <!-- Logout Button -->
-    <button class="logout-btn" id="logoutBtn" onclick="logout()">
+    <button class="btn-secondary" id="logoutBtn" onclick="logout()" style="position: fixed; top: 20px; left: 20px; z-index: 1000; display: none;">
         <i class="fas fa-sign-out-alt"></i> Logout
     </button>
 
-    <!-- Header Section -->
+    <!-- Header with Auto-play Video -->
     <header class="header">
-        <div class="logo-container">
-            <img src="https://ibb.co/rRtZT75b" alt="AI Podda Logo" class="logo-img">
+        <div class="header-video-container">
+            <video class="header-video" autoplay muted loop playsinline>
+                <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-technology-network-connections-27611-large.mp4" type="video/mp4">
+                <source src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-futuristic-devices-99786-large.mp4" type="video/mp4">
+            </video>
         </div>
-        <h1 class="brand-title">AI පොඩ්ඩා</h1>
+        <h1 class="brand-title sinhala-text glow-text">AI පොඩ්ඩා</h1>
         <div class="welcome-text">
             <span class="typing-text" id="typingText">Welcome To AI පොඩ්ඩා</span>
         </div>
     </header>
 
-    <!-- Voice Welcome Section -->
+    <!-- Voice Section -->
     <section class="voice-section">
         <button class="voice-btn" id="voiceBtn" onclick="playWelcomeMessage()">
             <i class="fas fa-play"></i>
@@ -1058,92 +1043,109 @@
         <!-- Auth Section -->
         <div class="auth-container active" id="authSection">
             <div class="glass-card">
+                <!-- Login Form -->
                 <div id="loginForm">
                     <h2 style="text-align: center; margin-bottom: 30px; color: var(--light-blue);">
-                        <i class="fas fa-user-circle"></i> Student Login
+                        <i class="fas fa-user-circle"></i> <span class="sinhala-text">ශිෂ්‍ය ලොගින්</span>
                     </h2>
                     <form onsubmit="handleLogin(event)">
                         <div class="form-group">
-                            <label><i class="fas fa-envelope"></i> Email</label>
-                            <input type="email" id="loginEmail" required placeholder="Enter your email">
+                            <label><i class="fas fa-envelope"></i> ඊමේල්</label>
+                            <input type="email" id="loginEmail" required placeholder="ඔබගේ ඊමේල් ලිපිනය">
                         </div>
                         <div class="form-group">
-                            <label><i class="fas fa-lock"></i> Password</label>
-                            <input type="password" id="loginPassword" required placeholder="Enter your password">
+                            <label><i class="fas fa-lock"></i> මුරපදය</label>
+                            <input type="password" id="loginPassword" required placeholder="මුරපදය ඇතුළත් කරන්න">
                         </div>
                         <button type="submit" class="btn-primary">
-                            <i class="fas fa-sign-in-alt"></i> Login
+                            <i class="fas fa-sign-in-alt"></i> ලොගින් වන්න
                         </button>
                     </form>
-                    <div class="auth-toggle">
-                        Don't have an account? <a href="#" onclick="showRegister()">Register here</a>
+                    <div style="text-align: center; margin-top: 20px; color: rgba(255,255,255,0.7);">
+                        ගිණුමක් නැද්ද? <a href="#" onclick="showRegister()" style="color: var(--light-blue);">ලියාපදිංචි වන්න</a>
                     </div>
                 </div>
 
+                <!-- Register Form -->
                 <div id="registerForm" style="display: none;">
                     <h2 style="text-align: center; margin-bottom: 30px; color: var(--light-blue);">
-                        <i class="fas fa-user-plus"></i> Student Registration
+                        <i class="fas fa-user-plus"></i> <span class="sinhala-text">නව ලියාපදිංචිය</span>
                     </h2>
                     <form onsubmit="handleRegister(event)">
                         <div class="form-group">
-                            <label><i class="fas fa-user"></i> Name</label>
-                            <input type="text" id="regName" required placeholder="Enter your name">
+                            <label><i class="fas fa-user"></i> සම්පූර්ණ නම</label>
+                            <input type="text" id="regName" required placeholder="ඔබගේ නම">
                         </div>
                         <div class="form-group">
-                            <label><i class="fas fa-envelope"></i> Email</label>
-                            <input type="email" id="regEmail" required placeholder="Enter your email">
+                            <label><i class="fas fa-envelope"></i> ඊමේල්</label>
+                            <input type="email" id="regEmail" required placeholder="ඊමේල් ලිපිනය">
                         </div>
                         <div class="form-group">
-                            <label><i class="fas fa-phone"></i> Phone Number</label>
+                            <label><i class="fas fa-phone"></i> දුරකථන අංකය</label>
                             <input type="tel" id="regPhone" required placeholder="07X XXX XXXX">
                         </div>
                         <div class="form-group">
-                            <label><i class="fas fa-lock"></i> Password</label>
-                            <input type="password" id="regPassword" required placeholder="Create password">
+                            <label><i class="fas fa-lock"></i> මුරපදය</label>
+                            <input type="password" id="regPassword" required placeholder="මුරපදයක් සාදන්න">
                         </div>
                         <button type="submit" class="btn-primary">
-                            <i class="fas fa-arrow-right"></i> Continue
+                            <i class="fas fa-arrow-right"></i> ඉදිරියට යන්න
                         </button>
                     </form>
-                    <div class="auth-toggle">
-                        Already have an account? <a href="#" onclick="showLogin()">Login here</a>
+                    <div style="text-align: center; margin-top: 20px; color: rgba(255,255,255,0.7);">
+                        දැනටමත් ගිණුමක් තිබේද? <a href="#" onclick="showLogin()" style="color: var(--light-blue);">ලොගින් වන්න</a>
                     </div>
                 </div>
 
-                <!-- 2FA Section - Google Authenticator Integration -->
-                <div id="twofaSection" class="twofa-section">
-                    <!-- Student Name Display (REPLACED Two-Factor Authentication) -->
+                <!-- Payment & 2FA Section -->
+                <div id="paymentSection" class="twofa-section">
                     <div class="student-name-display">
                         <i class="fas fa-user-graduate"></i> 
-                        <span class="name" id="displayStudentName">-</span>
+                        <span id="displayStudentName" class="sinhala-wave">-</span>
                     </div>
 
-                    <div class="admin-notice">
-                        <i class="fas fa-exclamation-triangle"></i> 
-                        කරුණාකර ඇඩ්මින් සම්බන්ධ කරගන්න<br>
-                        <small>Please contact admin for setup</small>
-                    </div>
-
-                    <div id="setup2FA">
-                        <p style="margin-bottom: 20px; color: rgba(255,255,255,0.8);">
-                            <i class="fas fa-qrcode"></i> ඔබගේ Key එක කොපි කර ඇඩ්මින් වෙත යොමුකරන්න:
+                    <!-- Payment Receipt Upload -->
+                    <div class="payment-section">
+                        <h3 style="color: var(--light-blue); margin-bottom: 15px;">
+                            <i class="fas fa-receipt"></i> <span class="sinhala-text">ගෙවීම් රිසිට්පත අප්ලෝඩ් කරන්න</span>
+                        </h3>
+                        <p style="color: rgba(255,255,255,0.8); margin-bottom: 20px;">
+                            කරුණාකර ඔබගේ ගෙවීම් රිසිට්පත මෙතැනට අප්ලෝඩ් කරන්න.<br>
+                            <small>රිසිට්පත තහවුරු වූ පසු පමණක් Key ලැබේ.</small>
                         </p>
-                        <div class="qr-container" id="qrcode"></div>
                         
-                        <div class="secret-key-section">
-                            <h4><i class="fas fa-key"></i> key එක උඩ එක පාරක් ක්ලික් කරහම කොපි වෙනවා</h4>
-                            <div class="secret-key-box" id="secretKeyDisplay" onclick="copySecretKey()">
-                                Click to generate key
-                            </div>
-                            <p class="copy-instruction">
-                                <i class="fas fa-copy"></i> ඔබගේ ඉමෙල් එකෙන් එක Device එකකට පමණයි Login වෙන්න පුලුවන්
-                            </p>
+                        <div class="upload-area" id="uploadArea" onclick="document.getElementById('receiptInput').click()">
+                            <i class="fas fa-cloud-upload-alt" style="font-size: 3rem; color: var(--light-blue); margin-bottom: 15px;"></i>
+                            <p>රිසිට්පත තෝරන්න හෝ මෙතැනට ඇද දමන්න</p>
+                            <p style="font-size: 0.9rem; opacity: 0.7; margin-top: 10px;">(JPG, PNG, PDF පමණි)</p>
                         </div>
+                        
+                        <input type="file" id="receiptInput" accept="image/*,.pdf" style="display: none;" onchange="handleReceiptUpload(event)">
+                        
+                        <img id="receiptPreview" class="upload-preview" alt="Receipt Preview">
+                        
+                        <div id="uploadStatus" class="upload-status"></div>
+                        
+                        <button class="btn-primary" id="confirmPaymentBtn" onclick="confirmPayment()" style="margin-top: 20px; display: none;">
+                            <i class="fas fa-check-circle"></i> ගෙවීම තහවුරු කරන්න
+                        </button>
                     </div>
 
-                    <div id="verify2FA" style="margin-top: 30px;">
+                    <!-- Secret Key Display (Hidden until payment confirmed) -->
+                    <div id="secretKeySection" class="secret-key-section">
+                        <h4><i class="fas fa-key"></i> ඔබගේ Key</h4>
+                        <div class="secret-key-box" id="secretKeyDisplay" onclick="copySecretKey()">
+                            Click to generate key
+                        </div>
+                        <p style="color: rgba(255,255,255,0.7); font-size: 0.9rem; margin-top: 10px; text-align: center;">
+                            <i class="fas fa-copy"></i> උඩින් ක්ලික් කර කොපි කරගන්න
+                        </p>
+                    </div>
+
+                    <!-- Verification Code Input -->
+                    <div id="verifySection" style="margin-top: 30px; display: none;">
                         <p style="margin-bottom: 20px; color: rgba(255,255,255,0.8);">
-                            <i class="fas fa-shield-alt"></i> හැකි ඉක්මනින් ඇඩ්මින් ඔබවෙත දාන අංක 6 මෙතන ටයිප් කරන්න:
+                            <i class="fas fa-shield-alt"></i> ඇඩ්මින් විසින් ලබාදෙන 6 අංකය ඇතුළත් කරන්න:
                         </p>
                         <div class="code-inputs">
                             <input type="text" maxlength="1" onkeyup="moveToNext(this, 0)" oninput="validateDigit(this)">
@@ -1153,8 +1155,8 @@
                             <input type="text" maxlength="1" onkeyup="moveToNext(this, 4)" oninput="validateDigit(this)">
                             <input type="text" maxlength="1" onkeyup="moveToNext(this, 5)" oninput="validateDigit(this)">
                         </div>
-                        <button class="btn-primary" onclick="verify2FA()">
-                            <i class="fas fa-check-circle"></i> Verify & Complete Registration
+                        <button class="btn-primary" onclick="verifyAndComplete()">
+                            <i class="fas fa-check-circle"></i> තහවුරු කර හා ලියාපදිංචිය සම්පූර්ණ කරන්න
                         </button>
                     </div>
                 </div>
@@ -1163,192 +1165,154 @@
 
         <!-- Dashboard -->
         <div class="dashboard" id="dashboard">
-            <div class="dashboard-header">
-                <h2 class="section-title">
-                    <i class="fas fa-robot"></i> AI Learning Dashboard
-                </h2>
-                <p style="color: rgba(255,255,255,0.8);">Welcome back, <span id="userNameDisplay">Student</span>!</p>
+            <!-- Student Profile -->
+            <div class="profile-section">
+                <div class="profile-header">
+                    <div class="profile-avatar-container">
+                        <img src="https://via.placeholder.com/150" alt="Profile" class="profile-avatar" id="profileAvatar">
+                        <div class="profile-avatar-upload" onclick="document.getElementById('avatarInput').click()">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                        <input type="file" id="avatarInput" accept="image/*" style="display: none;" onchange="updateAvatar(event)">
+                    </div>
+                    <div class="profile-info">
+                        <h3 id="profileName">Student Name</h3>
+                        <p id="profileEmail" style="color: rgba(255,255,255,0.7);">email@example.com</p>
+                        <div class="profile-actions">
+                            <button class="btn-secondary" onclick="openPasswordModal()">
+                                <i class="fas fa-key"></i> මුරපදය වෙනස් කරන්න
+                            </button>
+                            <button class="btn-secondary" onclick="logout()">
+                                <i class="fas fa-sign-out-alt"></i> ලොග් අවුට්
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <!-- AI Tools Section -->
+            <!-- AI Tools -->
             <div class="glass-card">
                 <h3 style="margin-bottom: 20px; color: var(--light-blue);">
-                    <i class="fas fa-tools"></i> AI Tools Login Links
+                    <i class="fas fa-tools"></i> <span class="sinhala-text">AI මෙවලම්</span>
                 </h3>
                 <div class="tools-grid">
                     <a href="https://gemini.google.com" target="_blank" class="tool-card">
-                        <div class="tool-icon" style="color: #4285f4;"><i class="fas fa-brain"></i></div>
+                        <div style="font-size: 2.5rem; color: #4285f4; margin-bottom: 10px;"><i class="fas fa-brain"></i></div>
                         <h4>Gemini AI</h4>
-                        <p style="font-size: 0.9rem; opacity: 0.8;">Google's AI Assistant</p>
-                    </a>
-                    <a href="https://flowgpt.com" target="_blank" class="tool-card">
-                        <div class="tool-icon" style="color: #ff6b6b;"><i class="fas fa-water"></i></div>
-                        <h4>Flow AI</h4>
-                        <p style="font-size: 0.9rem; opacity: 0.8;">AI Prompts & Tools</p>
                     </a>
                     <a href="https://chat.openai.com" target="_blank" class="tool-card">
-                        <div class="tool-icon" style="color: #10a37f;"><i class="fas fa-comments"></i></div>
+                        <div style="font-size: 2.5rem; color: #10a37f; margin-bottom: 10px;"><i class="fas fa-comments"></i></div>
                         <h4>ChatGPT</h4>
-                        <p style="font-size: 0.9rem; opacity: 0.8;">OpenAI's Chatbot</p>
                     </a>
                     <a href="https://hailuo.ai" target="_blank" class="tool-card">
-                        <div class="tool-icon" style="color: #ff9f43;"><i class="fas fa-video"></i></div>
+                        <div style="font-size: 2.5rem; color: #ff9f43; margin-bottom: 10px;"><i class="fas fa-video"></i></div>
                         <h4>Hailuo AI</h4>
-                        <p style="font-size: 0.9rem; opacity: 0.8;">AI Video Creation</p>
                     </a>
                     <a href="https://suno.ai" target="_blank" class="tool-card">
-                        <div class="tool-icon" style="color: #ee5a24;"><i class="fas fa-music"></i></div>
+                        <div style="font-size: 2.5rem; color: #ee5a24; margin-bottom: 10px;"><i class="fas fa-music"></i></div>
                         <h4>Suno AI</h4>
-                        <p style="font-size: 0.9rem; opacity: 0.8;">AI Music Generation</p>
                     </a>
                 </div>
             </div>
 
-            <!-- AI Live Updates Ticker -->
-            <div class="ticker-container">
-                <div class="ticker-wrap" id="tickerWrap">
-                    <div class="ticker-item">🚀 OpenAI releases GPT-5 preview with enhanced reasoning capabilities</div>
-                    <div class="ticker-item">🎨 Midjourney V7 launches with photorealistic video generation</div>
-                    <div class="ticker-item">💼 AI automation saves businesses $500B annually worldwide</div>
-                    <div class="ticker-item">🎵 Suno AI hits 100 million users milestone</div>
-                    <div class="ticker-item">🤖 Tesla Optimus robot enters mass production phase</div>
-                    <div class="ticker-item">🌐 Google DeepMind achieves breakthrough in protein folding</div>
-                    <div class="ticker-item">📱 Apple integrates advanced AI into iOS 18</div>
-                    <div class="ticker-item">🎬 Runway Gen-3 revolutionizes AI filmmaking</div>
+            <!-- Robot Technology Video -->
+            <div class="robot-video-section">
+                <h2 class="section-title">
+                    <i class="fas fa-robot"></i> <span class="sinhala-text">රොබෝ තාක්ෂණය</span>
+                </h2>
+                <div class="robot-video-container">
+                    <video class="robot-video" autoplay muted loop playsinline>
+                        <source src="https://assets.mixkit.co/videos/preview/mixkit-robot-working-in-a-factory-21807-large.mp4" type="video/mp4">
+                        <source src="https://assets.mixkit.co/videos/preview/mixkit-futuristic-robot-walking-in-a-dark-background-31478-large.mp4" type="video/mp4">
+                    </video>
                 </div>
+                <p style="margin-top: 15px; color: rgba(255,255,255,0.8);">
+                    <span class="sinhala-text">අනාගත රොබෝ තාක්ෂණය සමඟ වැඩ කිරීම</span>
+                </p>
             </div>
 
-            <!-- Daily AI News -->
-            <div class="glass-card">
-                <h3 style="margin-bottom: 20px; color: var(--light-blue);">
-                    <i class="fas fa-newspaper"></i> Daily AI News
-                </h3>
-                <div class="news-grid" id="newsGrid">
-                    <!-- News items injected by JS -->
+            <!-- Gemini AI Chat Section -->
+            <div class="gemini-section">
+                <div class="gemini-header">
+                    <div class="gemini-avatar"><i class="fas fa-robot"></i></div>
+                    <div>
+                        <h3 style="color: var(--neon-cyan);">Gemini AI Assistant</h3>
+                        <small style="opacity: 0.8;">විඩියෝ, පින්තූර හා ප්‍රශ්න වලට පිළිතුරු</small>
+                    </div>
                 </div>
-            </div>
-
-            <!-- Course Videos -->
-            <div class="glass-card">
-                <h3 style="margin-bottom: 20px; color: var(--light-blue);">
-                    <i class="fas fa-graduation-cap"></i> AI Course Videos
-                </h3>
-                <div class="video-grid" id="videoGrid">
-                    <!-- Video items injected by JS -->
+                <div class="gemini-messages" id="geminiMessages">
+                    <div class="message ai">
+                        <i class="fas fa-robot" style="color: var(--neon-cyan);"></i> 
+                        ආයුබෝවන්! මම Gemini AI සහායක. ඔබට විඩියෝවක්, පින්තූරයක් හදාගන්න ඕනද? හෝ ඕනෑම ප්‍රශ්නයක් අසන්න!<br>
+                        <small style="opacity: 0.7;">Hello! I'm Gemini AI. Need a video, image or have any questions?</small>
+                    </div>
+                </div>
+                <div class="gemini-input-container">
+                    <input type="text" class="gemini-input" id="geminiInput" placeholder="ප්‍රශ්නයක් අසන්න / Ask anything..." onkeypress="handleGeminiKeyPress(event)">
+                    <div class="gemini-actions">
+                        <button class="gemini-btn btn-media" onclick="generateImage()" title="පින්තූරයක් හදන්න">
+                            <i class="fas fa-image"></i>
+                        </button>
+                        <button class="gemini-btn btn-media" onclick="generateVideo()" title="විඩියෝවක් හදන්න">
+                            <i class="fas fa-video"></i>
+                        </button>
+                        <button class="gemini-btn btn-send" onclick="sendToGemini()">
+                            <i class="fas fa-paper-plane"></i> යවන්න
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Social Media Section -->
+        <!-- Social Section -->
         <section class="social-section">
             <h2 class="section-title">
-                <i class="fas fa-share-alt"></i> Connect With Us
+                <i class="fas fa-share-alt"></i> <span class="sinhala-text">අප හා සම්බන්ධ වන්න</span>
             </h2>
             <div class="social-grid">
-                <a href="https://www.tiktok.com/@ai_podda2" target="_blank" class="social-card tiktok">
-                    <i class="fab fa-tiktok"></i>
+                <a href="https://www.tiktok.com/@ai_podda2" target="_blank" class="social-card">
+                    <i class="fab fa-tiktok" style="font-size: 2.5rem;"></i>
                     <span>TikTok</span>
                 </a>
-                <a href="https://www.facebook.com/share/1CCptRphbm/" target="_blank" class="social-card facebook">
-                    <i class="fab fa-facebook"></i>
+                <a href="https://www.facebook.com/share/1CCptRphbm/" target="_blank" class="social-card">
+                    <i class="fab fa-facebook" style="font-size: 2.5rem; color: #1877f2;"></i>
                     <span>Facebook</span>
                 </a>
-                <a href="#" class="social-card youtube">
-                    <i class="fab fa-youtube"></i>
+                <a href="#" class="social-card">
+                    <i class="fab fa-youtube" style="font-size: 2.5rem; color: #ff0000;"></i>
                     <span>YouTube</span>
                 </a>
-                <a href="https://whatsapp.com/channel/0029Vb7R7sP6WaKgGMs4oy1X" target="_blank" class="social-card whatsapp">
-                    <i class="fab fa-whatsapp"></i>
-                    <span>WhatsApp Channel</span>
+                <a href="https://whatsapp.com/channel/0029Vb7R7sP6WaKgGMs4oy1X" target="_blank" class="social-card">
+                    <i class="fab fa-whatsapp" style="font-size: 2.5rem; color: #25D366;"></i>
+                    <span>WhatsApp</span>
                 </a>
-            </div>
-        </section>
-
-        <!-- AI Technology Introduction -->
-        <section class="tech-section">
-            <h2 class="section-title">
-                <i class="fas fa-rocket"></i> The Future of AI Technology
-            </h2>
-            <p style="max-width: 800px; margin: 0 auto 40px; line-height: 1.8; color: rgba(255,255,255,0.9);">
-                Artificial Intelligence is revolutionizing every aspect of our world. From automating mundane tasks to creating breathtaking art, 
-                AI is the driving force of the Fourth Industrial Revolution. Join us to master these transformative technologies.
-            </p>
-            <div class="tech-grid">
-                <div class="tech-card">
-                    <div class="tech-icon"><i class="fas fa-brain"></i></div>
-                    <h3>Artificial Intelligence</h3>
-                    <p>Machine learning, neural networks, and deep learning technologies reshaping industries.</p>
-                </div>
-                <div class="tech-card">
-                    <div class="tech-icon"><i class="fas fa-cogs"></i></div>
-                    <h3>Automation</h3>
-                    <p>Streamline workflows and increase productivity with intelligent automation solutions.</p>
-                </div>
-                <div class="tech-card">
-                    <div class="tech-icon"><i class="fas fa-briefcase"></i></div>
-                    <h3>Digital Business</h3>
-                    <p>AI-powered marketing, sales, and customer service for modern enterprises.</p>
-                </div>
-                <div class="tech-card">
-                    <div class="tech-icon"><i class="fas fa-film"></i></div>
-                    <h3>AI Video Creation</h3>
-                    <p>Create professional videos with text-to-video AI tools like Hailuo and Runway.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- AI Video Ads Section -->
-        <section class="ads-section">
-            <div class="glass-card">
-                <h2 class="section-title">
-                    <i class="fas fa-ad"></i> AI Video Ads Showcase
-                </h2>
-                <div class="ad-showcase">
-                    <i class="fas fa-play-circle" style="font-size: 4rem; color: var(--light-blue); margin-bottom: 20px;"></i>
-                    <h3>Create Stunning AI Video Ads</h3>
-                    <p style="margin: 20px 0; color: rgba(255,255,255,0.8);">
-                        Learn to create high-converting video advertisements using cutting-edge AI tools. 
-                        Perfect for promoting your business on social media!
-                    </p>
-                    <button class="btn-primary" style="max-width: 300px; margin: 0 auto; display: block;">
-                        <i class="fas fa-rocket"></i> Start Creating
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <!-- AI Chat Section -->
-        <section class="glass-card" style="margin: 40px auto; max-width: 900px;">
-            <h2 class="section-title">
-                <i class="fas fa-robot"></i> AI Assistant
-            </h2>
-            <div class="chat-container">
-                <div class="chat-header">
-                    <div class="robot-avatar" id="robotAvatar">🤖</div>
-                    <div>
-                        <h4>AI පොඩ්ඩා Assistant</h4>
-                        <small style="opacity: 0.8;">Powered by Gemini</small>
-                    </div>
-                </div>
-                <div class="chat-messages" id="chatMessages">
-                    <div class="message ai">
-                        <i class="fas fa-robot"></i> ආයුබෝවන්! මම ඔබේ AI පොඩ්ඩා සහායක. මට ඕනෑම දෙයක් අසන්න! 
-                        <br><small style="opacity: 0.7;">Hello! I'm your AI Podda assistant. Ask me anything!</small>
-                    </div>
-                </div>
-                <div class="chat-input-container">
-                    <input type="text" class="chat-input" id="chatInput" placeholder="Type your message in Sinhala or English..." onkeypress="handleChatKeyPress(event)">
-                    <button class="send-btn" onclick="sendMessage()">
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
-                </div>
             </div>
         </section>
     </main>
 
-    <!-- Robot Mascot -->
-    <div class="robot-mascot" onclick="scrollToTop()" title="Back to Top">
-        <i class="fas fa-robot"></i>
+    <!-- Password Change Modal -->
+    <div class="modal" id="passwordModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closePasswordModal()"><i class="fas fa-times"></i></button>
+            <h3 style="color: var(--light-blue); margin-bottom: 20px;">
+                <i class="fas fa-key"></i> මුරපදය වෙනස් කරන්න
+            </h3>
+            <form onsubmit="changePassword(event)">
+                <div class="form-group">
+                    <label>වත්මන් මුරපදය</label>
+                    <input type="password" id="currentPassword" required>
+                </div>
+                <div class="form-group">
+                    <label>නව මුරපදය</label>
+                    <input type="password" id="newPassword" required>
+                </div>
+                <div class="form-group">
+                    <label>නව මුරපදය තහවුරු කරන්න</label>
+                    <input type="password" id="confirmPassword" required>
+                </div>
+                <button type="submit" class="btn-primary">වෙනස් කරන්න</button>
+            </form>
+        </div>
     </div>
 
     <script>
@@ -1357,14 +1321,11 @@
             setTimeout(() => {
                 document.getElementById('loader').classList.add('hidden');
             }, 2000);
-            
             createParticles();
-            generateNews();
-            generateVideos();
             checkAuthStatus();
         };
 
-        // Create floating particles
+        // Create Particles
         function createParticles() {
             const container = document.getElementById('particles');
             for (let i = 0; i < 50; i++) {
@@ -1377,7 +1338,7 @@
             }
         }
 
-        // Typing animation reset
+        // Typing Animation
         setInterval(() => {
             const text = document.getElementById('typingText');
             text.style.animation = 'none';
@@ -1386,96 +1347,117 @@
             }, 100);
         }, 5000);
 
-        // Text-to-Speech for Sinhala
+        // Text to Speech
         function playWelcomeMessage() {
             const btn = document.getElementById('voiceBtn');
-            const text = "හැමෝම ආදරයෙන් පිලිගන්නවා Ai Podda වෙත. මාත් එක්ක ලෝකේ පුරා ඇවිදින්න වගේම AI වලින් සුපිරිම වීඩියෝ හදලා මුදල් උපයන්න පුළුවන් විදි මගෙන් ඉගෙන ගන්න පුළුවන්. ඒවගේම ඔයාගේ business එකට promotion එකට ගැලපෙන creative ads හදාගන්නත් අපගෙන් පුළුවන්. Set වෙමු මම එක්ක.";
+            const text = "හැමෝම ආදරයෙන් පිලිගන්නවා Ai Podda වෙත. මාත් එක්ක ලෝකේ පුරා ඇවිදින්න වගේම AI වලින් සුපිරිම වීඩියෝ හදලා මුදල් උපයන්න පුළුවන් විදි මගෙන් ඉගෙන ගන්න පුළුවන්.";
             
             if ('speechSynthesis' in window) {
                 btn.classList.add('playing');
                 const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'si-LK'; // Sinhala language code
+                utterance.lang = 'si-LK';
                 utterance.rate = 0.9;
-                utterance.pitch = 1;
-                
-                // Try to find a Sinhala voice
-                const voices = window.speechSynthesis.getVoices();
-                const sinhalaVoice = voices.find(voice => voice.lang.includes('si') || voice.lang.includes('Sinhala'));
-                if (sinhalaVoice) {
-                    utterance.voice = sinhalaVoice;
-                }
-                
-                utterance.onend = () => {
-                    btn.classList.remove('playing');
-                };
-                
+                utterance.onend = () => btn.classList.remove('playing');
                 window.speechSynthesis.speak(utterance);
-            } else {
-                alert('Sorry, your browser does not support text-to-speech.');
             }
         }
 
         // Auth Functions
         let currentUser = null;
         let currentSecret = '';
-        let totp = null;
+        let receiptUploaded = false;
+        let paymentConfirmed = false;
 
         function showRegister() {
             document.getElementById('loginForm').style.display = 'none';
             document.getElementById('registerForm').style.display = 'block';
-            document.getElementById('twofaSection').style.display = 'none';
+            document.getElementById('paymentSection').style.display = 'none';
         }
 
         function showLogin() {
             document.getElementById('loginForm').style.display = 'block';
             document.getElementById('registerForm').style.display = 'none';
-            document.getElementById('twofaSection').style.display = 'none';
+            document.getElementById('paymentSection').style.display = 'none';
         }
 
-        function show2FA() {
+        function showPaymentSection() {
             document.getElementById('loginForm').style.display = 'none';
             document.getElementById('registerForm').style.display = 'none';
-            document.getElementById('twofaSection').style.display = 'block';
-            document.getElementById('twofaSection').classList.add('active');
+            document.getElementById('paymentSection').style.display = 'block';
+            document.getElementById('paymentSection').classList.add('active');
         }
 
         function handleRegister(e) {
             e.preventDefault();
-            
             const studentName = document.getElementById('regName').value;
-            
-            // Display student name
             document.getElementById('displayStudentName').textContent = studentName;
+            showPaymentSection();
+        }
+
+        // Receipt Upload
+        function handleReceiptUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const preview = document.getElementById('receiptPreview');
+            const status = document.getElementById('uploadStatus');
+            const confirmBtn = document.getElementById('confirmPaymentBtn');
+
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = 'https://via.placeholder.com/400x300?text=PDF+Receipt';
+                preview.style.display = 'block';
+            }
+
+            receiptUploaded = true;
+            status.className = 'upload-status pending';
+            status.innerHTML = '<i class="fas fa-clock"></i> රිසිට්පත අප්ලෝඩ් විය. තහවුරු කිරීමට බොත්තම ඔබන්න.';
+            confirmBtn.style.display = 'block';
+        }
+
+        // Drag and Drop
+        const uploadArea = document.getElementById('uploadArea');
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                document.getElementById('receiptInput').files = files;
+                handleReceiptUpload({ target: { files: files } });
+            }
+        });
+
+        function confirmPayment() {
+            if (!receiptUploaded) {
+                alert('කරුණාකර පළමුව රිසිට්පත අප්ලෝඩ් කරන්න!');
+                return;
+            }
+
+            paymentConfirmed = true;
+            document.getElementById('uploadStatus').className = 'upload-status success';
+            document.getElementById('uploadStatus').innerHTML = '<i class="fas fa-check-circle"></i> ගෙවීම තහවුරු කරන ලදී! ඔබගේ Key ලබා ගන්න.';
             
-            // Generate TOTP secret
+            // Generate and show secret key
             currentSecret = generateSecret();
-            
-            // Create TOTP object
-            totp = new OTPAuth.TOTP({
-                issuer: 'AI පොඩ්ඩා',
-                label: document.getElementById('regEmail').value,
-                algorithm: 'SHA1',
-                digits: 6,
-                period: 30,
-                secret: OTPAuth.Secret.fromBase32(currentSecret)
-            });
-            
-            // Generate QR Code
-            const uri = totp.toString();
-            document.getElementById('qrcode').innerHTML = '';
-            new QRCode(document.getElementById('qrcode'), {
-                text: uri,
-                width: 200,
-                height: 200,
-                colorDark : "#000000",
-                colorLight : "#ffffff",
-                correctLevel : QRCode.CorrectLevel.H
-            });
-            
-            // Display secret key
             document.getElementById('secretKeyDisplay').textContent = currentSecret;
+            document.getElementById('secretKeySection').classList.add('show');
+            document.getElementById('verifySection').style.display = 'block';
             
-            show2FA();
+            // Hide confirm button
+            document.getElementById('confirmPaymentBtn').style.display = 'none';
         }
 
         function generateSecret() {
@@ -1489,14 +1471,8 @@
 
         function copySecretKey() {
             const keyText = document.getElementById('secretKeyDisplay').textContent;
-            if (keyText === 'Click to generate key') return;
-            
             navigator.clipboard.writeText(keyText).then(() => {
-                const toast = document.getElementById('copyToast');
-                toast.classList.add('show');
-                setTimeout(() => {
-                    toast.classList.remove('show');
-                }, 2000);
+                alert('Key එක කොපි විය!');
             });
         }
 
@@ -1513,34 +1489,28 @@
             }
         }
 
-        function verify2FA() {
+        function verifyAndComplete() {
             const inputs = document.querySelectorAll('.code-inputs input');
             let code = '';
             inputs.forEach(input => code += input.value);
             
             if (code.length !== 6) {
-                alert('Please enter all 6 digits');
+                alert('කරුණාකර සියලුම අංක ඇතුළත් කරන්න');
                 return;
             }
-            
-            // Verify TOTP code
-            const isValid = totp.validate({ token: code, window: 1 }) !== null;
-            
-            if (isValid) {
-                // Save user data with 2FA secret
-                const userData = {
-                    name: document.getElementById('regName').value,
-                    email: document.getElementById('regEmail').value,
-                    password: document.getElementById('regPassword').value,
-                    secret: currentSecret,
-                    phone: document.getElementById('regPhone').value
-                };
-                localStorage.setItem('aiPoddaUser', JSON.stringify(userData));
-                alert('Registration successful! Please login.');
-                showLogin();
-            } else {
-                alert('Invalid code. Please try again.');
-            }
+
+            // Save user
+            const userData = {
+                name: document.getElementById('regName').value,
+                email: document.getElementById('regEmail').value,
+                password: document.getElementById('regPassword').value,
+                phone: document.getElementById('regPhone').value,
+                secret: currentSecret,
+                avatar: 'https://via.placeholder.com/150'
+            };
+            localStorage.setItem('aiPoddaUser', JSON.stringify(userData));
+            alert('ලියාපදිංචිය සාර්ථකයි! දැන් ලොගින් වන්න.');
+            showLogin();
         }
 
         function handleLogin(e) {
@@ -1551,68 +1521,25 @@
             const storedUser = JSON.parse(localStorage.getItem('aiPoddaUser') || '{}');
             
             if (storedUser.email === email && storedUser.password === password) {
-                // For login, we need to verify 2FA as well
                 currentUser = storedUser;
-                currentSecret = storedUser.secret;
-                
-                // Display student name
-                document.getElementById('displayStudentName').textContent = storedUser.name || 'Student';
-                
-                // Create TOTP for verification
-                totp = new OTPAuth.TOTP({
-                    issuer: 'AI පොඩ්ඩා',
-                    label: storedUser.email,
-                    algorithm: 'SHA1',
-                    digits: 6,
-                    period: 30,
-                    secret: OTPAuth.Secret.fromBase32(currentSecret)
-                });
-                
-                // Show 2FA verification for login
-                document.getElementById('loginForm').style.display = 'none';
-                document.getElementById('twofaSection').style.display = 'block';
-                document.getElementById('twofaSection').classList.add('active');
-                document.querySelector('.admin-notice').style.display = 'none';
-                document.getElementById('setup2FA').style.display = 'none';
-                
-                // Change verify button action
-                const verifyBtn = document.querySelector('#twofaSection .btn-primary');
-                verifyBtn.onclick = verifyLogin2FA;
-                verifyBtn.innerHTML = '<i class="fas fa-check"></i> Verify & Login';
-            } else {
-                alert('Invalid credentials. Please try again or register.');
-            }
-        }
-
-        function verifyLogin2FA() {
-            const inputs = document.querySelectorAll('.code-inputs input');
-            let code = '';
-            inputs.forEach(input => code += input.value);
-            
-            if (code.length !== 6) {
-                alert('Please enter all 6 digits');
-                return;
-            }
-            
-            const isValid = totp.validate({ token: code, window: 1 }) !== null;
-            
-            if (isValid) {
                 localStorage.setItem('aiPoddaLoggedIn', 'true');
                 showDashboard();
             } else {
-                alert('Invalid code. Please try again.');
+                alert('වැරදි ඊමේල් හෝ මුරපදය!');
             }
         }
 
         function showDashboard() {
             document.getElementById('authSection').classList.remove('active');
             document.getElementById('dashboard').classList.add('active');
-            document.getElementById('logoutBtn').classList.add('active');
-            document.getElementById('userNameDisplay').textContent = currentUser?.name || 'Student';
+            document.getElementById('logoutBtn').style.display = 'flex';
             
-            // Clone ticker for seamless loop
-            const ticker = document.getElementById('tickerWrap');
-            ticker.innerHTML += ticker.innerHTML;
+            // Update profile
+            document.getElementById('profileName').textContent = currentUser.name;
+            document.getElementById('profileEmail').textContent = currentUser.email;
+            if (currentUser.avatar) {
+                document.getElementById('profileAvatar').src = currentUser.avatar;
+            }
         }
 
         function logout() {
@@ -1620,7 +1547,7 @@
             currentUser = null;
             document.getElementById('dashboard').classList.remove('active');
             document.getElementById('authSection').classList.add('active');
-            document.getElementById('logoutBtn').classList.remove('active');
+            document.getElementById('logoutBtn').style.display = 'none';
             showLogin();
         }
 
@@ -1631,126 +1558,128 @@
             }
         }
 
-        // Generate News
-        function generateNews() {
-            const newsItems = [
-                { title: "OpenAI Announces GPT-5 Architecture", date: "Today", icon: "fa-robot" },
-                { title: "AI Video Generation Reaches 4K Quality", date: "Today", icon: "fa-video" },
-                { title: "New AI Tools for Small Businesses", date: "Yesterday", icon: "fa-briefcase" },
-                { title: "Sinhala AI Assistant Breakthrough", date: "Yesterday", icon: "fa-language" },
-                { title: "AI Music Hits Mainstream Charts", date: "2 days ago", icon: "fa-music" },
-                { title: "Automated Content Creation Trends", date: "2 days ago", icon: "fa-pen-fancy" }
-            ];
-            
-            const grid = document.getElementById('newsGrid');
-            newsItems.forEach(news => {
-                grid.innerHTML += `
-                    <div class="news-card">
-                        <div class="news-image">
-                            <i class="fas ${news.icon}"></i>
-                        </div>
-                        <div class="news-content">
-                            <div class="news-date"><i class="far fa-clock"></i> ${news.date}</div>
-                            <h4>${news.title}</h4>
-                            <p style="margin-top: 10px; font-size: 0.9rem; opacity: 0.8;">
-                                Click to read more about this exciting development in AI technology...
-                            </p>
-                        </div>
-                    </div>
-                `;
-            });
+        // Profile Functions
+        function updateAvatar(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('profileAvatar').src = e.target.result;
+                currentUser.avatar = e.target.result;
+                localStorage.setItem('aiPoddaUser', JSON.stringify(currentUser));
+            };
+            reader.readAsDataURL(file);
         }
 
-        // Generate Course Videos
-        function generateVideos() {
-            const grid = document.getElementById('videoGrid');
-            for (let i = 1; i <= 50; i++) {
-                grid.innerHTML += `
-                    <div class="video-card" onclick="alert('Lesson ${i} - Coming soon!')">
-                        <div class="video-placeholder">
-                            <div class="play-btn">
-                                <i class="fas fa-play"></i>
-                            </div>
-                        </div>
-                        <h4>Lesson ${i}</h4>
-                        <p style="font-size: 0.9rem; opacity: 0.7;">AI Course Module</p>
-                    </div>
-                `;
+        function openPasswordModal() {
+            document.getElementById('passwordModal').classList.add('active');
+        }
+
+        function closePasswordModal() {
+            document.getElementById('passwordModal').classList.remove('active');
+        }
+
+        function changePassword(e) {
+            e.preventDefault();
+            const current = document.getElementById('currentPassword').value;
+            const newPass = document.getElementById('newPassword').value;
+            const confirm = document.getElementById('confirmPassword').value;
+
+            if (current !== currentUser.password) {
+                alert('වත්මන් මුරපදය වැරදිය!');
+                return;
             }
+
+            if (newPass !== confirm) {
+                alert('නව මුරපදයන් ගැලපෙන්නේ නැත!');
+                return;
+            }
+
+            currentUser.password = newPass;
+            localStorage.setItem('aiPoddaUser', JSON.stringify(currentUser));
+            alert('මුරපදය සාර්ථකව වෙනස් විය!');
+            closePasswordModal();
         }
 
-        // Chat Functionality
-        function handleChatKeyPress(e) {
-            if (e.key === 'Enter') sendMessage();
+        // Gemini AI Functions
+        function handleGeminiKeyPress(e) {
+            if (e.key === 'Enter') sendToGemini();
         }
 
-        function sendMessage() {
-            const input = document.getElementById('chatInput');
+        function sendToGemini() {
+            const input = document.getElementById('geminiInput');
             const message = input.value.trim();
             if (!message) return;
-            
-            // Add user message
-            addMessage(message, 'user');
+
+            addGeminiMessage(message, 'user');
             input.value = '';
-            
+
             // Simulate AI response
             setTimeout(() => {
                 const responses = [
-                    "මම ඔබට උදව් කරන්න සූදානම්! (I'm ready to help you!)",
-                    "AI වීඩියෝ හදන එක ගැන ඉගෙන ගන්න ඕනද? (Want to learn AI video creation?)",
-                    "ChatGPT පාවිච්චි කරන හැටි මම ඔයාට කියාදෙන්නම්! (I'll teach you how to use ChatGPT!)",
-                    "හොඳ ප්‍රශ්නයක්! (Good question!)",
-                    "මේකට උත්තරය Gemini AI එකෙන් හොයමු! (Let's find the answer with Gemini AI!)"
+                    "මම ඔබට උදව් කරන්න සූදානම්! 🤖",
+                    "මෙය සිංහලෙන් පිළිතුරු දෙමි. ඔබට තවත් උදව්වක් අවශ්‍යද?",
+                    "AI වීඩියෝ හදන එක ගැන ඉගෙන ගන්න ඕනද? මම උදව් කරන්නම්!",
+                    "හොඳ ප්‍රශ්නයක්! මෙයට පිළිතුරු සොයමු.",
+                    "Gemini AI ලෙස මම ඔබට පින්තූර, විඩියෝ සහ ප්‍රශ්න වලට පිළිතුරු දිය හැක."
                 ];
-                const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-                addMessage(randomResponse, 'ai');
-                speakResponse(randomResponse);
+                const response = responses[Math.floor(Math.random() * responses.length)];
+                addGeminiMessage(response, 'ai');
             }, 1000);
         }
 
-        function addMessage(text, sender) {
-            const container = document.getElementById('chatMessages');
+        function addGeminiMessage(text, sender) {
+            const container = document.getElementById('geminiMessages');
             const div = document.createElement('div');
             div.className = `message ${sender}`;
-            div.innerHTML = sender === 'ai' ? `<i class="fas fa-robot"></i> ${text}` : text;
+            
+            if (sender === 'ai') {
+                div.innerHTML = `<i class="fas fa-robot" style="color: var(--neon-cyan); margin-right: 8px;"></i>${text}`;
+            } else {
+                div.textContent = text;
+            }
+            
             container.appendChild(div);
             container.scrollTop = container.scrollHeight;
         }
 
-        function speakResponse(text) {
-            const avatar = document.getElementById('robotAvatar');
-            avatar.classList.add('speaking');
+        function generateImage() {
+            const prompts = [
+                "https://via.placeholder.com/400x300/0066cc/ffffff?text=AI+Generated+Image+1",
+                "https://via.placeholder.com/400x300/4da6ff/ffffff?text=AI+Generated+Image+2",
+                "https://via.placeholder.com/400x300/00ffff/000000?text=AI+Generated+Image+3"
+            ];
+            const randomImage = prompts[Math.floor(Math.random() * prompts.length)];
             
-            if ('speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'si-LK';
-                utterance.rate = 1;
-                
-                utterance.onend = () => {
-                    avatar.classList.remove('speaking');
-                };
-                
-                window.speechSynthesis.speak(utterance);
-            } else {
-                setTimeout(() => avatar.classList.remove('speaking'), 2000);
-            }
+            const container = document.getElementById('geminiMessages');
+            const div = document.createElement('div');
+            div.className = 'message ai';
+            div.innerHTML = `
+                <i class="fas fa-robot" style="color: var(--neon-cyan);"></i> 
+                ඔබගේ පින්තූරය සාදන ලදී:<br>
+                <img src="${randomImage}" class="media-preview" alt="Generated Image">
+                <br><small>AI විසින් සාදන ලදී</small>
+            `;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
         }
 
-        // Scroll to top
-        function scrollToTop() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        function generateVideo() {
+            const container = document.getElementById('geminiMessages');
+            const div = document.createElement('div');
+            div.className = 'message ai';
+            div.innerHTML = `
+                <i class="fas fa-robot" style="color: var(--neon-cyan);"></i> 
+                ඔබගේ විඩියෝව සාදන ලදී:<br>
+                <video class="media-preview" controls>
+                    <source src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-futuristic-devices-99786-large.mp4" type="video/mp4">
+                </video>
+                <br><small>AI විසින් සාදන ලදී</small>
+            `;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
         }
-
-        // Smooth scroll for all links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
     </script>
 </body>
 </html>
