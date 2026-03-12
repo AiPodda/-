@@ -8,87 +8,36 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/otpauth/9.1.4/otpauth.umd.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body, html {
-            height: 100%;
-            font-family: 'Segoe UI', sans-serif;
-            color: white;
-            overflow-x: hidden;
-            background: #001f3f;
-        }
+        body, html { height: 100%; font-family: 'Segoe UI', sans-serif; color: white; overflow-x: hidden; background: #001f3f; }
 
-        #bg-video {
-            position: fixed;
-            right: 0; bottom: 0;
-            min-width: 100%; min-height: 100%;
-            z-index: -1;
-            filter: brightness(0.6) contrast(1.1);
-            object-fit: cover;
-        }
+        #bg-video { position: fixed; right: 0; bottom: 0; min-width: 100%; min-height: 100%; z-index: -1; filter: brightness(0.5); object-fit: cover; }
 
-        .welcome-banner {
-            width: 100%;
-            background: rgba(0, 51, 102, 0.8);
-            padding: 20px;
-            text-align: center;
-            border-bottom: 2px solid #add8e6;
-        }
-
-        .welcome-text {
-            font-size: 2.5rem;
-            font-weight: bold;
-            background: linear-gradient(90deg, #ffffff, #add8e6, #ffffff);
-            background-size: 200%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: moveColor 3s linear infinite;
-        }
-
+        .welcome-banner { width: 100%; background: rgba(0, 51, 102, 0.8); padding: 20px; text-align: center; border-bottom: 2px solid #add8e6; }
+        .welcome-text { font-size: 2.5rem; font-weight: bold; background: linear-gradient(90deg, #ffffff, #add8e6, #ffffff); background-size: 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: moveColor 3s linear infinite; }
         @keyframes moveColor { 0% { background-position: 0%; } 100% { background-position: 200%; } }
 
-        /* Student Name Animation Style */
+        /* Name Animation */
         .animated-name {
-            font-size: 2.8rem;
-            font-family: 'Arial Black', sans-serif;
+            font-size: 3rem;
+            font-family: 'Verdana', sans-serif;
             text-transform: uppercase;
-            color: #fff;
-            text-shadow: 0 0 10px #00bfff, 0 0 20px #00bfff, 0 0 40px #00bfff;
+            background: linear-gradient(to right, #00bfff, #ffffff, #00bfff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             display: inline-block;
-            animation: slideInAndGlow 1.5s ease-out forwards;
+            animation: slideUp 1s ease-out forwards, glow 2s ease-in-out infinite;
             opacity: 0;
-            margin-bottom: 10px;
         }
 
-        @keyframes slideInAndGlow {
-            0% { transform: translateX(-100px); opacity: 0; }
-            100% { transform: translateX(0); opacity: 1; }
-        }
+        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes glow { 0%, 100% { filter: drop-shadow(0 0 5px #00bfff); } 50% { filter: drop-shadow(0 0 20px #00bfff); } }
 
-        /* Forms Styling */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(15px);
-            border-radius: 20px; padding: 25px; width: 92%; max-width: 420px;
-            margin: 20px auto; border: 2px solid rgba(255,255,255,0.3);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            text-align: center;
-        }
-
-        .form-group input { 
-            width: 100%; padding: 12px; margin-top: 10px; border-radius: 8px; border: none; 
-            background: #ffffff; color: #000; font-weight: bold; outline: none;
-        }
-
-        .btn-primary { 
-            width: 100%; padding: 12px; background: linear-gradient(45deg, #0066cc, #00bfff); 
-            border: none; border-radius: 10px; color: white; cursor: pointer; 
-            font-weight: bold; margin-top: 15px; transition: 0.3s;
-        }
-        .btn-primary:hover { transform: scale(1.02); }
-
-        .dashboard { display: none; padding: 20px; animation: fadeIn 1s; text-align: center; }
-        .video-item { padding: 15px; background: rgba(255,255,255,0.1); margin-bottom: 10px; border-radius: 8px; border-left: 5px solid #00bfff; text-align: left; }
+        .glass-card { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border-radius: 20px; padding: 25px; width: 92%; max-width: 420px; margin: 20px auto; border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 10px 30px rgba(0,0,0,0.5); text-align: center; }
+        .form-group input { width: 100%; padding: 12px; margin-top: 10px; border-radius: 8px; border: none; background: white; color: black; font-weight: bold; }
+        .btn-primary { width: 100%; padding: 12px; background: #0066cc; border: none; border-radius: 10px; color: white; cursor: pointer; font-weight: bold; margin-top: 15px; }
         
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .dashboard { display: none; padding: 20px; text-align: center; }
+        .video-item { padding: 15px; background: rgba(255,255,255,0.1); margin: 10px 0; border-radius: 8px; text-align: left; border-left: 4px solid #00bfff; }
     </style>
 </head>
 <body>
@@ -98,130 +47,123 @@
     </video>
 
     <div class="welcome-banner">
-        <div class="welcome-text">WELCOME TO AI පොඩ්ඩා</div>
+        <div class="welcome-text">AI පොඩ්ඩා PORTAL</div>
     </div>
 
-    <div id="pre-login">
+    <div id="auth-container">
         <div class="glass-card" id="reg-box">
-            <h2 style="color: #fff; margin-bottom: 15px;">STUDENT REGISTRATION</h2>
-            <div class="form-group"><input type="text" id="r-name" placeholder="නම (FULL NAME IN ENGLISH)"></div>
-            <div class="form-group"><input type="email" id="r-email" placeholder="ඊමේල් (EMAIL)"></div>
-            <div class="form-group"><input type="tel" id="r-phone" placeholder="දුරකථන අංකය (PHONE)"></div>
-            <div class="form-group"><input type="password" id="r-pass" placeholder="මුරපදය (PASSWORD)"></div>
-            <button class="btn-primary" onclick="goToStep2()">ඊළඟ පියවර (NEXT)</button>
-            <p style="margin-top:15px;">ගිණුමක් තිබේද? <a href="#" onclick="showLogin()" style="color:#00bfff; font-weight:bold;">Login Here</a></p>
-        </div>
-
-        <div class="glass-card" id="pay-box" style="display:none;">
-            <h2 style="color:#fff;">PAYMENT VERIFY</h2>
-            <p style="margin-bottom:10px;">රිසිට්පත සහ ගෙවූ ගාන ඇතුළත් කර ඇඩ්මින්ගෙන් Code එක ලබාගන්න.</p>
-            <input type="file" id="r-receipt" style="margin-bottom:15px; color:#fff;">
-            <div class="form-group"><input type="number" id="r-amount" placeholder="ගෙවූ ගාන (AMOUNT)"></div>
-            <button class="btn-primary" onclick="sendToWA()">Confirm & Get Auth Code</button>
+            <h2>STUDENT REGISTER</h2>
+            <div class="form-group"><input type="text" id="r-name" placeholder="FULL NAME (ENGLISH)"></div>
+            <div class="form-group"><input type="email" id="r-email" placeholder="EMAIL ADDRESS"></div>
+            <div class="form-group"><input type="password" id="r-pass" placeholder="PASSWORD"></div>
+            <button class="btn-primary" onclick="showStep2()">Next Step</button>
+            <p style="margin-top:10px;">Already have an account? <a href="#" onclick="showLogin()" style="color:#00bfff;">Login</a></p>
         </div>
 
         <div class="glass-card" id="verify-box" style="display:none;">
-            <h2 style="color:#fff;">VERIFY AUTH CODE</h2>
-            <p>ඇඩ්මින් ලබා දෙන <b>අංක 6</b> මෙතන ඇතුළත් කරන්න.</p>
+            <h2 style="color:#00bfff;">OTP VERIFICATION</h2>
+            <p style="font-size: 0.9rem; margin-top:10px;">ඇඩ්මින් ලබා දෙන Google Authenticator Code එක ඇතුළත් කරන්න.</p>
             <div class="form-group">
-                <input type="text" id="auth-code" placeholder="000000" maxlength="6" style="text-align:center; font-size:1.8rem; letter-spacing:8px;">
+                <input type="text" id="otp-code" placeholder="000000" maxlength="6" style="text-align:center; font-size:1.5rem; letter-spacing:5px;">
             </div>
-            <button class="btn-primary" onclick="finalRegister()">REGISTER NOW</button>
+            <button class="btn-primary" onclick="validateAndRegister()">VERIFY & REGISTER</button>
         </div>
 
         <div class="glass-card" id="login-box" style="display:none;">
-            <h2 style="color: #fff; margin-bottom: 15px;">STUDENT LOGIN</h2>
+            <h2>STUDENT LOGIN</h2>
             <div class="form-group"><input type="email" id="l-email" placeholder="EMAIL"></div>
             <div class="form-group"><input type="password" id="l-pass" placeholder="PASSWORD"></div>
-            <button class="btn-primary" onclick="processLogin()">LOGIN</button>
-            <p style="margin-top:15px;"><a href="#" onclick="location.reload()" style="color:#00bfff;">Back to Register</a></p>
+            <button class="btn-primary" onclick="handleLogin()">LOGIN</button>
         </div>
     </div>
 
     <div id="dashboard" class="dashboard">
-        <div class="glass-card" style="max-width:800px;">
-            <h3 style="color:#add8e6; margin-bottom:5px;">Welcome Back!</h3>
-            <div id="name-container"></div> <div style="margin: 20px 0;">
-                <img id="u-img" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" style="width:80px; height:80px; border-radius:50%; border:2px solid #00bfff;">
-            </div>
-            
-            <div id="video-list">
-                <div class="video-item"><i class="fas fa-play-circle"></i> Lesson 01: Introduction to AI</div>
-                <div class="video-item"><i class="fas fa-play-circle"></i> Lesson 02: Advanced Prompt Engineering</div>
-            </div>
-            
-            <button class="btn-primary" style="background:#ff4d4d;" onclick="location.reload()">Logout</button>
+        <div class="glass-card" style="max-width:600px;">
+            <p style="color:#add8e6;">Welcome Back,</p>
+            <div id="name-display"></div>
+            <hr style="margin:20px 0; opacity:0.2;">
+            <div class="video-item"><i class="fas fa-video"></i> Lesson 01: Creating AI Avatars</div>
+            <div class="video-item"><i class="fas fa-video"></i> Lesson 02: Monetizing AI Content</div>
+            <button class="btn-primary" style="background:#cc0000;" onclick="handleLogout()">Logout Device</button>
         </div>
     </div>
 
     <script>
-        let userData = {};
-        let currentSecret = "";
+        let tempUser = {};
+        // Admin Secret Key (මෙය ඇඩ්මින්ගේ Google App එකට දාන Key එකයි)
+        const ADMIN_SECRET = "JBSWY3DPEHPK3PXP"; 
 
-        function goToStep2() {
-            userData.name = document.getElementById('r-name').value;
-            userData.email = document.getElementById('r-email').value;
-            userData.phone = document.getElementById('r-phone').value;
-            userData.pass = document.getElementById('r-pass').value;
+        function showStep2() {
+            tempUser.name = document.getElementById('r-name').value;
+            tempUser.email = document.getElementById('r-email').value;
+            tempUser.pass = document.getElementById('r-pass').value;
 
-            if(!userData.name || !userData.email || !userData.pass) return alert("කරුණාකර සියලු විස්තර පුරවන්න.");
-            document.getElementById('reg-box').style.display = 'none';
-            document.getElementById('pay-box').style.display = 'block';
-        }
-
-        function sendToWA() {
-            if(!document.getElementById('r-amount').value) return alert("ගෙවූ ගාන ඇතුළත් කරන්න.");
+            if(!tempUser.name || !tempUser.email) return alert("කරුණාකර විස්තර සම්පූර්ණ කරන්න.");
             
-            // සසම්භාවී Secret Key එකක් සාදයි (Base32 format)
-            currentSecret = "JBSWY3DPEHPK3PXP"; // මෙය සැබෑ පද්ධතියකදී සෑම පාරිභෝගිකයෙකුටම වෙනස් විය යුතුය.
+            // ඇඩ්මින්ට විස්තර යැවීම (WhatsApp)
+            const msg = `*New Request*%0AName: ${tempUser.name}%0AEmail: ${tempUser.email}%0A*Secret Key:* ${ADMIN_SECRET}`;
+            window.open(`https://wa.me/94762196055?text=${msg}`, '_blank');
 
-            const waMsg = `*New Student Registration*%0AName: ${userData.name}%0AEmail: ${userData.email}%0AAmount: Rs. ${document.getElementById('r-amount').value}%0A%0A*ADMIN ACTION:* Please generate OTP using Secret: ${currentSecret}`;
-            window.open(`https://wa.me/94762196055?text=${waMsg}`, '_blank');
-
-            document.getElementById('pay-box').style.display = 'none';
+            document.getElementById('reg-box').style.display = 'none';
             document.getElementById('verify-box').style.display = 'block';
         }
 
-        function finalRegister() {
-            const code = document.getElementById('auth-code').value;
+        function validateAndRegister() {
+            const inputOTP = document.getElementById('otp-code').value;
             
-            // Google Authenticator Verification Logic
-            const totp = new OTPAuth.TOTP({ secret: OTPAuth.Secret.fromBase32(currentSecret), digits: 6 });
-            let isValid = totp.validate({ token: code, window: 1 });
+            // Google Authenticator Verification
+            const totp = new OTPAuth.TOTP({ secret: OTPAuth.Secret.fromBase32(ADMIN_SECRET), digits: 6 });
+            let isValid = totp.validate({ token: inputOTP, window: 1 });
 
-            // Tester code "123456" හෝ නිවැරදි OTP එක පරීක්ෂා කිරීම
-            if(isValid !== null || code === "123456") {
-                alert("Registration Successfully!");
-                localStorage.setItem('user_' + userData.email, JSON.stringify(userData));
+            if(isValid !== null) { // මෙතනදී 123456 වැනි අංක වැඩ කරන්නේ නැත. App එකේ එකම විය යුතුය.
+                alert("Verification Successful!");
+                localStorage.setItem('user_' + tempUser.email, JSON.stringify(tempUser));
                 showLogin();
             } else {
-                alert("වැරදි OTP අංකයක්! ඇඩ්මින්ගෙන් නිවැරදි අංකය ලබාගන්න.");
+                alert("වැරදි කේතයක්! කරුණාකර ඇඩ්මින් ලබා දෙන නිවැරදි අංකයම ඇතුළත් කරන්න.");
             }
         }
 
         function showLogin() {
-            document.getElementById('pre-login').children[0].style.display = 'none';
             document.getElementById('reg-box').style.display = 'none';
-            document.getElementById('pay-box').style.display = 'none';
             document.getElementById('verify-box').style.display = 'none';
             document.getElementById('login-box').style.display = 'block';
         }
 
-        function processLogin() {
+        function handleLogin() {
             const email = document.getElementById('l-email').value;
             const pass = document.getElementById('l-pass').value;
-            const saved = JSON.parse(localStorage.getItem('user_' + email));
+            const savedUser = JSON.parse(localStorage.getItem('user_' + email));
 
-            if(saved && saved.pass === pass) {
-                document.getElementById('pre-login').style.display = 'none';
-                document.getElementById('dashboard').style.display = 'block';
-                
-                // නම Animation එක සහිතව පෙන්වීම
-                const nameContainer = document.getElementById('name-container');
-                nameContainer.innerHTML = `<h1 class="animated-name">${saved.name}</h1>`;
+            if (savedUser && savedUser.pass === pass) {
+                // --- Device Locking Logic ---
+                const sessionKey = 'session_' + email;
+                const currentDeviceId = localStorage.getItem('my_device_id') || Math.random().toString(36).slice(2);
+                localStorage.setItem('my_device_id', currentDeviceId);
+
+                const activeSession = localStorage.getItem(sessionKey);
+
+                if (activeSession && activeSession !== currentDeviceId) {
+                    alert("මෙම ගිණුම දැනටමත් වෙනත් ඩිවයිස් එකකින් හෝ බ්‍රවුසරයකින් භාවිතා කරයි. කරුණාකර එයින් ඉවත් වී නැවත උත්සාහ කරන්න.");
+                } else {
+                    // Session එක ලොක් කිරීම
+                    localStorage.setItem(sessionKey, currentDeviceId);
+                    
+                    document.getElementById('auth-container').style.display = 'none';
+                    document.getElementById('dashboard').style.display = 'block';
+                    
+                    const nameDiv = document.getElementById('name-display');
+                    nameDiv.innerHTML = `<h1 class="animated-name">${savedUser.name}</h1>`;
+                }
             } else {
-                alert("විස්තර වැරදියි! නැවත උත්සාහ කරන්න.");
+                alert("ඊමේල් ලිපිනය හෝ මුරපදය වැරදියි!");
             }
+        }
+
+        function handleLogout() {
+            const email = JSON.parse(localStorage.getItem('user_' + document.getElementById('l-email').value))?.email;
+            if(email) localStorage.removeItem('session_' + email);
+            location.reload();
         }
     </script>
 </body>
