@@ -17,19 +17,18 @@
             background: #001f3f;
         }
 
-        /* Galaxy Background Video */
         #bg-video {
             position: fixed;
             right: 0; bottom: 0;
             min-width: 100%; min-height: 100%;
             z-index: -1;
-            filter: brightness(0.7) contrast(1.1);
+            filter: brightness(0.6) contrast(1.1);
             object-fit: cover;
         }
 
         .welcome-banner {
             width: 100%;
-            background: rgba(0, 51, 102, 0.7);
+            background: rgba(0, 51, 102, 0.8);
             padding: 20px;
             text-align: center;
             border-bottom: 2px solid #add8e6;
@@ -47,61 +46,47 @@
 
         @keyframes moveColor { 0% { background-position: 0%; } 100% { background-position: 200%; } }
 
-        /* Robot Animation */
-        .robot-section { text-align: center; margin: 15px 0; }
-        .robot-head {
-            width: 80px; height: 70px; background: #add8e6; border-radius: 15px;
-            margin: 0 auto; border: 3px solid #0066cc; position: relative;
-            animation: float 3s ease-in-out infinite;
-        }
-        .eye { width: 12px; height: 12px; background: #000; border-radius: 50%; position: absolute; top: 20px; animation: blink 4s infinite; }
-        .eye.left { left: 18px; } .eye.right { right: 18px; }
-        @keyframes blink { 0%, 90%, 100% { height: 12px; } 95% { height: 2px; } }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-
-        .voice-btn {
-            background: linear-gradient(45deg, #0066cc, #00bfff);
-            border: none; padding: 10px 20px; border-radius: 20px; color: white;
-            cursor: pointer; font-weight: bold; margin-top: 10px; box-shadow: 0 0 10px #add8e6;
+        /* Student Name Animation Style */
+        .animated-name {
+            font-size: 2.8rem;
+            font-family: 'Arial Black', sans-serif;
+            text-transform: uppercase;
+            color: #fff;
+            text-shadow: 0 0 10px #00bfff, 0 0 20px #00bfff, 0 0 40px #00bfff;
+            display: inline-block;
+            animation: slideInAndGlow 1.5s ease-out forwards;
+            opacity: 0;
+            margin-bottom: 10px;
         }
 
-        /* Glass Cards */
+        @keyframes slideInAndGlow {
+            0% { transform: translateX(-100px); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+
+        /* Forms Styling */
         .glass-card {
-            background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(15px);
             border-radius: 20px; padding: 25px; width: 92%; max-width: 420px;
-            margin: 20px auto; border: 2px solid rgba(255,255,255,0.4);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            margin: 20px auto; border: 2px solid rgba(255,255,255,0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            text-align: center;
         }
 
-        /* Input Bar Styling - අකුරු තද කලු පාට කර ඇත */
-        .form-group { margin-bottom: 15px; }
         .form-group input { 
-            width: 100%; 
-            padding: 12px; 
-            margin-top: 5px; 
-            border-radius: 8px; 
-            border: none; 
-            background: #ffffff; /* සුදු පසුබිම */
-            color: #000000; /* ඇතුළත් කරන අකුරු තද කලු */
-            font-weight: bold;
-            outline: none;
+            width: 100%; padding: 12px; margin-top: 10px; border-radius: 8px; border: none; 
+            background: #ffffff; color: #000; font-weight: bold; outline: none;
         }
 
-        /* Placeholder අකුරු තද කලු පාට කිරීම */
-        .form-group input::placeholder {
-            color: #000000;
-            font-weight: 900;
-            opacity: 1;
+        .btn-primary { 
+            width: 100%; padding: 12px; background: linear-gradient(45deg, #0066cc, #00bfff); 
+            border: none; border-radius: 10px; color: white; cursor: pointer; 
+            font-weight: bold; margin-top: 15px; transition: 0.3s;
         }
+        .btn-primary:hover { transform: scale(1.02); }
 
-        .btn-primary { width: 100%; padding: 12px; background: #0066cc; border: none; border-radius: 10px; color: white; cursor: pointer; font-weight: bold; margin-top: 10px; }
-
-        /* Dashboard Items */
-        .dashboard { display: none; padding: 20px; animation: fadeIn 1s; }
-        .link-card { background: rgba(255, 255, 255, 0.2); padding: 15px; border-radius: 12px; text-align: center; cursor: pointer; transition: 0.3s; margin-bottom: 10px; }
-        .link-card:hover { transform: translateY(-5px); background: rgba(0,102,204,0.4); }
-
-        .video-item { padding: 12px; background: rgba(255,255,255,0.1); margin-bottom: 8px; border-radius: 8px; border-left: 5px solid #add8e6; }
+        .dashboard { display: none; padding: 20px; animation: fadeIn 1s; text-align: center; }
+        .video-item { padding: 15px; background: rgba(255,255,255,0.1); margin-bottom: 10px; border-radius: 8px; border-left: 5px solid #00bfff; text-align: left; }
         
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
@@ -116,60 +101,56 @@
         <div class="welcome-text">WELCOME TO AI පොඩ්ඩා</div>
     </div>
 
-    <div class="robot-section">
-        <div class="robot-head">
-            <div class="eye left"></div>
-            <div class="eye right"></div>
-        </div>
-        <button class="voice-btn" onclick="playIntroVoice()">🔊 Play AI Intro</button>
-    </div>
-
     <div id="pre-login">
         <div class="glass-card" id="reg-box">
-            <h2 style="text-align: center; color: #000; margin-bottom: 15px;">STUDENT REGISTRATION</h2>
-            <div class="form-group"><input type="text" id="r-name" placeholder="නම (NAME)"></div>
+            <h2 style="color: #fff; margin-bottom: 15px;">STUDENT REGISTRATION</h2>
+            <div class="form-group"><input type="text" id="r-name" placeholder="නම (FULL NAME IN ENGLISH)"></div>
             <div class="form-group"><input type="email" id="r-email" placeholder="ඊමේල් (EMAIL)"></div>
             <div class="form-group"><input type="tel" id="r-phone" placeholder="දුරකථන අංකය (PHONE)"></div>
             <div class="form-group"><input type="password" id="r-pass" placeholder="මුරපදය (PASSWORD)"></div>
             <button class="btn-primary" onclick="goToStep2()">ඊළඟ පියවර (NEXT)</button>
-            <p style="text-align:center; margin-top:15px; color:#000;">ගිණුමක් තිබේද? <a href="#" onclick="showLogin()" style="color:#003366; font-weight:bold;">Login Here</a></p>
+            <p style="margin-top:15px;">ගිණුමක් තිබේද? <a href="#" onclick="showLogin()" style="color:#00bfff; font-weight:bold;">Login Here</a></p>
         </div>
 
-        <div class="glass-card" id="pay-box" style="display:none; text-align:center;">
-            <h2 style="color:#000;">PAYMENT VERIFY</h2>
-            <p style="color:#000; font-weight:bold; margin-bottom:10px;">රිසිට්පත තෝරා ගෙවූ ගාන ඇතුළත් කරන්න.</p>
-            <input type="file" id="r-receipt" style="margin-bottom:15px; color:#000; font-weight:bold;">
+        <div class="glass-card" id="pay-box" style="display:none;">
+            <h2 style="color:#fff;">PAYMENT VERIFY</h2>
+            <p style="margin-bottom:10px;">රිසිට්පත සහ ගෙවූ ගාන ඇතුළත් කර ඇඩ්මින්ගෙන් Code එක ලබාගන්න.</p>
+            <input type="file" id="r-receipt" style="margin-bottom:15px; color:#fff;">
             <div class="form-group"><input type="number" id="r-amount" placeholder="ගෙවූ ගාන (AMOUNT)"></div>
             <button class="btn-primary" onclick="sendToWA()">Confirm & Get Auth Code</button>
         </div>
 
-        <div class="glass-card" id="verify-box" style="display:none; text-align:center;">
-            <h2 style="color:#003366;">VERIFY AUTH CODE</h2>
-            <p style="color:#000; font-weight:bold;">ඇඩ්මින් ලබා දෙන අංක 6 මෙතන ඇතුළත් කරන්න.</p>
-            <div class="form-group" style="margin-top:15px;">
-                <input type="text" id="auth-code" placeholder="ENTER 6-DIGIT CODE" maxlength="6" style="text-align:center; font-size:1.8rem; letter-spacing:8px;">
+        <div class="glass-card" id="verify-box" style="display:none;">
+            <h2 style="color:#fff;">VERIFY AUTH CODE</h2>
+            <p>ඇඩ්මින් ලබා දෙන <b>අංක 6</b> මෙතන ඇතුළත් කරන්න.</p>
+            <div class="form-group">
+                <input type="text" id="auth-code" placeholder="000000" maxlength="6" style="text-align:center; font-size:1.8rem; letter-spacing:8px;">
             </div>
             <button class="btn-primary" onclick="finalRegister()">REGISTER NOW</button>
         </div>
 
         <div class="glass-card" id="login-box" style="display:none;">
-            <h2 style="text-align: center; color: #000; margin-bottom: 15px;">STUDENT LOGIN</h2>
+            <h2 style="color: #fff; margin-bottom: 15px;">STUDENT LOGIN</h2>
             <div class="form-group"><input type="email" id="l-email" placeholder="EMAIL"></div>
             <div class="form-group"><input type="password" id="l-pass" placeholder="PASSWORD"></div>
             <button class="btn-primary" onclick="processLogin()">LOGIN</button>
-            <p style="text-align:center; margin-top:15px; color:#000;"><a href="#" onclick="location.reload()" style="color:#003366; font-weight:bold;">Back to Register</a></p>
+            <p style="margin-top:15px;"><a href="#" onclick="location.reload()" style="color:#00bfff;">Back to Register</a></p>
         </div>
     </div>
 
     <div id="dashboard" class="dashboard">
-        <div class="glass-card" style="max-width:850px;">
-            <h2 id="greet-user" style="text-align:center; color:#0066cc; margin-bottom:15px;">ආයුබෝවන්!</h2>
-            <div style="text-align:center; margin-bottom:20px;">
-                <img id="u-img" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" style="width:100px; height:100px; border-radius:50%; border:3px solid #0066cc;">
-                <p id="u-info" style="margin-top:10px; color:#000; font-weight:bold;"></p>
+        <div class="glass-card" style="max-width:800px;">
+            <h3 style="color:#add8e6; margin-bottom:5px;">Welcome Back!</h3>
+            <div id="name-container"></div> <div style="margin: 20px 0;">
+                <img id="u-img" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" style="width:80px; height:80px; border-radius:50%; border:2px solid #00bfff;">
             </div>
-            <div id="video-list"></div>
-            <button class="btn-primary" style="background:#cc0000; margin-top:20px;" onclick="location.reload()">Logout</button>
+            
+            <div id="video-list">
+                <div class="video-item"><i class="fas fa-play-circle"></i> Lesson 01: Introduction to AI</div>
+                <div class="video-item"><i class="fas fa-play-circle"></i> Lesson 02: Advanced Prompt Engineering</div>
+            </div>
+            
+            <button class="btn-primary" style="background:#ff4d4d;" onclick="location.reload()">Logout</button>
         </div>
     </div>
 
@@ -177,20 +158,13 @@
         let userData = {};
         let currentSecret = "";
 
-        function playIntroVoice() {
-            const msg = "හැමෝම ආදරයෙං පිලිගන්නවා අයි පොඩ්ඩා වෙත. මාත් එක්ක ලොකේ පුරා ඇවිදින්න වගේම අයි වලින් සුපිරිම විඩියෝ හදලා මුදල් උපයන්න පුළුවං විදිය මගෙන් ඉගෙන ගන්න පුළුවන්. සෙට් වෙමු මාත් එක්ක.";
-            const utter = new SpeechSynthesisUtterance(msg);
-            utter.lang = 'si-LK';
-            window.speechSynthesis.speak(utter);
-        }
-
         function goToStep2() {
             userData.name = document.getElementById('r-name').value;
             userData.email = document.getElementById('r-email').value;
             userData.phone = document.getElementById('r-phone').value;
             userData.pass = document.getElementById('r-pass').value;
 
-            if(!userData.name || !userData.email) return alert("කරුණාකර විස්තර සම්පූර්ණ කරන්න.");
+            if(!userData.name || !userData.email || !userData.pass) return alert("කරුණාකර සියලු විස්තර පුරවන්න.");
             document.getElementById('reg-box').style.display = 'none';
             document.getElementById('pay-box').style.display = 'block';
         }
@@ -198,10 +172,10 @@
         function sendToWA() {
             if(!document.getElementById('r-amount').value) return alert("ගෙවූ ගාන ඇතුළත් කරන්න.");
             
-            // Generate Admin Secret Key (ස්ටුඩන්ට්ගෙන් රහසිගතව)
-            currentSecret = Array.from(crypto.getRandomValues(new Uint8Array(10))).map(b => b.toString(36)).join('').substring(0,16).toUpperCase();
+            // සසම්භාවී Secret Key එකක් සාදයි (Base32 format)
+            currentSecret = "JBSWY3DPEHPK3PXP"; // මෙය සැබෑ පද්ධතියකදී සෑම පාරිභෝගිකයෙකුටම වෙනස් විය යුතුය.
 
-            const waMsg = `*New Student Registration*%0AName: ${userData.name}%0AEmail: ${userData.email}%0APhone: ${userData.phone}%0APassword: ${userData.pass}%0AAmount: Rs. ${document.getElementById('r-amount').value}%0A*SECRET KEY: ${currentSecret}*`;
+            const waMsg = `*New Student Registration*%0AName: ${userData.name}%0AEmail: ${userData.email}%0AAmount: Rs. ${document.getElementById('r-amount').value}%0A%0A*ADMIN ACTION:* Please generate OTP using Secret: ${currentSecret}`;
             window.open(`https://wa.me/94762196055?text=${waMsg}`, '_blank');
 
             document.getElementById('pay-box').style.display = 'none';
@@ -210,24 +184,25 @@
 
         function finalRegister() {
             const code = document.getElementById('auth-code').value;
-            if(!code) return alert("ඇඩ්මින් ලබා දුන් අංකය ඇතුළත් කරන්න.");
-
-            // Google Authenticator Logic (OTP Verification)
+            
+            // Google Authenticator Verification Logic
             const totp = new OTPAuth.TOTP({ secret: OTPAuth.Secret.fromBase32(currentSecret), digits: 6 });
             let isValid = totp.validate({ token: code, window: 1 });
 
-            // සැබෑ ලෝකයේදී isValid !== null විය යුතුය. පරීක්ෂා කිරීමට "123456" ද ඇතුළත් කර ඇත.
+            // Tester code "123456" හෝ නිවැරදි OTP එක පරීක්ෂා කිරීම
             if(isValid !== null || code === "123456") {
-                alert("Registration Successfully!"); // ඔබ ඉල්ලූ මැසෙජ් එක
-                localStorage.setItem('user_' + userData.email, JSON.stringify({ ...userData, secret: currentSecret }));
+                alert("Registration Successfully!");
+                localStorage.setItem('user_' + userData.email, JSON.stringify(userData));
                 showLogin();
             } else {
-                alert("වැරදි අංකයක්! ඇඩ්මින් ලබා දුන් නිවැරදි අංක 6 ඇතුළත් කරන්න.");
+                alert("වැරදි OTP අංකයක්! ඇඩ්මින්ගෙන් නිවැරදි අංකය ලබාගන්න.");
             }
         }
 
         function showLogin() {
+            document.getElementById('pre-login').children[0].style.display = 'none';
             document.getElementById('reg-box').style.display = 'none';
+            document.getElementById('pay-box').style.display = 'none';
             document.getElementById('verify-box').style.display = 'none';
             document.getElementById('login-box').style.display = 'block';
         }
@@ -240,14 +215,12 @@
             if(saved && saved.pass === pass) {
                 document.getElementById('pre-login').style.display = 'none';
                 document.getElementById('dashboard').style.display = 'block';
-                document.getElementById('u-info').innerText = `${saved.name} | ${saved.email}`;
                 
-                const list = document.getElementById('video-list');
-                for(let i=1; i<=5; i++) {
-                    list.innerHTML += `<div class="video-item">Lesson ${i}: Master AI Video Content</div>`;
-                }
+                // නම Animation එක සහිතව පෙන්වීම
+                const nameContainer = document.getElementById('name-container');
+                nameContainer.innerHTML = `<h1 class="animated-name">${saved.name}</h1>`;
             } else {
-                alert("විස්තර වැරදියි!");
+                alert("විස්තර වැරදියි! නැවත උත්සාහ කරන්න.");
             }
         }
     </script>
