@@ -22,24 +22,27 @@
             color: var(--text-light); overflow-x: hidden; min-height: 100vh;
         }
 
-        /* NEW WELCOME HEADER - CHANGE #1 */
-        .welcome-header {
-            position: fixed; top: 0; left: 0; width: 100%; height: 80px; z-index: 100;
-            background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
-            border-bottom: 3px solid var(--blue-frame); display: flex; align-items: center;
-            justify-content: center; box-shadow: 0 4px 20px rgba(30,64,175,0.3);
+        /* 1️⃣ WELCOME BOX - BLUE FRAME, GREEN TEXT, TRANSPARENT */
+        .welcome-box {
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+            z-index: 1000; background: rgba(255,255,255,0.05);
+            border: 4px solid var(--blue-frame); border-radius: 20px;
+            padding: 15px 40px; backdrop-filter: blur(10px);
+            box-shadow: 0 0 30px rgba(30,64,175,0.6), inset 0 0 20px rgba(30,64,175,0.2);
+            overflow: hidden; max-width: 90%;
         }
         .welcome-runner {
-            color: var(--text-light); font-size: 1.8rem; font-weight: 700;
-            white-space: nowrap; animation: scrollLeft 20s linear infinite;
+            color: #00ff00; font-size: 1.6rem; font-weight: 800;
+            white-space: nowrap; animation: scrollText 15s linear infinite;
+            text-shadow: 0 0 10px rgba(0,255,0,0.5);
         }
-        @keyframes scrollLeft {
+        @keyframes scrollText {
             0% { transform: translateX(100%); }
             100% { transform: translateX(-100%); }
         }
 
         /* Particles */
-        .particles { position: fixed; top: 80px; left: 0; width: 100%; height: calc(100vh - 80px); z-index: -1; pointer-events: none; }
+        .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; pointer-events: none; }
         .particle { position: absolute; width: 4px; height: 4px; background: var(--light-blue); border-radius: 50%; 
             animation: float 15s infinite; opacity: 0.6; }
         @keyframes float {
@@ -48,159 +51,376 @@
             100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
         }
 
-        /* Content starts below header */
-        .main-content { margin-top: 80px; }
+        /* Main Content */
+        .main-content { margin-top: 120px; padding: 20px; }
 
-        /* NEW PRE-LOGIN SECTIONS - CHANGE #5 & #6 */
+        /* 5️⃣ & 6️⃣ PRE-LOGIN SECTIONS */
         .pre-login-section {
-            max-width: 800px; margin: 40px auto; padding: 30px;
+            max-width: 900px; margin: 30px auto; padding: 35px;
             background: var(--glass-bg); backdrop-filter: blur(15px);
-            border: 1px solid var(--glass-border); border-radius: 25px;
-            margin-bottom: 30px; animation: cardFloat 6s ease-in-out infinite;
+            border: 2px solid var(--glass-border); border-radius: 25px;
+            animation: cardFloat 6s ease-in-out infinite;
             box-shadow: 0 15px 40px rgba(31,38,135,0.4);
         }
         @keyframes cardFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 
-        /* NEW AI NEWS ANIMATION - CHANGE #4 */
+        /* 4️⃣ AI NEWS ANIMATION (REPLACED GEMINI LIVE) */
         .ai-news-item { 
-            background: rgba(0,255,255,0.1); border-left: 4px solid var(--neon-cyan);
+            background: rgba(0,255,255,0.08); border-left: 4px solid var(--neon-cyan);
             padding: 20px; margin: 15px 0; border-radius: 12px; 
-            transform: translateX(-20px); opacity: 0; transition: all 0.8s ease;
+            transform: translateX(-50px); opacity: 0; transition: all 0.6s ease;
+            animation: slideIn 0.8s ease forwards;
         }
-        .ai-news-item.animate { transform: translateX(0); opacity: 1; }
-        .ai-news-item h4 { color: var(--neon-cyan); margin-bottom: 10px; }
+        .ai-news-item:nth-child(1) { animation-delay: 0.2s; }
+        .ai-news-item:nth-child(2) { animation-delay: 0.5s; }
+        .ai-news-item:nth-child(3) { animation-delay: 0.8s; }
+        .ai-news-item:nth-child(4) { animation-delay: 1.1s; }
+        
+        @keyframes slideIn {
+            to { transform: translateX(0); opacity: 1; }
+        }
+        .ai-news-item h4 { color: var(--neon-cyan); margin-bottom: 10px; font-size: 1.2rem; }
+        .ai-news-item p { color: rgba(255,255,255,0.9); line-height: 1.6; }
+
+        /* AI INTRO ANIMATION (REPLACED GEMINI) */
+        .ai-intro-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px;
+        }
+        .ai-intro-card {
+            background: rgba(255,255,255,0.05); border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 20px; padding: 30px 20px; text-align: center;
+            transition: all 0.4s ease; animation: fadeInUp 0.8s ease backwards;
+        }
+        .ai-intro-card:hover {
+            transform: translateY(-10px); border-color: var(--light-blue);
+            box-shadow: 0 20px 40px rgba(0,102,204,0.3);
+        }
+        .ai-intro-card:nth-child(1) { animation-delay: 0.1s; }
+        .ai-intro-card:nth-child(2) { animation-delay: 0.3s; }
+        .ai-intro-card:nth-child(3) { animation-delay: 0.5s; }
+        .ai-intro-card:nth-child(4) { animation-delay: 0.7s; }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
         /* Glass Cards */
-        .glass-card { background: var(--glass-bg); backdrop-filter: blur(10px); border: 1px solid var(--glass-border);
-            border-radius: 20px; padding: 30px; margin: 25px auto; max-width: 600px;
-            box-shadow: 0 12px 40px rgba(31,38,135,0.5); animation: cardFloat 6s ease-in-out infinite; }
-
-        /* WhatsApp Float */
-        .whatsapp-float {
-            position: fixed; top: 100px; right: 20px; background: #000; color: #ff0000;
-            padding: 12px 18px; border-radius: 50px; text-decoration: none; display: flex;
-            align-items: center; gap: 8px; font-weight: 700; font-size: 0.9rem;
-            box-shadow: 0 6px 20px rgba(255,0,0,0.4); z-index: 1000;
-            animation: redBlackPulse 2s infinite; border: 2px solid #ff0000;
-        }
-        @keyframes redBlackPulse {
-            0%,100% { background: #000; color: #ff0000; }
-            50% { background: #ff0000; color: #000; }
+        .glass-card { 
+            background: var(--glass-bg); backdrop-filter: blur(10px); 
+            border: 2px solid var(--glass-border);
+            border-radius: 25px; padding: 40px; margin: 30px auto; max-width: 650px;
+            box-shadow: 0 12px 40px rgba(31,38,135,0.5); 
         }
 
-        /* NEW PAYMENT FORM - CHANGE #2 */
-        .payment-container { background: rgba(0,0,0,0.4); border: 3px solid var(--light-blue); 
-            border-radius: 20px; padding: 35px; margin: 25px 0; text-align: center; }
-        .amount-input { width: 100%; padding: 15px; border: 2px solid rgba(255,255,255,0.3);
-            border-radius: 12px; background: rgba(255,255,255,0.08); color: white; font-size: 1.2rem;
-            margin: 15px 0; text-align: center; }
-        .screenshot-area { border: 3px dashed var(--light-blue); border-radius: 15px; padding: 40px;
-            margin: 20px 0; cursor: pointer; transition: all 0.3s; background: rgba(0,102,204,0.1); }
-        .screenshot-area:hover { background: rgba(0,102,204,0.25); transform: scale(1.02); }
-        .screenshot-preview { max-width: 100%; max-height: 250px; border-radius: 12px; margin-top: 15px; display: none; }
+        /* 2️⃣ PAYMENT SYSTEM */
+        .payment-container { 
+            background: rgba(0,0,0,0.3); border: 3px solid var(--light-blue); 
+            border-radius: 25px; padding: 40px; margin: 25px 0; text-align: center;
+        }
+        .screenshot-area { 
+            border: 3px dashed var(--light-blue); border-radius: 20px; padding: 50px 30px;
+            margin: 25px 0; cursor: pointer; transition: all 0.3s; 
+            background: rgba(0,102,204,0.15); position: relative;
+        }
+        .screenshot-area:hover { 
+            background: rgba(0,102,204,0.3); transform: scale(1.02); 
+            box-shadow: 0 10px 30px rgba(0,102,204,0.4);
+        }
+        .screenshot-area i { font-size: 4rem; color: var(--light-blue); margin-bottom: 15px; }
+        .screenshot-preview { 
+            max-width: 100%; max-height: 300px; border-radius: 15px; 
+            margin-top: 20px; border: 3px solid var(--light-blue);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .amount-input { 
+            width: 100%; padding: 18px; border: 2px solid var(--light-blue);
+            border-radius: 15px; background: rgba(255,255,255,0.1); 
+            color: white; font-size: 1.3rem; margin: 20px 0; text-align: center;
+            font-weight: 600;
+        }
+        .amount-input:focus { outline: none; box-shadow: 0 0 20px rgba(77,166,255,0.5); }
 
         /* Buttons */
-        .btn-primary { width: 100%; padding: 16px; background: linear-gradient(45deg, var(--primary-blue), var(--light-blue));
-            border: none; border-radius: 12px; color: white; font-size: 1.2rem; font-weight: 700;
-            cursor: pointer; transition: all 0.3s; margin: 10px 0; }
-        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,102,204,0.5); }
+        .btn-primary { 
+            width: 100%; padding: 18px; 
+            background: linear-gradient(45deg, var(--primary-blue), var(--light-blue));
+            border: none; border-radius: 15px; color: white; 
+            font-size: 1.2rem; font-weight: 700; cursor: pointer; 
+            transition: all 0.3s; margin: 15px 0; position: relative; overflow: hidden;
+        }
+        .btn-primary:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 10px 30px rgba(0,102,204,0.6);
+        }
+        .btn-primary::after {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: rgba(255,255,255,0.1); transform: rotate(30deg);
+            transition: all 0.6s;
+        }
+        .btn-primary:hover::after { transform: rotate(30deg) translate(20%, 20%); }
+
+        .btn-whatsapp {
+            background: linear-gradient(45deg, #25d366, #128c7e) !important;
+        }
 
         /* Forms */
         .form-group { margin-bottom: 25px; }
-        .form-group label { display: block; margin-bottom: 10px; color: var(--light-blue); font-weight: 600; }
-        .form-group input { width: 100%; padding: 15px; border: 2px solid rgba(255,255,255,0.25);
-            border-radius: 12px; background: rgba(255,255,255,0.08); color: white; font-size: 1.1rem; }
+        .form-group label { 
+            display: block; margin-bottom: 12px; 
+            color: var(--light-blue); font-weight: 600; font-size: 1.1rem;
+        }
+        .form-group input { 
+            width: 100%; padding: 16px; border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 12px; background: rgba(255,255,255,0.08); 
+            color: white; font-size: 1.1rem; transition: all 0.3s;
+        }
+        .form-group input:focus {
+            border-color: var(--light-blue); outline: none;
+            box-shadow: 0 0 15px rgba(77,166,255,0.3);
+        }
 
-        /* Dashboard */
-        .dashboard { display: none; padding: 40px 20px; max-width: 1200px; margin: 0 auto; }
+        /* 6-Digit Code */
+        .code-container {
+            background: rgba(0,255,0,0.15); border: 3px solid #00ff88; 
+            padding: 30px; border-radius: 20px; margin: 25px 0;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(0,255,136,0.3); }
+            50% { box-shadow: 0 0 40px rgba(0,255,136,0.6); }
+        }
+        .code-display {
+            font-size: 2.5rem; color: #00ff88; font-weight: bold; 
+            font-family: 'Courier New', monospace; letter-spacing: 15px;
+            text-shadow: 0 0 20px rgba(0,255,136,0.5);
+        }
+        .code-input {
+            width: 250px; padding: 18px; margin: 25px auto; display: block; 
+            font-size: 2rem; text-align: center; letter-spacing: 10px;
+            background: rgba(0,0,0,0.5); border: 3px solid var(--light-blue);
+            border-radius: 15px; color: #00ff88; font-weight: bold;
+        }
+
+        /* 7️⃣ DASHBOARD & VIDEO UPLOAD */
+        .dashboard { display: none; padding: 40px 20px; max-width: 1400px; margin: 0 auto; }
         .dashboard.active { display: block; animation: fadeIn 0.6s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* NEW VIDEO UPLOAD SYSTEM - CHANGE #7 */
         .video-upload-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin: 30px 0;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px;
         }
         .video-upload-card {
-            background: rgba(255,255,255,0.08); border: 2px solid var(--light-blue); border-radius: 18px;
-            padding: 30px; text-align: center; transition: all 0.3s; cursor: pointer;
+            background: rgba(255,255,255,0.08); border: 3px solid var(--light-blue); 
+            border-radius: 25px; padding: 40px; text-align: center;
+            transition: all 0.4s ease;
         }
-        .video-upload-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,102,204,0.4); }
-        .video-list { background: rgba(0,0,0,0.3); border-radius: 15px; padding: 20px; margin-top: 20px; max-height: 400px; overflow-y: auto; }
+        .video-upload-card:hover { 
+            transform: translateY(-8px); 
+            box-shadow: 0 25px 50px rgba(0,102,204,0.4);
+            border-color: var(--neon-cyan);
+        }
+        .video-list { 
+            background: rgba(0,0,0,0.4); border-radius: 20px; padding: 25px; 
+            margin-top: 25px; max-height: 500px; overflow-y: auto;
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+        .video-item {
+            background: rgba(255,255,255,0.05); padding: 15px; margin: 10px 0;
+            border-radius: 12px; border-left: 4px solid var(--light-blue);
+            display: flex; align-items: center; gap: 15px;
+        }
+        .video-item i { color: var(--light-blue); font-size: 1.5rem; }
+
+        /* Progress Bar */
+        .progress-bar {
+            width: 100%; height: 8px; background: rgba(255,255,255,0.1);
+            border-radius: 10px; margin: 20px 0; overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%; background: linear-gradient(90deg, var(--primary-blue), var(--neon-cyan));
+            border-radius: 10px; transition: width 0.5s ease; width: 0%;
+        }
+
+        /* Status Messages */
+        .status-message {
+            padding: 20px; border-radius: 15px; margin: 20px 0; font-weight: 600;
+            display: none; animation: slideDown 0.3s ease;
+        }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .status-success { background: rgba(0,255,0,0.2); border: 2px solid #00ff00; color: #00ff00; }
+        .status-error { background: rgba(255,0,0,0.2); border: 2px solid #ff0000; color: #ff0000; }
 
         /* Responsive */
         @media (max-width: 768px) {
-            .welcome-runner { font-size: 1.3rem; } .main-content { margin-top: 70px; }
+            .welcome-runner { font-size: 1.1rem; }
+            .welcome-box { padding: 12px 20px; top: 10px; }
+            .main-content { margin-top: 100px; }
             .pre-login-section, .glass-card { margin: 20px 15px; padding: 25px 20px; }
+            .code-display { font-size: 1.8rem; letter-spacing: 8px; }
+            .code-input { width: 200px; font-size: 1.5rem; }
         }
     </style>
+<base target="_blank">
 </head>
 <body>
-    <!-- NEW WELCOME HEADER - ✅ CHANGE #1 COMPLETE -->
-    <div class="welcome-header">
-        <div class="welcome-runner">🎉 Welcome To AI පොඩ්ඩා - ලංකාවේ AI Learning Platform එක! 🎉</div>
+    <!-- 1️⃣ WELCOME BOX - BLUE FRAME, GREEN TEXT, TRANSPARENT -->
+    <div class="welcome-box">
+        <div class="welcome-runner">🎉 Welcome To AI පොඩ්ඩා - ලංකාවේ #1 AI Learning Platform! 🎉</div>
     </div>
 
     <!-- Particles -->
     <div class="particles" id="particles"></div>
 
-    <!-- WhatsApp Float Button -->
-    <a href="https://wa.me/94762196055" class="whatsapp-float" target="_blank">
-        <i class="fab fa-whatsapp"></i> <span>0762196055</span>
-    </a>
-
     <!-- Main Content -->
     <div class="main-content">
-        <!-- NEW PRE-LOGIN SECTIONS - ✅ CHANGE #5 & #6 COMPLETE -->
+        <!-- 5️⃣ DAILY AI NEWS (PRE-LOGIN) -->
         <div class="pre-login-section">
-            <h2 style="color: var(--neon-cyan); text-align: center; margin-bottom: 25px;">
-                <i class="fas fa-newspaper"></i> ඩේලි AI News Update
+            <h2 style="color: var(--neon-cyan); text-align: center; margin-bottom: 30px; font-size: 2rem;">
+                <i class="fas fa-newspaper"></i> ඩේලි AI News Update (සිංහලෙන්)
             </h2>
-            <div class="ai-news-item animate">
-                <h4>🚀 OpenAI GPT-5 Release එක මාර්තු 2026</h4>
-                <p>ලෝකයේ advanced AI model එක සිංහලෙන් support කරනවා!</p>
+            <div class="ai-news-item">
+                <h4>🚀 OpenAI GPT-5 Release - මාර්තු 2026</h4>
+                <p>ලෝකයේ advanced AI model එක සිංහලෙන් support කරනවා! Voice, text, image සියල්ලම එකට.</p>
             </div>
-            <div class="ai-news-item" style="animation-delay: 0.3s;">
+            <div class="ai-news-item">
                 <h4>🤖 Google Gemini 2.0 Sri Lanka Launch</h4>
-                <p>සිංහල Voice commands සමග නව AI assistant එක.</p>
+                <p>සිංහල Voice commands සමග නව AI assistant එක. Mobile app එකත් දැන් available!</p>
             </div>
-            <div class="ai-news-item" style="animation-delay: 0.6s;">
-                <h4>💰 AI Video Tools Free Trial</h4>
-                <p>Hailuo AI, Suno AI සියල්ලම මුල් මාසයකට free!</p>
+            <div class="ai-news-item">
+                <h4>🎬 AI Video Tools Free Access</h4>
+                <p>Hailuo AI, Runway, Pika Labs සියල්ලම මුල් මාස 3කට free trial!</p>
+            </div>
+            <div class="ai-news-item">
+                <h4>💼 AI Jobs in Sri Lanka</h4>
+                <p>Local tech companies AI specialists හොයනවා. Salary එක Rs. 200,000+</p>
             </div>
         </div>
 
+        <!-- 6️⃣ AI BENEFITS (PRE-LOGIN) -->
         <div class="pre-login-section">
-            <h2 style="color: var(--light-blue); text-align: center; margin-bottom: 25px;">
-                <i class="fas fa-brain"></i> AI අපිට වැඩ පහසු කරන විදිය
+            <h2 style="color: var(--light-blue); text-align: center; margin-bottom: 35px; font-size: 2rem;">
+                <i class="fas fa-brain"></i> AI අපිට වැඩ පහසු කරන විදිය (සිංහලෙන්)
             </h2>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
-                <div style="text-align: center; padding: 20px; background: rgba(0,255,255,0.08); border-radius: 12px;">
-                    <i class="fas fa-video" style="font-size: 3rem; color: var(--neon-cyan); margin-bottom: 15px;"></i>
-                    <h4>වීඩියෝ හදන්න</h4>
-                    <p>Text type කරලා professional videos auto generate වෙනවා</p>
+            <div class="ai-intro-grid">
+                <div class="ai-intro-card">
+                    <i class="fas fa-video" style="font-size: 3.5rem; color: var(--neon-cyan); margin-bottom: 20px; animation: bounce 2s infinite;"></i>
+                    <h3 style="color: var(--neon-cyan); margin-bottom: 15px;">වීඩියෝ හදන්න</h3>
+                    <p>Text type කරලා professional videos auto generate වෙනවා. YouTube, TikTok සඳහා perfect!</p>
                 </div>
-                <div style="text-align: center; padding: 20px; background: rgba(255,215,0,0.1); border-radius: 12px;">
-                    <i class="fas fa-music" style="font-size: 3rem; color: var(--accent-gold); margin-bottom: 15px;"></i>
-                    <h4>Songs හදන්න</h4>
-                    <p>ඔබේ words වලින් trending songs create කරන්න</p>
+                <div class="ai-intro-card">
+                    <i class="fas fa-music" style="font-size: 3.5rem; color: var(--accent-gold); margin-bottom: 20px; animation: bounce 2s infinite 0.2s;"></i>
+                    <h3 style="color: var(--accent-gold); margin-bottom: 15px;">Songs හදන්න</h3>
+                    <p>ඔබේ words වලින් trending songs create කරන්න. Suno AI, Udio tools භාවිතා කරන්න.</p>
                 </div>
-                <div style="text-align: center; padding: 20px; background: rgba(255,0,255,0.1); border-radius: 12px;">
-                    <i class="fas fa-images" style="font-size: 3rem; color: var(--neon-pink); margin-bottom: 15px;"></i>
-                    <h4>Photos හදන්න</h4>
-                    <p>ඕන design එක describe කරලා HD images generate කරන්න</p>
+                <div class="ai-intro-card">
+                    <i class="fas fa-images" style="font-size: 3.5rem; color: var(--neon-pink); margin-bottom: 20px; animation: bounce 2s infinite 0.4s;"></i>
+                    <h3 style="color: var(--neon-pink); margin-bottom: 15px;">Photos හදන්න</h3>
+                    <p>ඕන design එක describe කරලා HD images generate කරන්න. Midjourney, DALL-E 3 free!</p>
+                </div>
+                <div class="ai-intro-card">
+                    <i class="fas fa-code" style="font-size: 3.5rem; color: #00ff88; margin-bottom: 20px; animation: bounce 2s infinite 0.6s;"></i>
+                    <h3 style="color: #00ff88; margin-bottom: 15px;">Code ලියන්න</h3>
+                    <p>Programming knowledge නැතුව websites, apps හදන්න. ChatGPT, Claude AI help කරනවා!</p>
                 </div>
             </div>
         </div>
 
         <!-- Auth Section -->
-        <div class="glass-card">
-            <div id="loginForm">
+        <div class="glass-card" id="authSection">
+            <!-- Step 1: Register Form -->
+            <div id="registerStep1">
+                <h2 style="text-align: center; margin-bottom: 35px; color: var(--light-blue); font-size: 1.8rem;">
+                    <i class="fas fa-user-plus"></i> නව ශිෂ්‍ය ලියාපදිංචිය
+                </h2>
+                <form onsubmit="goToPayment(event)">
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i> සම්පූර්ණ නම</label>
+                        <input type="text" id="studentName" required placeholder="ඔබගේ සම්පූර්ණ නම">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-phone"></i> දුරකථන අංකය</label>
+                        <input type="tel" id="studentPhone" required placeholder="07X XXX XXXX" pattern="[0-9]{10}">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-envelope"></i> ඊමේල් ලිපිනය</label>
+                        <input type="email" id="studentEmail" required placeholder="example@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-lock"></i> මුරපදය (Password)</label>
+                        <input type="password" id="studentPassword" required placeholder="මුරපදයක් සාදන්න" minlength="6">
+                    </div>
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-arrow-right"></i> ඉදිරියට යන්න (Payment)
+                    </button>
+                </form>
+                <div style="text-align: center; margin-top: 25px;">
+                    <p style="color: rgba(255,255,255,0.7);">දැනටමත් account එකක් තියෙනවාද?</p>
+                    <button onclick="showLogin()" class="btn-primary" style="margin-top: 15px; background: linear-gradient(45deg, #666, #999);">
+                        <i class="fas fa-sign-in-alt"></i> ලොගින් වන්න
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 2: Payment Section -->
+            <div id="paymentStep" style="display: none;">
                 <h2 style="text-align: center; margin-bottom: 30px; color: var(--light-blue);">
+                    <i class="fas fa-credit-card"></i> Payment තහවුරු කිරීම
+                </h2>
+                
+                <div class="payment-container">
+                    <p style="margin-bottom: 20px; color: rgba(255,255,255,0.9);">
+                        <i class="fas fa-info-circle"></i> Payment screenshot එක upload කරලා, ගෙවපු ගාන type කරන්න.
+                    </p>
+                    
+                    <div class="screenshot-area" id="screenshotArea">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <h3 style="margin: 15px 0;">Payment Screenshot Upload කරන්න</h3>
+                        <p style="color: rgba(255,255,255,0.7);">Click කරන්න හෝ Drag & Drop කරන්න</p>
+                        <small style="color: rgba(255,255,255,0.5);">(JPG, PNG, JPEG පමණි)</small>
+                    </div>
+                    <input type="file" id="screenshotInput" accept="image/*" style="display: none;" onchange="handleScreenshot(event)">
+                    <img id="screenshotPreview" class="screenshot-preview" style="display: none;">
+                    
+                    <div class="form-group" style="margin-top: 25px;">
+                        <label><i class="fas fa-money-bill-wave"></i> ගෙවපු ගාන (LKR)</label>
+                        <input type="number" id="paymentAmount" class="amount-input" placeholder="2500" min="1" required>
+                    </div>
+                    
+                    <button class="btn-primary btn-whatsapp" onclick="sendWhatsAppNotification()">
+                        <i class="fab fa-whatsapp"></i> Confirm & WhatsApp යවන්න
+                    </button>
+                    
+                    <div id="paymentStatus" class="status-message"></div>
+                </div>
+                
+                <!-- 6-Digit Code Verification -->
+                <div class="code-container" id="codeSection" style="display: none;">
+                    <h4 style="margin-bottom: 15px; color: #00ff88;">
+                        <i class="fas fa-key"></i> 6-Digit Register Code ඇතුළත් කරන්න
+                    </h4>
+                    <p style="color: rgba(255,255,255,0.8); margin-bottom: 20px;">
+                        WhatsApp එකට ආ code එක ඇතුළත් කරන්න
+                    </p>
+                    <div class="code-display" id="generatedCode">------</div>
+                    <input type="text" id="sixDigitInput" class="code-input" maxlength="6" placeholder="______" oninput="validateCode(this)">
+                    <button class="btn-primary" onclick="verifyAndRegister()" style="margin-top: 20px;">
+                        <i class="fas fa-check-circle"></i> Registration Complete කරන්න
+                    </button>
+                </div>
+            </div>
+
+            <!-- Login Form -->
+            <div id="loginForm" style="display: none;">
+                <h2 style="text-align: center; margin-bottom: 35px; color: var(--light-blue); font-size: 1.8rem;">
                     <i class="fas fa-user-circle"></i> ශිෂ්‍ය ලොගින්
                 </h2>
                 <form onsubmit="handleLogin(event)">
                     <div class="form-group">
-                        <label><i class="fas fa-envelope"></i> ඊමේල්</label>
+                        <label><i class="fas fa-envelope"></i> ඊමේල් ලිපිනය</label>
                         <input type="email" id="loginEmail" required placeholder="ඔබගේ ඊමේල් ලිපිනය">
                     </div>
                     <div class="form-group">
@@ -211,112 +431,160 @@
                         <i class="fas fa-sign-in-alt"></i> ලොගින් වන්න
                     </button>
                 </form>
-                <div style="text-align: center; margin-top: 25px; color: rgba(255,255,255,0.8);">
-                    නව student ද? <button onclick="showRegister()" class="btn-primary" style="padding: 12px 24px; font-size: 1rem;">ලියාපදිංචි වන්න</button>
-                </div>
-            </div>
-
-            <!-- NEW PAYMENT SYSTEM - ✅ CHANGE #2 COMPLETE -->
-            <div id="paymentSection" style="display: none;">
-                <h3 style="color: var(--light-blue); margin-bottom: 20px;">
-                    <i class="fas fa-credit-card"></i> Student Payment
-                </h3>
-                <div class="payment-container">
-                    <div class="screenshot-area" id="screenshotArea">
-                        <i class="fas fa-cloud-upload-alt" style="font-size: 3rem; color: var(--light-blue);"></i>
-                        <p>Payment Screenshot Upload කරන්න</p>
-                        <small>(JPG, PNG පමණි)</small>
-                    </div>
-                    <input type="file" id="screenshotInput" accept="image/*" style="display: none;" onchange="handleScreenshot(event)">
-                    <img id="screenshotPreview" class="screenshot-preview" style="display: none;">
-                    
-                    <input type="number" class="amount-input" id="paymentAmount" placeholder="ගෙවූ ගාන (LKR)" min="1">
-                    
-                    <button class="btn-primary" onclick="sendToWhatsApp()">
-                        <i class="fab fa-whatsapp"></i> Confirm & Send to WhatsApp
+                <div style="text-align: center; margin-top: 25px;">
+                    <button onclick="showRegister()" style="background: none; border: none; color: var(--light-blue); cursor: pointer; font-size: 1rem;">
+                        <i class="fas fa-arrow-left"></i> ලියාපදිංචියට යන්න
                     </button>
-                    
-                    <div id="paymentStatus" style="margin-top: 15px; padding: 12px; border-radius: 10px; display: none;"></div>
                 </div>
-                
-                <div style="background: rgba(0,255,0,0.2); border: 2px solid #00ff88; padding: 20px; border-radius: 15px; margin-top: 20px;">
-                    <h4><i class="fas fa-key"></i> 6 Digit Register Code:</h4>
-                    <div id="registerCode" style="font-size: 2rem; color: #00ff88; font-weight: bold; font-family: monospace; letter-spacing: 10px;">
-                        Enter කරන්න
-                    </div>
-                </div>
-                
-                <input type="text" id="sixDigitCode" maxlength="6" style="width: 200px; padding: 15px; margin: 20px auto; display: block; font-size: 1.5rem; text-align: center;" placeholder="6 Digit Code">
-                <button class="btn-primary" onclick="completeRegistration()">Register Complete කරන්න</button>
             </div>
         </div>
 
-        <!-- Dashboard - NEW VIDEO UPLOAD SYSTEM ✅ CHANGE #7 -->
+        <!-- 7️⃣ DASHBOARD - 50 VIDEO COURSES -->
         <div class="dashboard" id="dashboard">
-            <div style="text-align: center; margin-bottom: 40px;">
-                <h1 style="font-size: 2.5rem; background: linear-gradient(45deg, #fff, var(--light-blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                    Welcome Back! 🎉
+            <div style="text-align: center; margin-bottom: 50px;">
+                <h1 style="font-size: 2.8rem; margin-bottom: 15px; background: linear-gradient(45deg, #fff, var(--light-blue), var(--neon-cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                    🎓 Welcome Back, <span id="userNameDisplay">Student</span>!
                 </h1>
-                <button onclick="logout()" class="btn-primary" style="display: inline-block; padding: 12px 30px; font-size: 1.1rem;">
+                <p style="color: rgba(255,255,255,0.8); font-size: 1.2rem;">
+                    ඔබේ AI Learning Journey ආරම්භ කරන්න
+                </p>
+                <button onclick="logout()" class="btn-primary" style="display: inline-block; padding: 12px 35px; font-size: 1.1rem; margin-top: 20px; width: auto;">
                     <i class="fas fa-sign-out-alt"></i> Logout
                 </button>
             </div>
 
-            <!-- 50 Video Courses Upload System -->
-            <div class="glass-card">
-                <h2 style="color: var(--light-blue); margin-bottom: 30px; text-align: center;">
-                    <i class="fas fa-video"></i> 50 Video Courses Upload කරන්න
-                </h2>
-                <div class="video-upload-grid">
-                    <div class="video-upload-card">
-                        <i class="fas fa-plus-circle" style="font-size: 4rem; color: var(--light-blue); margin-bottom: 20px;"></i>
-                        <h3>New Course Upload</h3>
-                        <input type="file" id="videoFile" accept="video/*" multiple style="margin-top: 15px;">
-                        <p>50 Videos දක්වා upload කරන්න</p>
-                        <button class="btn-primary">Upload Videos</button>
+            <!-- Course Stats -->
+            <div class="glass-card" style="max-width: 1000px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; text-align: center;">
+                    <div style="padding: 20px;">
+                        <i class="fas fa-video" style="font-size: 2.5rem; color: var(--light-blue);"></i>
+                        <h3 style="margin: 15px 0; color: var(--light-blue);">50 Courses</h3>
+                        <p>Total Video Lessons</p>
                     </div>
+                    <div style="padding: 20px;">
+                        <i class="fas fa-clock" style="font-size: 2.5rem; color: var(--neon-cyan);"></i>
+                        <h3 style="margin: 15px 0; color: var(--neon-cyan);">100+ Hours</h3>
+                        <p>Learning Content</p>
+                    </div>
+                    <div style="padding: 20px;">
+                        <i class="fas fa-certificate" style="font-size: 2.5rem; color: var(--accent-gold);"></i>
+                        <h3 style="margin: 15px 0; color: var(--accent-gold);">Certificate</h3>
+                        <p>Course Completion</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Upload System -->
+            <div class="glass-card" style="max-width: 1200px;">
+                <h2 style="color: var(--light-blue); margin-bottom: 30px; text-align: center; font-size: 2rem;">
+                    <i class="fas fa-cloud-upload-alt"></i> 50 Video Courses Upload කරන්න
+                </h2>
+                
+                <div class="video-upload-grid">
+                    <!-- Upload Card -->
                     <div class="video-upload-card">
-                        <i class="fas fa-list" style="font-size: 4rem; color: var(--neon-cyan); margin-bottom: 20px;"></i>
-                        <h3>Course List</h3>
-                        <div class="video-list" id="videoList">
-                            <p style="color: rgba(255,255,255,0.5);">No videos uploaded yet</p>
+                        <i class="fas fa-plus-circle" style="font-size: 5rem; color: var(--light-blue); margin-bottom: 25px;"></i>
+                        <h3 style="margin-bottom: 15px;">New Course Upload</h3>
+                        <p style="color: rgba(255,255,255,0.7); margin-bottom: 20px;">
+                            Maximum 50 videos upload කරන්න පුළුවන්
+                        </p>
+                        <input type="file" id="videoUploadInput" accept="video/*" multiple style="display: none;" onchange="handleVideoUpload(event)">
+                        <button class="btn-primary" onclick="document.getElementById('videoUploadInput').click()">
+                            <i class="fas fa-folder-open"></i> Videos Select කරන්න
+                        </button>
+                        <div class="progress-bar" id="uploadProgress" style="display: none;">
+                            <div class="progress-fill" id="progressFill"></div>
                         </div>
+                        <p id="uploadStatus" style="margin-top: 15px; color: var(--neon-cyan);"></p>
+                    </div>
+
+                    <!-- Video List Card -->
+                    <div class="video-upload-card">
+                        <i class="fas fa-list-ul" style="font-size: 5rem; color: var(--neon-cyan); margin-bottom: 25px;"></i>
+                        <h3 style="margin-bottom: 15px;">Uploaded Courses</h3>
+                        <div class="video-list" id="videoListContainer">
+                            <p style="color: rgba(255,255,255,0.5); text-align: center; padding: 40px;">
+                                <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 15px; display: block;"></i>
+                                No videos uploaded yet
+                            </p>
+                        </div>
+                        <div style="margin-top: 20px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 12px;">
+                            <p style="color: var(--light-blue);">
+                                <i class="fas fa-info-circle"></i> 
+                                Uploaded: <span id="videoCount" style="font-weight: bold; color: var(--neon-cyan);">0</span> / 50
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course Grid Display -->
+                <div style="margin-top: 40px;">
+                    <h3 style="color: var(--light-blue); margin-bottom: 25px; text-align: center;">
+                        <i class="fas fa-th"></i> Course Gallery
+                    </h3>
+                    <div id="courseGallery" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px;">
+                        <!-- Videos will appear here -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- REMOVED: All autoplay videos, Gemini Live ✅ CHANGE #3 & #4 COMPLETE -->
-
     <script>
+        // Global Variables
+        let uploadedVideos = [];
+        let generatedSixDigitCode = '';
+        let tempStudentData = {};
+
         // Initialize
         window.onload = function() {
             createParticles();
-            animateNewsItems();
+            checkExistingLogin();
         };
 
+        // Create Background Particles
         function createParticles() {
             const container = document.getElementById('particles');
-            for(let i = 0; i < 60; i++) {
+            for(let i = 0; i < 80; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
                 particle.style.left = Math.random() * 100 + '%';
                 particle.style.animationDelay = Math.random() * 15 + 's';
-                particle.style.animationDuration = (12 + Math.random() * 12) + 's';
+                particle.style.animationDuration = (10 + Math.random() * 15) + 's';
+                particle.style.opacity = Math.random() * 0.6 + 0.2;
                 container.appendChild(particle);
             }
         }
 
-        function animateNewsItems() {
-            const items = document.querySelectorAll('.ai-news-item');
-            items.forEach((item, index) => {
-                setTimeout(() => item.classList.add('animate'), index * 400);
-            });
+        // Check if already logged in
+        function checkExistingLogin() {
+            const user = JSON.parse(localStorage.getItem('aiPoddaUser'));
+            if(user && user.loggedIn) {
+                showDashboard(user);
+            }
         }
 
-        // NEW WHATSAPP PAYMENT SYSTEM ✅ CHANGE #2
-        let screenshotUploaded = false;
+        // Step 1: Go to Payment
+        function goToPayment(event) {
+            event.preventDefault();
+            
+            // Save student data temporarily
+            tempStudentData = {
+                name: document.getElementById('studentName').value,
+                phone: document.getElementById('studentPhone').value,
+                email: document.getElementById('studentEmail').value,
+                password: document.getElementById('studentPassword').value
+            };
+            
+            // Store temporarily
+            localStorage.setItem('tempStudentData', JSON.stringify(tempStudentData));
+            
+            // Show payment section
+            document.getElementById('registerStep1').style.display = 'none';
+            document.getElementById('paymentStep').style.display = 'block';
+        }
+
+        // Handle Screenshot Upload
         function handleScreenshot(event) {
             const file = event.target.files[0];
             if(file) {
@@ -325,130 +593,300 @@
                     const preview = document.getElementById('screenshotPreview');
                     preview.src = e.target.result;
                     preview.style.display = 'block';
-                    screenshotUploaded = true;
+                    
+                    // Store screenshot
+                    localStorage.setItem('tempPaymentScreenshot', e.target.result);
+                    
+                    showStatus('paymentStatus', 'Screenshot upload වුණා! ✅', 'success');
                 };
                 reader.readAsDataURL(file);
             }
         }
 
-        function sendToWhatsApp() {
-            if(!screenshotUploaded) {
-                alert('Payment screenshot upload කරන්න!');
+        // Send WhatsApp Notification
+        function sendWhatsAppNotification() {
+            const amount = document.getElementById('paymentAmount').value;
+            const screenshot = localStorage.getItem('tempPaymentScreenshot');
+            
+            if(!screenshot) {
+                showStatus('paymentStatus', 'Payment screenshot upload කරන්න! ❌', 'error');
                 return;
             }
             
-            const amount = document.getElementById('paymentAmount').value;
             if(!amount || amount <= 0) {
-                alert('ගෙවූ ගාන enter කරන්න!');
+                showStatus('paymentStatus', 'ගෙවපු ගාන enter කරන්න! ❌', 'error');
                 return;
             }
 
-            // Get student details from register form
-            const studentName = localStorage.getItem('tempStudentName') || 'Student';
-            const studentEmail = document.getElementById('regEmail')?.value || 'N/A';
+            // Generate 6-digit code
+            generatedSixDigitCode = Math.floor(100000 + Math.random() * 900000).toString();
             
-            const message = `🆕 *New Student Payment*\n\n👤 *Name:* ${studentName}\n📧 *Email:* ${studentEmail}\n💰 *Amount:* Rs. ${amount}\n📸 Screenshot attached\n\n✅ Please send 6-digit code!`;
+            // Prepare WhatsApp message
+            const message = `🆕 *NEW STUDENT REGISTRATION* 🆕
+
+👤 *Name:* ${tempStudentData.name}
+📱 *Phone:* ${tempStudentData.phone}
+📧 *Email:* ${tempStudentData.email}
+🔐 *Password:* ${tempStudentData.password}
+💰 *Amount Paid:* Rs. ${amount}
+🔑 *6-Digit Code:* ${generatedSixDigitCode}
+
+📸 *Payment Screenshot Attached*
+
+Please verify and activate account!`;
             
+            // Open WhatsApp with message
             const whatsappUrl = `https://wa.me/94762196055?text=${encodeURIComponent(message)}`;
             window.open(whatsappUrl, '_blank');
             
-            // Generate 6-digit code
-            const code = Math.floor(100000 + Math.random() * 900000);
-            document.getElementById('registerCode').textContent = code;
+            // Show code section
+            document.getElementById('codeSection').style.display = 'block';
+            document.getElementById('generatedCode').textContent = generatedSixDigitCode;
             
-            document.getElementById('paymentStatus').style.display = 'block';
-            document.getElementById('paymentStatus').innerHTML = 
-                '<i class="fas fa-check-circle" style="color: #00ff00;"></i> WhatsApp එකට send වුණා! 6-digit code එක ඉහළින් තියෙනවා.';
-            document.getElementById('paymentStatus').style.background = 'rgba(0,255,0,0.2)';
-            document.getElementById('paymentStatus').style.border = '1px solid #00ff00';
+            showStatus('paymentStatus', 'WhatsApp එකට message යවන ලදී! ✅', 'success');
+            
+            // Store code for verification
+            localStorage.setItem('tempSixDigitCode', generatedSixDigitCode);
         }
 
-        function completeRegistration() {
-            const codeInput = document.getElementById('sixDigitCode').value;
-            if(codeInput.length !== 6) {
-                alert('6-digit code complete enter කරන්න!');
-                return;
+        // Validate 6-digit code input
+        function validateCode(input) {
+            input.value = input.value.replace(/[^0-9]/g, '').slice(0, 6);
+        }
+
+        // Verify Code and Complete Registration
+        function verifyAndRegister() {
+            const enteredCode = document.getElementById('sixDigitInput').value;
+            const storedCode = localStorage.getItem('tempSixDigitCode');
+            
+            if(enteredCode === storedCode && enteredCode.length === 6) {
+                // Save user data permanently
+                const userData = {
+                    ...tempStudentData,
+                    loggedIn: true,
+                    registeredAt: new Date().toISOString(),
+                    courses: []
+                };
+                
+                localStorage.setItem('aiPoddaUser', JSON.stringify(userData));
+                
+                // Clear temp data
+                localStorage.removeItem('tempStudentData');
+                localStorage.removeItem('tempPaymentScreenshot');
+                localStorage.removeItem('tempSixDigitCode');
+                
+                // Show success and redirect
+                alert('🎉 Registration සාර්ථකයි! Dashboard එකට යනවා.');
+                showDashboard(userData);
+            } else {
+                alert('❌ 6-digit code එක වැරදියි! නැවත උත්සාහ කරන්න.');
             }
-            
-            // Save to localStorage
-            const userData = {
-                name: localStorage.getItem('tempStudentName') || 'Student',
-                email: document.getElementById('regEmail')?.value || 'student@email.com',
-                loggedIn: true,
-                courses: []
-            };
-            localStorage.setItem('aiPoddaUser', JSON.stringify(userData));
-            
-            showDashboard();
-            alert('✅ Registration Complete! Dashboard එකට redirect වෙනවා.');
         }
 
-        // Auth Functions
+        // Show Login Form
+        function showLogin() {
+            document.getElementById('registerStep1').style.display = 'none';
+            document.getElementById('paymentStep').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'block';
+        }
+
+        // Show Register Form
         function showRegister() {
-            document.getElementById('loginForm').innerHTML = `
-                <h2 style="text-align: center; margin-bottom: 30px; color: var(--light-blue);">
-                    <i class="fas fa-user-plus"></i> නව ලියාපදිංචිය
-                </h2>
-                <form onsubmit="startPayment(event)">
-                    <div class="form-group">
-                        <label><i class="fas fa-user"></i> සම්පූර්ණ නම</label>
-                        <input type="text" id="regName" required placeholder="ඔබගේ නම">
-                    </div>
-                    <div class="form-group">
-                        <label><i class="fas fa-envelope"></i> ඊමේල්</label>
-                        <input type="email" id="regEmail" required placeholder="ඊමේල් ලිපිනය">
-                    </div>
-                    <button type="submit" class="btn-primary">ඉදිරියට යන්න (Payment)</button>
-                </form>
-            `;
-        }
-
-        function startPayment(event) {
-            event.preventDefault();
-            const name = document.getElementById('regName').value;
-            const email = document.getElementById('regEmail').value;
-            localStorage.setItem('tempStudentName', name);
-            document.getElementById('regEmail').value = email;
-            
-            document.getElementById('paymentSection').style.display = 'block';
             document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('paymentStep').style.display = 'none';
+            document.getElementById('registerStep1').style.display = 'block';
         }
 
+        // Handle Login
         function handleLogin(event) {
             event.preventDefault();
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
             
-            const user = JSON.parse(localStorage.getItem('aiPoddaUser') || '{}');
-            if(user.email === email) { // Simplified login
-                showDashboard();
+            // Check stored users (simplified - in production, use proper auth)
+            const storedUser = JSON.parse(localStorage.getItem('aiPoddaUser') || '{}');
+            
+            if(storedUser.email === email && storedUser.password === password) {
+                storedUser.loggedIn = true;
+                localStorage.setItem('aiPoddaUser', JSON.stringify(storedUser));
+                showDashboard(storedUser);
             } else {
-                alert('Email හෝ details check කරන්න!');
+                alert('❌ Email හෝ Password වැරදියි!');
             }
         }
 
-        function showDashboard() {
-            document.getElementById('dashboard').classList.add('active');
+        // Show Dashboard
+        function showDashboard(user) {
+            document.getElementById('authSection').style.display = 'none';
+            document.querySelector('.pre-login-section').style.display = 'none';
+            document.querySelectorAll('.pre-login-section')[1].style.display = 'none';
+            
+            const dashboard = document.getElementById('dashboard');
+            dashboard.classList.add('active');
+            
+            document.getElementById('userNameDisplay').textContent = user.name || 'Student';
+            
+            // Load existing videos
+            loadVideoList();
         }
 
+        // 7️⃣ HANDLE VIDEO UPLOAD (50 COURSES)
+        function handleVideoUpload(event) {
+            const files = Array.from(event.target.files);
+            const currentCount = uploadedVideos.length;
+            
+            if(currentCount + files.length > 50) {
+                alert(`❌ Maximum 50 videos පමණි! දැනට තියෙනවා ${currentCount}, තව එකතු කරන්න පුළුවන් ${50 - currentCount} පමණි.`);
+                return;
+            }
+            
+            // Simulate upload progress
+            const progressBar = document.getElementById('uploadProgress');
+            const progressFill = document.getElementById('progressFill');
+            const statusText = document.getElementById('uploadStatus');
+            
+            progressBar.style.display = 'block';
+            statusText.textContent = 'Uploading... ⏳';
+            
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 10;
+                progressFill.style.width = progress + '%';
+                
+                if(progress >= 100) {
+                    clearInterval(interval);
+                    
+                    // Add files to list
+                    files.forEach((file, index) => {
+                        const videoData = {
+                            id: Date.now() + index,
+                            name: file.name,
+                            size: (file.size / (1024 * 1024)).toFixed(2) + ' MB',
+                            uploadedAt: new Date().toLocaleString('si-LK'),
+                            thumbnail: `https://via.placeholder.com/300x200/0066cc/ffffff?text=Course+${currentCount + index + 1}`
+                        };
+                        uploadedVideos.push(videoData);
+                    });
+                    
+                    statusText.textContent = `✅ ${files.length} videos upload වුණා!`;
+                    updateVideoDisplay();
+                    
+                    setTimeout(() => {
+                        progressBar.style.display = 'none';
+                        progressFill.style.width = '0%';
+                    }, 2000);
+                }
+            }, 200);
+        }
+
+        // Update Video List Display
+        function updateVideoDisplay() {
+            const listContainer = document.getElementById('videoListContainer');
+            const gallery = document.getElementById('courseGallery');
+            const countSpan = document.getElementById('videoCount');
+            
+            countSpan.textContent = uploadedVideos.length;
+            
+            // Update list view
+            if(uploadedVideos.length === 0) {
+                listContainer.innerHTML = `
+                    <p style="color: rgba(255,255,255,0.5); text-align: center; padding: 40px;">
+                        <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 15px; display: block;"></i>
+                        No videos uploaded yet
+                    </p>`;
+            } else {
+                listContainer.innerHTML = uploadedVideos.map((video, index) => `
+                    <div class="video-item">
+                        <i class="fas fa-play-circle"></i>
+                        <div style="flex: 1;">
+                            <strong>Course ${index + 1}:</strong> ${video.name}<br>
+                            <small style="color: rgba(255,255,255,0.6);">${video.size} • ${video.uploadedAt}</small>
+                        </div>
+                        <i class="fas fa-check-circle" style="color: #00ff00;"></i>
+                    </div>
+                `).join('');
+            }
+            
+            // Update gallery view
+            gallery.innerHTML = uploadedVideos.map((video, index) => `
+                <div style="background: rgba(255,255,255,0.05); border-radius: 15px; overflow: hidden; border: 2px solid var(--light-blue); transition: all 0.3s;">
+                    <div style="position: relative;">
+                        <img src="${video.thumbnail}" style="width: 100%; height: 160px; object-fit: cover;">
+                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.7); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-play" style="color: white; margin-left: 5px;"></i>
+                        </div>
+                    </div>
+                    <div style="padding: 20px;">
+                        <h4 style="color: var(--light-blue); margin-bottom: 10px;">Course ${index + 1}</h4>
+                        <p style="color: rgba(255,255,255,0.7); font-size: 0.9rem; margin-bottom: 15px;">${video.name}</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="color: var(--neon-cyan); font-size: 0.85rem;"><i class="fas fa-clock"></i> 45 mins</span>
+                            <button style="background: var(--primary-blue); color: white; border: none; padding: 8px 20px; border-radius: 20px; cursor: pointer;">
+                                Watch
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Load Video List on Dashboard
+        function loadVideoList() {
+            // In real app, this would fetch from server
+            updateVideoDisplay();
+        }
+
+        // Logout
         function logout() {
-            localStorage.removeItem('aiPoddaUser');
-            location.reload();
+            if(confirm('Logout වන්නද?')) {
+                localStorage.removeItem('aiPoddaUser');
+                location.reload();
+            }
         }
 
-        // Drag & Drop for screenshot
-        document.getElementById('screenshotArea').addEventListener('dragover', (e) => {
-            e.preventDefault(); e.currentTarget.style.background = 'rgba(0,102,204,0.3)';
-        });
-        document.getElementById('screenshotArea').addEventListener('dragleave', (e) => {
-            e.currentTarget.style.background = 'rgba(0,102,204,0.1)';
-        });
-        document.getElementById('screenshotArea').addEventListener('drop', (e) => {
-            e.preventDefault(); e.currentTarget.style.background = 'rgba(0,102,204,0.1)';
-            document.getElementById('screenshotInput').files = e.dataTransfer.files;
-            handleScreenshot({target: {files: e.dataTransfer.files}});
-        });
-        document.getElementById('screenshotArea').onclick = () => document.getElementById('screenshotInput').click();
+        // Utility: Show Status Message
+        function showStatus(elementId, message, type) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.className = `status-message status-${type}`;
+            element.style.display = 'block';
+            
+            setTimeout(() => {
+                element.style.display = 'none';
+            }, 5000);
+        }
+
+        // Drag & Drop for Screenshot
+        const screenshotArea = document.getElementById('screenshotArea');
+        if(screenshotArea) {
+            screenshotArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                screenshotArea.style.background = 'rgba(0,102,204,0.4)';
+                screenshotArea.style.transform = 'scale(1.02)';
+            });
+            
+            screenshotArea.addEventListener('dragleave', (e) => {
+                e.preventDefault();
+                screenshotArea.style.background = 'rgba(0,102,204,0.15)';
+                screenshotArea.style.transform = 'scale(1)';
+            });
+            
+            screenshotArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                screenshotArea.style.background = 'rgba(0,102,204,0.15)';
+                screenshotArea.style.transform = 'scale(1)';
+                
+                const files = e.dataTransfer.files;
+                if(files.length > 0) {
+                    document.getElementById('screenshotInput').files = files;
+                    handleScreenshot({target: {files: files}});
+                }
+            });
+            
+            screenshotArea.addEventListener('click', () => {
+                document.getElementById('screenshotInput').click();
+            });
+        }
     </script>
 </body>
 </html>
