@@ -1114,7 +1114,7 @@
                 <div id="twofaSection" class="twofa-section">
                     <!-- Student Name Display (REPLACED Two-Factor Authentication) -->
                     <div class="student-name-display">
-                        <i class="fas fa-user-graduate"></i> සිසුවාගේ නම / Student Name
+                        <i class="fas fa-user-graduate"></i> සිසුවාගේ නම 
                         <span class="name" id="displayStudentName">-</span>
                     </div>
 
@@ -1126,24 +1126,24 @@
 
                     <div id="setup2FA">
                         <p style="margin-bottom: 20px; color: rgba(255,255,255,0.8);">
-                            <i class="fas fa-qrcode"></i> Scan this QR code with Google Authenticator:
+                            <i class="fas fa-qrcode"></i> ඔබගේ Key එක කොපි කර ඇඩ්මින් වෙත යොමුකරන්න:
                         </p>
                         <div class="qr-container" id="qrcode"></div>
                         
                         <div class="secret-key-section">
-                            <h4><i class="fas fa-key"></i> Google Authenticator Secret Key</h4>
+                            <h4><i class="fas fa-key"></i> key එක උඩ එක පාරක් ක්ලික් කරහම කොපි වෙනවා</h4>
                             <div class="secret-key-box" id="secretKeyDisplay" onclick="copySecretKey()">
                                 Click to generate key
                             </div>
                             <p class="copy-instruction">
-                                <i class="fas fa-copy"></i> Click the key above to copy, then paste in Google Authenticator app
+                                <i class="fas fa-copy"></i> ඔබගේ ඉමෙල් එකෙන් එක Device එකකට පමණයි Login වෙන්න පුලුවන්
                             </p>
                         </div>
                     </div>
 
                     <div id="verify2FA" style="margin-top: 30px;">
                         <p style="margin-bottom: 20px; color: rgba(255,255,255,0.8);">
-                            <i class="fas fa-shield-alt"></i> Enter the 6-digit code from Google Authenticator:
+                            <i class="fas fa-shield-alt"></i> හැකි ඉක්මනින් ඇඩ්මින් ඔබවෙත දාන අංක 6 මෙතන ටයිප් කරන්න:
                         </p>
                         <div class="code-inputs">
                             <input type="text" maxlength="1" onkeyup="moveToNext(this, 0)" oninput="validateDigit(this)">
