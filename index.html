@@ -3,300 +3,251 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI පොඩ්ඩා - Future of AI Learning</title>
+    <title>AI පොඩ්ඩා - Future of AI</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/otpauth/9.1.4/otpauth.umd.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root {
-            --primary-blue: #0066cc;
-            --light-blue: #add8e6;
-            --welcome-green: #00ff00;
-            --glass-bg: rgba(255, 255, 255, 0.1);
-            --text-light: #ffffff;
+        
+        body, html {
+            height: 100%;
+            font-family: 'Segoe UI', sans-serif;
+            color: white;
+            overflow-x: hidden;
+            background: #000;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
-            color: var(--text-light);
-            min-height: 100vh;
+        /* 1. Galaxy Background Video */
+        #bg-video {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -1;
+            filter: brightness(0.6) blue;
+            object-fit: cover;
         }
 
-        /* 1) Logo වෙනුවට Welcome කොටුව */
-        .welcome-box {
+        /* 2. Scrolling Welcome Text */
+        .header-container {
+            width: 100%;
+            padding: 20px 0;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .welcome-marquee {
+            width: 100%;
+            overflow: hidden;
+            border: 2px solid #add8e6;
+            background: rgba(0,0,0,0.5);
+            padding: 10px 0;
+        }
+
+        .welcome-marquee h1 {
             display: inline-block;
-            padding: 20px 40px;
-            border: 3px solid var(--light-blue);
-            background: transparent;
+            color: #00ff00;
+            font-size: 2.5rem;
+            white-space: nowrap;
+            animation: marquee 15s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* 3. Animated Robot */
+        .robot-box {
+            margin: 20px auto;
+            width: 100px;
+            height: 100px;
+            position: relative;
+            animation: headMove 3s ease-in-out infinite;
+        }
+
+        .robot-head {
+            width: 80px;
+            height: 70px;
+            background: #add8e6;
             border-radius: 15px;
-            margin-top: 20px;
-        }
-        .welcome-box h1 {
-            color: var(--welcome-green);
-            font-size: 3rem;
-            text-transform: uppercase;
-            letter-spacing: 5px;
+            margin: 0 auto;
+            position: relative;
+            border: 3px solid #0066cc;
         }
 
-        .header { text-align: center; padding: 40px 20px; }
+        .eye {
+            width: 15px;
+            height: 15px;
+            background: #000;
+            border-radius: 50%;
+            position: absolute;
+            top: 20px;
+            animation: blink 4s infinite;
+        }
 
-        /* Registration & Auth Styling */
+        .eye.left { left: 15px; }
+        .eye.right { right: 15px; }
+
+        @keyframes blink {
+            0%, 90%, 100% { height: 15px; }
+            95% { height: 2px; }
+        }
+
+        @keyframes headMove {
+            0%, 100% { transform: rotate(0deg) translateY(0); }
+            50% { transform: rotate(5deg) translateY(-5px); }
+        }
+
+        /* 4. Animated Floating WhatsApp */
+        .whatsapp-float {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+            text-align: center;
+        }
+
+        .wa-btn {
+            background: #ff0000;
+            color: white;
+            padding: 15px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 3px solid white;
+            animation: colorChange 1s infinite alternate;
+        }
+
+        @keyframes colorChange {
+            from { background: #ff0000; box-shadow: 0 0 10px #ff0000; }
+            to { background: #00ff00; box-shadow: 0 0 20px #00ff00; }
+        }
+
+        /* Glass Card */
         .glass-card {
-            background: var(--glass-bg);
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(15px);
-            border: 1px solid rgba(255,255,255,0.2);
             border-radius: 20px;
             padding: 30px;
             margin: 20px auto;
-            max-width: 500px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+            max-width: 450px;
+            border: 1px solid rgba(255,255,255,0.2);
         }
 
-        .form-group { margin-bottom: 15px; text-align: left; }
-        .form-group label { display: block; margin-bottom: 5px; color: var(--light-blue); }
-        .form-group input {
-            width: 100%; padding: 12px; border-radius: 8px; border: none;
-            background: rgba(255,255,255,0.1); color: white;
+        /* Social Media Footer */
+        .social-footer {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0,0,0,0.7);
+            margin-top: 30px;
         }
 
-        .btn-primary {
-            width: 100%; padding: 15px; background: var(--primary-blue);
-            border: none; border-radius: 10px; color: white; font-weight: bold; cursor: pointer;
+        .social-icons a {
+            color: white;
+            font-size: 2rem;
+            margin: 0 15px;
+            text-decoration: none;
+            transition: 0.3s;
         }
 
-        /* Profile Section */
-        .profile-container { text-align: center; margin-bottom: 30px; }
-        .profile-pic-wrapper {
-            width: 120px; height: 120px; border-radius: 50%;
-            border: 3px solid var(--light-blue); margin: 0 auto 15px;
-            overflow: hidden; background: #333; position: relative;
-        }
-        .profile-pic-wrapper img { width: 100%; height: 100%; object-fit: cover; }
-        .upload-hint { font-size: 0.8rem; color: var(--light-blue); cursor: pointer; }
+        .social-icons a:hover { transform: scale(1.2); }
+        .fa-tiktok { color: #ff0050; }
+        .fa-facebook { color: #1877f2; }
+        .fa-youtube { color: #ff0000; }
+        .fa-whatsapp { color: #25d366; }
 
-        /* AI News Pre-login */
-        .prelogin-news { max-width: 800px; margin: 40px auto; padding: 20px; }
-        .news-item { background: rgba(0,0,0,0.3); padding: 20px; border-radius: 10px; margin-bottom: 20px; border-left: 5px solid var(--primary-blue); }
-
-        /* Dashboard */
-        .dashboard { display: none; padding: 20px; }
-        .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
-        .video-card { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; text-align: center; }
-
-        /* 2FA inputs */
-        .code-inputs { display: flex; gap: 10px; justify-content: center; margin: 20px 0; }
-        .code-inputs input { width: 45px; height: 45px; text-align: center; font-size: 1.2rem; background: white; color: black; border-radius: 5px; }
-
-        /* Animations */
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .animate-fade { animation: fadeIn 1.5s ease-in; }
+        .form-group { margin-bottom: 15px; }
+        .form-group input { width: 100%; padding: 12px; border-radius: 8px; border: none; background: rgba(255,255,255,0.2); color: white; }
+        .btn-primary { width: 100%; padding: 15px; background: #0066cc; border: none; border-radius: 10px; color: white; cursor: pointer; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <header class="header">
-        <div class="welcome-box">
-            <h1>WELCOME</h1>
+    <video autoplay muted loop id="bg-video">
+        <source src="https://assets.mixkit.co/videos/preview/mixkit-nebula-in-outer-space-background-1611-large.mp4" type="video/mp4">
+    </video>
+
+    <div class="whatsapp-float">
+        <a href="https://wa.me/94762196055" class="wa-btn" target="_blank">
+            <i class="fab fa-whatsapp" style="font-size: 2rem;"></i>
+            <span>0762196055</span>
+        </a>
+    </div>
+
+    <div class="header-container">
+        <div class="welcome-marquee">
+            <h1>WELCOME TO AI PODDA LEARNING CENTER</h1>
         </div>
-        <p style="margin-top:10px;">Future of AI with AI පොඩ්ඩා</p>
-    </header>
-
-    <main id="mainContent">
-        
-        <div id="preLoginInfo" class="prelogin-news">
-            <h2 style="color: var(--light-blue); text-align: center; margin-bottom: 20px;">Daily AI News Update (සිංහලෙන්)</h2>
-            <div class="news-item">
-                <h3>🤖 අද දවසේ AI පුවත්</h3>
-                <p>OpenAI විසින් නවතම GPT-5 මාදිලිය අත්හදා බලයි. මෙය මිනිස් මොළයට වඩා වේගයෙන් තීරණ ගැනීමේ හැකියාව පවතින බව වාර්තා වේ.</p>
+        <div class="robot-box">
+            <div class="robot-head">
+                <div class="eye left"></div>
+                <div class="eye right"></div>
             </div>
-            <div class="news-item">
-                <h3>💡 AI අපිට වැඩ පහසු කරන විදිය</h3>
-                <p>දැන් ඔබට කේතනය (Coding), ලිපි ලිවීම සහ වීඩියෝ නිර්මාණය තත්පර කිහිපයකින් AI තාක්ෂණය හරහා සිදු කර ගත හැක. මෙය ඔබගේ කාලය 90% කින් ඉතිරි කරයි.</p>
-            </div>
+            <div style="width:40px; height:10px; background:#0066cc; margin:5px auto; border-radius:5px;"></div>
         </div>
+    </div>
 
-        <div id="authSection" class="glass-card">
-            <div id="regStep1">
-                <h2 style="text-align: center; margin-bottom: 20px;">Student Registration</h2>
-                <div class="form-group">
-                    <label>නම (Name)</label>
-                    <input type="text" id="regName" placeholder="Enter full name">
-                </div>
-                <div class="form-group">
-                    <label>ඊමේල් (Email)</label>
-                    <input type="email" id="regEmail" placeholder="Enter email">
-                </div>
-                <div class="form-group">
-                    <label>පාස්වර්ඩ් (Password)</label>
-                    <input type="password" id="regPassword" placeholder="Enter password">
-                </div>
-                <div class="form-group">
-                    <label>ෆෝන් නම්බර් (Phone)</label>
-                    <input type="tel" id="regPhone" placeholder="076XXXXXXX">
-                </div>
-                <button class="btn-primary" onclick="goToStep2()">Confirm & Continue</button>
-            </div>
-
-            <div id="regStep2" style="display: none; text-align: center;">
-                <h2 style="margin-bottom: 20px;">Payment Receipt</h2>
-                <p>කරුණාකර ඔබ ගෙවීම් කළ රිසිට්පතේ Screenshot එකක් මෙතනට Upload කරන්න.</p>
-                <div style="margin: 20px 0; border: 2px dashed var(--light-blue); padding: 30px; border-radius: 10px;">
-                    <input type="file" id="receiptFile" accept="image/*">
-                </div>
-                <button class="btn-primary" onclick="sendToWhatsApp()">Confirm Upload & Send Details</button>
-            </div>
-
-            <div id="regStep3" style="display: none; text-align: center;">
-                <h2>Verify Admin Code</h2>
-                <p>ඇඩ්මින් විසින් ඔබට ලබා දෙන අංක 6 මෙතන ටයිප් කරන්න.</p>
-                <div class="code-inputs">
-                    <input type="text" maxlength="1" class="otp">
-                    <input type="text" maxlength="1" class="otp">
-                    <input type="text" maxlength="1" class="otp">
-                    <input type="text" maxlength="1" class="otp">
-                    <input type="text" maxlength="1" class="otp">
-                    <input type="text" maxlength="1" class="otp">
-                </div>
-                <button class="btn-primary" onclick="completeRegistration()">Register Now</button>
-            </div>
-
-            <div id="loginForm" style="display: none;">
-                <h2 style="text-align: center; margin-bottom: 20px;">Student Login</h2>
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" id="loginEmail">
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="loginPassword">
-                </div>
-                <button class="btn-primary" onclick="handleLogin()">Login</button>
-            </div>
+    <div id="authArea">
+        <div class="glass-card" id="regForm">
+            <h2 style="text-align: center; margin-bottom: 20px;">Student Registration</h2>
+            <div class="form-group"><input type="text" id="name" placeholder="ඔබේ නම"></div>
+            <div class="form-group"><input type="email" id="email" placeholder="ඊමේල් ලිපිනය"></div>
+            <div class="form-group"><input type="tel" id="phone" placeholder="දුරකථන අංකය"></div>
+            <div class="form-group"><input type="password" id="pass" placeholder="මුරපදයක් ඇතුළත් කරන්න"></div>
+            <button class="btn-primary" onclick="toStep2()">Register Now</button>
         </div>
+    </div>
 
-        <div id="dashboard" class="dashboard">
-            <div class="glass-card" style="max-width: 900px;">
-                <div class="profile-container">
-                    <div class="profile-pic-wrapper">
-                        <img id="profileDisplay" src="https://via.placeholder.com/150" alt="Profile">
-                    </div>
-                    <label for="imgInput" class="upload-hint">Change Photo</label>
-                    <input type="file" id="imgInput" style="display:none" onchange="updateProfilePic(event)">
-                    <h2 id="userName">Student Name</h2>
-                    <p id="userEmail">email@example.com</p>
-                    <button style="background:none; border:1px solid #ff4d4d; color:#ff4d4d; padding:5px 10px; border-radius:5px; margin-top:10px; cursor:pointer;" onclick="changePassword()">Change Password</button>
-                </div>
-
-                <hr style="opacity: 0.2; margin: 20px 0;">
-
-                <div class="animate-fade" style="background: rgba(0,102,204,0.2); padding: 20px; border-radius: 10px; margin-bottom: 30px;">
-                    <h3 style="color: var(--light-blue);"><i class="fas fa-brain"></i> අද ලෝකයේ AI තාක්ෂණය</h3>
-                    <p>කෘතිම බුද්ධිය (Artificial Intelligence) යනු පරිගණක පද්ධති හරහා මිනිස් බුද්ධිය අනුකරණය කිරීමයි. වර්තමානයේ මෙය වෛද්‍ය, ඉංජිනේරු සහ අධ්‍යාපන ක්ෂේත්‍රයන්හි විප්ලවීය වෙනසක් සිදු කරමින් පවතී.</p>
-                </div>
-
-                <h3><i class="fas fa-play-circle"></i> AI Course Videos (50 Lessons)</h3>
-                <div class="video-grid" id="videoGrid">
-                    </div>
-                <button class="btn-primary" style="margin-top:20px; background:#ff4d4d;" onclick="location.reload()">Logout</button>
-            </div>
+    <footer class="social-footer">
+        <h3 style="margin-bottom: 15px; color: #add8e6;">Connect With Us</h3>
+        <div class="social-icons">
+            <a href="https://www.tiktok.com/@ai_podda2?_r=1&_t=ZS-94bLsF3g1w5" target="_blank"><i class="fab fa-tiktok"></i></a>
+            <a href="https://www.facebook.com/share/1CCptRphbm/" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-youtube"></i></a> <a href="https://whatsapp.com/channel/0029Vb7R7sP6WaKgGMs4oy1X" target="_blank"><i class="fab fa-whatsapp"></i></a>
         </div>
-    </main>
+        <p style="margin-top: 15px; font-size: 0.8rem; opacity: 0.6;">© 2026 AI Podda. All Rights Reserved.</p>
+    </footer>
 
     <script>
-        // Data Handling
         let studentData = {};
 
-        function goToStep2() {
-            studentData.name = document.getElementById('regName').value;
-            studentData.email = document.getElementById('regEmail').value;
-            studentData.pass = document.getElementById('regPassword').value;
-            studentData.phone = document.getElementById('regPhone').value;
-            studentData.authKey = "AI-" + Math.random().toString(36).substring(2, 8).toUpperCase();
+        function toStep2() {
+            studentData.name = document.getElementById('name').value;
+            studentData.email = document.getElementById('email').value;
+            studentData.phone = document.getElementById('phone').value;
+            studentData.pass = document.getElementById('pass').value;
 
-            if(!studentData.name || !studentData.email) {
-                alert("කරුණාකර සියලු විස්තර පුරවන්න.");
-                return;
-            }
-            document.getElementById('regStep1').style.display = 'none';
-            document.getElementById('regStep2').style.display = 'block';
-        }
+            if(!studentData.name || !studentData.email) return alert("විස්තර සම්පූර්ණ කරන්න!");
 
-        function sendToWhatsApp() {
-            const file = document.getElementById('receiptFile').files[0];
-            if(!file) {
-                alert("කරුණාකර රිසිට්පත තෝරන්න.");
-                return;
-            }
-
-            // WhatsApp ලින්ක් එක සැකසීම
-            const msg = `New Student Registration:\n\nName: ${studentData.name}\nEmail: ${studentData.email}\nPassword: ${studentData.pass}\nPhone: ${studentData.phone}\nAuth Key: ${studentData.authKey}`;
-            const encodedMsg = encodeURIComponent(msg);
-            const waUrl = `https://wa.me/94762196055?text=${encodedMsg}`;
+            // WhatsApp පණිවිඩය සකස් කිරීම
+            const waMsg = `*New Registration*%0AName: ${studentData.name}%0AEmail: ${studentData.email}%0APhone: ${studentData.phone}%0APassword: ${studentData.pass}`;
             
-            window.open(waUrl, '_blank');
+            // රිසිට් එක ඉල්ලන පණිවිඩයක් සමඟ WhatsApp වෙත යොමු කිරීම
+            alert("ඔබේ විස්තර තහවුරු කිරීමට දැන් WhatsApp වෙත යොමු කෙරේ. කරුණාකර එහිදී ගෙවීම් රිසිට්පත එවන්න.");
+            window.open(`https://wa.me/94762196055?text=${waMsg}`, '_blank');
             
-            // ඊළඟ පියවරට යාම
-            document.getElementById('regStep2').style.display = 'none';
-            document.getElementById('regStep3').style.display = 'block';
+            // මෙහිදී රෙජිස්ටර් වීමේ ඉතිරි පියවර (කෝඩ් එක ගැසීම) පෙන්විය හැක.
+            showOtpStep();
         }
 
-        function completeRegistration() {
-            // මෙතනදී Admin දෙන කෝඩ් එක චෙක් කරන බව සලකන්න (මෙහිදී demo එකක් ලෙස ඕනෑම කෝඩ් එකක් ගනී)
-            alert("ලියාපදිංචිය සාර්ථකයි! දැන් ලොග් වෙන්න.");
-            document.getElementById('regStep3').style.display = 'none';
-            document.getElementById('loginForm').style.display = 'block';
+        function showOtpStep() {
+            document.getElementById('regForm').innerHTML = `
+                <h2 style="text-align: center;">Verify Admin Code</h2>
+                <p style="text-align: center; margin: 15px 0; font-size: 0.9rem;">ඇඩ්මින් ඔබට ලබා දෙන අංක 6 මෙතන ඇතුළත් කරන්න.</p>
+                <input type="text" id="otpCode" placeholder="Enter 6-digit code" style="width:100%; padding:15px; border-radius:10px; text-align:center; font-size:1.5rem; letter-spacing:5px;">
+                <button class="btn-primary" style="margin-top:20px;" onclick="completeReg()">Complete Registration</button>
+            `;
         }
 
-        function handleLogin() {
-            // සරල Login Logic එකක්
-            document.getElementById('authSection').style.display = 'none';
-            document.getElementById('preLoginInfo').style.display = 'none';
-            document.getElementById('dashboard').style.display = 'block';
-            
-            document.getElementById('userName').innerText = studentData.name || "Kaveesha Sakun";
-            document.getElementById('userEmail').innerText = studentData.email || "sakun@ai.com";
-            
-            generateVideos();
+        function completeReg() {
+            alert("ගිණුම සාර්ථකව නිර්මාණය විය! දැන් ලොග් වන්න.");
+            location.reload(); 
         }
-
-        function generateVideos() {
-            const grid = document.getElementById('videoGrid');
-            grid.innerHTML = "";
-            for (let i = 1; i <= 50; i++) {
-                grid.innerHTML += `
-                    <div class="video-card">
-                        <div style="background:#000; height:100px; border-radius:5px; margin-bottom:10px; display:flex; align-items:center; justify-content:center;">
-                            <i class="fas fa-play" style="color:white;"></i>
-                        </div>
-                        <p>Lesson ${i}</p>
-                        <small style="color:var(--light-blue)">YouTube Link Ready</small>
-                    </div>
-                `;
-            }
-        }
-
-        function updateProfilePic(event) {
-            const reader = new FileReader();
-            reader.onload = function() {
-                document.getElementById('profileDisplay').src = reader.result;
-            }
-            reader.readAsDataURL(event.target.files[0]);
-        }
-
-        function changePassword() {
-            const newPass = prompt("නව මුරපදය ඇතුළත් කරන්න:");
-            if(newPass) alert("මුරපදය සාර්ථකව වෙනස් කරන ලදී!");
-        }
-
-        // OTP inputs auto focus
-        const otps = document.querySelectorAll('.otp');
-        otps.forEach((otp, idx) => {
-            otp.addEventListener('keyup', (e) => {
-                if(e.target.value.length === 1 && idx < otps.length - 1) otps[idx+1].focus();
-            });
-        });
     </script>
 </body>
 </html>
