@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI පොඩ්ඩා - Future of AI</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/otpauth/9.1.4/otpauth.umd.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -24,7 +25,7 @@
             min-width: 100%;
             min-height: 100%;
             z-index: -1;
-            filter: brightness(0.6) blue;
+            filter: brightness(0.6);
             object-fit: cover;
         }
 
@@ -106,13 +107,12 @@
             top: 50%;
             transform: translateY(-50%);
             z-index: 1000;
-            text-align: center;
         }
 
         .wa-btn {
             background: #ff0000;
             color: white;
-            padding: 15px;
+            padding: 12px;
             border-radius: 50px;
             text-decoration: none;
             font-weight: bold;
@@ -137,6 +137,26 @@
             margin: 20px auto;
             max-width: 450px;
             border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; color: #add8e6; font-size: 0.9rem; }
+        .form-group input { width: 100%; padding: 12px; border-radius: 8px; border: none; background: rgba(255,255,255,0.2); color: white; outline: none; }
+        
+        .btn-primary { width: 100%; padding: 15px; background: #0066cc; border: none; border-radius: 10px; color: white; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .btn-primary:hover { background: #004d99; transform: scale(1.02); }
+
+        .otp-display {
+            background: #000;
+            color: #00ff00;
+            padding: 15px;
+            font-family: monospace;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 1px dashed #add8e6;
+            letter-spacing: 2px;
         }
 
         /* Social Media Footer */
@@ -147,23 +167,11 @@
             margin-top: 30px;
         }
 
-        .social-icons a {
-            color: white;
-            font-size: 2rem;
-            margin: 0 15px;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-
-        .social-icons a:hover { transform: scale(1.2); }
+        .social-icons a { color: white; font-size: 2rem; margin: 0 15px; text-decoration: none; transition: 0.3s; }
         .fa-tiktok { color: #ff0050; }
         .fa-facebook { color: #1877f2; }
         .fa-youtube { color: #ff0000; }
         .fa-whatsapp { color: #25d366; }
-
-        .form-group { margin-bottom: 15px; }
-        .form-group input { width: 100%; padding: 12px; border-radius: 8px; border: none; background: rgba(255,255,255,0.2); color: white; }
-        .btn-primary { width: 100%; padding: 15px; background: #0066cc; border: none; border-radius: 10px; color: white; cursor: pointer; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -174,14 +182,14 @@
 
     <div class="whatsapp-float">
         <a href="https://wa.me/94762196055" class="wa-btn" target="_blank">
-            <i class="fab fa-whatsapp" style="font-size: 2rem;"></i>
-            <span>0762196055</span>
+            <i class="fab fa-whatsapp" style="font-size: 1.8rem;"></i>
+            <span style="font-size: 0.7rem;">0762196055</span>
         </a>
     </div>
 
     <div class="header-container">
         <div class="welcome-marquee">
-            <h1>WELCOME TO AI PODDA LEARNING CENTER</h1>
+            <h1>WELCOME TO AI PODDA LEARNING CENTER - FUTURE IS HERE</h1>
         </div>
         <div class="robot-box">
             <div class="robot-head">
@@ -192,14 +200,34 @@
         </div>
     </div>
 
-    <div id="authArea">
-        <div class="glass-card" id="regForm">
-            <h2 style="text-align: center; margin-bottom: 20px;">Student Registration</h2>
-            <div class="form-group"><input type="text" id="name" placeholder="ඔබේ නම"></div>
-            <div class="form-group"><input type="email" id="email" placeholder="ඊමේල් ලිපිනය"></div>
-            <div class="form-group"><input type="tel" id="phone" placeholder="දුරකථන අංකය"></div>
-            <div class="form-group"><input type="password" id="pass" placeholder="මුරපදයක් ඇතුළත් කරන්න"></div>
-            <button class="btn-primary" onclick="toStep2()">Register Now</button>
+    <div id="main-content">
+        <div class="glass-card" id="auth-box">
+            <div id="reg-step-1">
+                <h2 style="text-align: center; margin-bottom: 20px;">Student Registration</h2>
+                <div class="form-group"><label>නම</label><input type="text" id="r-name"></div>
+                <div class="form-group"><label>ඊමේල්</label><input type="email" id="r-email"></div>
+                <div class="form-group"><label>දුරකථන අංකය</label><input type="tel" id="r-phone"></div>
+                <div class="form-group"><label>මුරපදය</label><input type="password" id="r-pass"></div>
+                <button class="btn-primary" onclick="generateKeyAndSend()">Confirm & Send Details</button>
+                <p style="text-align:center; margin-top:15px; font-size:0.8rem;">Already have an account? <a href="#" onclick="showLogin()" style="color:#add8e6;">Login</a></p>
+            </div>
+
+            <div id="reg-step-2" style="display:none; text-align: center;">
+                <h2>Verify Identity</h2>
+                <p style="font-size: 0.9rem; margin: 15px 0;">ඔබේ විස්තර සහ Authenticator Key එක ඇඩ්මින් වෙත වට්සැප් කරන ලදී.</p>
+                <div class="otp-display" id="display-key">KEY: GENERATING...</div>
+                <p style="color: #ffcc00; font-size: 0.8rem;">ඇඩ්මින් ඔබට ලබා දෙන අංක 6 මෙතන ඇතුළත් කරන්න:</p>
+                <input type="text" id="admin-otp" placeholder="Enter 6-digit code" maxlength="6" style="width:100%; padding:15px; border-radius:10px; text-align:center; font-size:1.5rem; letter-spacing:5px; margin-top:10px; border:none;">
+                <button class="btn-primary" style="margin-top:20px;" onclick="verifyCode()">Register & Complete</button>
+            </div>
+
+            <div id="login-form" style="display:none;">
+                <h2 style="text-align: center; margin-bottom: 20px;">Student Login</h2>
+                <div class="form-group"><label>Email</label><input type="email" id="l-email"></div>
+                <div class="form-group"><label>Password</label><input type="password" id="l-pass"></div>
+                <button class="btn-primary" onclick="processLogin()">Login</button>
+                <p style="text-align:center; margin-top:15px; font-size:0.8rem;"><a href="#" onclick="location.reload()" style="color:#add8e6;">Back to Register</a></p>
+            </div>
         </div>
     </div>
 
@@ -208,45 +236,82 @@
         <div class="social-icons">
             <a href="https://www.tiktok.com/@ai_podda2?_r=1&_t=ZS-94bLsF3g1w5" target="_blank"><i class="fab fa-tiktok"></i></a>
             <a href="https://www.facebook.com/share/1CCptRphbm/" target="_blank"><i class="fab fa-facebook"></i></a>
-            <a href="#" target="_blank"><i class="fab fa-youtube"></i></a> <a href="https://whatsapp.com/channel/0029Vb7R7sP6WaKgGMs4oy1X" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+            <a href="https://whatsapp.com/channel/0029Vb7R7sP6WaKgGMs4oy1X" target="_blank"><i class="fab fa-whatsapp"></i></a>
         </div>
-        <p style="margin-top: 15px; font-size: 0.8rem; opacity: 0.6;">© 2026 AI Podda. All Rights Reserved.</p>
     </footer>
 
     <script>
-        let studentData = {};
+        let tempUser = {};
+        let generatedSecret = "";
 
-        function toStep2() {
-            studentData.name = document.getElementById('name').value;
-            studentData.email = document.getElementById('email').value;
-            studentData.phone = document.getElementById('phone').value;
-            studentData.pass = document.getElementById('pass').value;
-
-            if(!studentData.name || !studentData.email) return alert("විස්තර සම්පූර්ණ කරන්න!");
-
-            // WhatsApp පණිවිඩය සකස් කිරීම
-            const waMsg = `*New Registration*%0AName: ${studentData.name}%0AEmail: ${studentData.email}%0APhone: ${studentData.phone}%0APassword: ${studentData.pass}`;
-            
-            // රිසිට් එක ඉල්ලන පණිවිඩයක් සමඟ WhatsApp වෙත යොමු කිරීම
-            alert("ඔබේ විස්තර තහවුරු කිරීමට දැන් WhatsApp වෙත යොමු කෙරේ. කරුණාකර එහිදී ගෙවීම් රිසිට්පත එවන්න.");
-            window.open(`https://wa.me/94762196055?text=${waMsg}`, '_blank');
-            
-            // මෙහිදී රෙජිස්ටර් වීමේ ඉතිරි පියවර (කෝඩ් එක ගැසීම) පෙන්විය හැක.
-            showOtpStep();
+        // Google Authenticator එකට ගැළපෙන Key එකක් සෑදීම
+        function makeSecret(len = 16) {
+            const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
+            let str = "";
+            for (let i = 0; i < len; i++) str += chars.charAt(Math.floor(Math.random() * chars.length));
+            return str;
         }
 
-        function showOtpStep() {
-            document.getElementById('regForm').innerHTML = `
-                <h2 style="text-align: center;">Verify Admin Code</h2>
-                <p style="text-align: center; margin: 15px 0; font-size: 0.9rem;">ඇඩ්මින් ඔබට ලබා දෙන අංක 6 මෙතන ඇතුළත් කරන්න.</p>
-                <input type="text" id="otpCode" placeholder="Enter 6-digit code" style="width:100%; padding:15px; border-radius:10px; text-align:center; font-size:1.5rem; letter-spacing:5px;">
-                <button class="btn-primary" style="margin-top:20px;" onclick="completeReg()">Complete Registration</button>
-            `;
+        function generateKeyAndSend() {
+            tempUser.name = document.getElementById('r-name').value;
+            tempUser.email = document.getElementById('r-email').value;
+            tempUser.phone = document.getElementById('r-phone').value;
+            tempUser.pass = document.getElementById('r-pass').value;
+            generatedSecret = makeSecret();
+
+            if(!tempUser.name || !tempUser.email || !tempUser.pass) return alert("කරුණාකර සියල්ල පුරවන්න!");
+
+            // WhatsApp පණිවිඩය
+            const msg = `*New Student Registration*%0AName: ${tempUser.name}%0AEmail: ${tempUser.email}%0APhone: ${tempUser.phone}%0APassword: ${tempUser.pass}%0A*Google Key: ${generatedSecret}*`;
+            
+            alert("ඔබේ විස්තර සහ Key එක ඇඩ්මින් වෙත යොමු කෙරේ. ඉන්පසු ඇඩ්මින් දෙන කෝඩ් එක භාවිතා කරන්න.");
+            window.open(`https://wa.me/94762196055?text=${msg}`, '_blank');
+
+            document.getElementById('reg-step-1').style.display = 'none';
+            document.getElementById('reg-step-2').style.display = 'block';
+            document.getElementById('display-key').innerText = "KEY: " + generatedSecret;
         }
 
-        function completeReg() {
-            alert("ගිණුම සාර්ථකව නිර්මාණය විය! දැන් ලොග් වන්න.");
-            location.reload(); 
+        function verifyCode() {
+            const inputOtp = document.getElementById('admin-otp').value;
+            if(inputOtp.length < 6) return alert("කරුණාකර අංක 6 ඇතුළත් කරන්න.");
+
+            // OTPAuth භාවිතයෙන් සැබෑ කෝඩ් එක පරීක්ෂා කිරීම
+            const totp = new OTPAuth.TOTP({
+                secret: OTPAuth.Secret.fromBase32(generatedSecret),
+                digits: 6,
+                period: 30
+            });
+
+            let isValid = totp.validate({ token: inputOtp, window: 1 });
+
+            if(isValid !== null) {
+                alert("රෙජිස්ටර් වීම සාර්ථකයි! දැන් ලොග් වෙන්න.");
+                localStorage.setItem('user_' + tempUser.email, JSON.stringify(tempUser));
+                showLogin();
+            } else {
+                alert("වැරදි කෝඩ් එකක්! කරුණාකර ඇඩ්මින් ලබා දුන් අංකයම ඇතුළත් කරන්න.");
+            }
+        }
+
+        function showLogin() {
+            document.getElementById('reg-step-1').style.display = 'none';
+            document.getElementById('reg-step-2').style.display = 'none';
+            document.getElementById('login-form').style.display = 'block';
+        }
+
+        function processLogin() {
+            const email = document.getElementById('l-email').value;
+            const pass = document.getElementById('l-pass').value;
+            const stored = JSON.parse(localStorage.getItem('user_' + email));
+
+            if(stored && stored.pass === pass) {
+                alert("Welcome back " + stored.name + "!");
+                // මෙතනින් ඩෑෂ්බෝඩ් එකට යොමු කළ හැක
+            } else {
+                alert("විස්තර වැරදියි!");
+            }
         }
     </script>
 </body>
