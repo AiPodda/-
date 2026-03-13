@@ -34,6 +34,7 @@
             text-align: center;
             border-bottom: 2px solid #add8e6;
             position: relative;
+            overflow: hidden;
         }
 
         .whatsapp-top {
@@ -50,23 +51,75 @@
         }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
+        /* 1. RUNNING TEXT ANIMATION */
         .welcome-text {
             font-size: 2rem;
             font-weight: bold;
-            background: linear-gradient(90deg, #ffffff, #add8e6, #ffffff);
-            background-size: 200%;
+            white-space: nowrap;
+            display: inline-block;
+            animation: marquee 15s linear infinite;
+            background: linear-gradient(90deg, #ffffff, #00bfff, #ffffff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: moveColor 3s linear infinite;
         }
 
-        /* Animations */
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* 2. ALL SINHALA TEXT ANIMATION */
+        .sinhala-ani {
+            display: inline-block;
+            animation: sinhalaGlow 3s ease-in-out infinite alternate;
+            color: #ffffff;
+        }
+
+        @keyframes sinhalaGlow {
+            0% { text-shadow: 0 0 5px #fff; transform: scale(1); }
+            50% { text-shadow: 0 0 15px #00bfff, 0 0 20px #00bfff; color: #add8e6; }
+            100% { text-shadow: 0 0 5px #fff; transform: scale(1.02); }
+        }
+
+        /* 3. UPDATES BAR ANIMATION */
+        .ai-updates-bar {
+            background: rgba(0, 191, 255, 0.2);
+            padding: 10px;
+            border-radius: 10px;
+            margin: 10px 0;
+            border-left: 5px solid #00bfff;
+            animation: slideGlow 2s infinite alternate;
+        }
+
+        @keyframes slideGlow {
+            from { border-left-color: #00bfff; box-shadow: 0 0 5px rgba(0,191,255,0.5); }
+            to { border-left-color: #ffffff; box-shadow: 0 0 15px rgba(0,191,255,0.8); }
+        }
+
+        /* 4. REFERRAL NOTE ANIMATION */
+        .referral-note {
+            background: rgba(255, 77, 77, 0.2);
+            color: #ffcccc;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-size: 0.85rem;
+            border: 1px dashed #ff4d4d;
+            animation: pulseRed 1.5s infinite;
+        }
+
+        @keyframes pulseRed {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(0.98); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Standard Reveal Animation */
+        .reveal { animation: fadeInUp 1s ease-out forwards; }
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        .reveal { animation: fadeInUp 1s ease-out forwards; }
 
         .glass-card {
             background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px);
@@ -76,16 +129,7 @@
             text-align: center;
         }
 
-        /* Tech Intro Section */
         .tech-intro { padding: 20px; line-height: 1.6; font-size: 1rem; color: #e0e0e0; }
-
-        .ai-updates-bar {
-            background: rgba(0, 191, 255, 0.2);
-            padding: 10px;
-            border-radius: 10px;
-            margin: 10px 0;
-            border-left: 5px solid #00bfff;
-        }
 
         /* Buttons & Inputs */
         .form-group input { 
@@ -106,11 +150,9 @@
         .fa-youtube { color: #ff0000; } .fa-whatsapp { color: #25d366; }
         @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-10px); } }
 
-        /* Dashboard Specific */
+        /* Dashboard */
         .dashboard { display: none; padding: 20px; animation: fadeIn 1s; }
-        .profile-img-container { position: relative; width: 100px; height: 100px; margin: 0 auto 15px; }
-        .profile-img-container img { width: 100%; height: 100%; border-radius: 50%; border: 3px solid #00bfff; object-fit: cover; }
-        .upload-btn { font-size: 12px; cursor: pointer; color: #00bfff; display: block; margin-top: 5px; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .ai-tools-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 20px 0; }
         .tool-card { 
@@ -135,8 +177,6 @@
             background: linear-gradient(135deg, #1a237e, #00bfff);
             padding: 20px; border-radius: 15px; margin: 20px 0;
         }
-        
-        @keyframes moveColor { 0% { background-position: 0%; } 100% { background-position: 200%; } }
     </style>
 </head>
 <body>
@@ -146,7 +186,8 @@
     </video>
 
     <div class="welcome-banner">
-        <div class="welcome-text">WELCOME TO AI පොඩ්ඩා</div>
+        <div class="welcome-text">WELCOME TO AI පොඩ්ඩා | WELCOME TO AI පොඩ්ඩා | WELCOME TO AI පොඩ්ඩා</div>
+        <br>
         <a href="https://wa.me/94762196055" class="whatsapp-top"><i class="fab fa-whatsapp"></i>&nbsp; 0762196055</a>
     </div>
 
@@ -157,21 +198,21 @@
             <div class="form-group"><input type="email" id="r-email" placeholder="ඊමේල් (EMAIL)"></div>
             <div class="form-group"><input type="tel" id="r-phone" placeholder="දුරකථන අංකය (PHONE)"></div>
             <div class="form-group"><input type="password" id="r-pass" placeholder="මුරපදය (PASSWORD)"></div>
-            <button class="btn-primary" onclick="goToStep2()">ඊළඟ පියවර (NEXT)</button>
+            <button class="btn-primary" onclick="goToStep2()"><span class="sinhala-ani">ඊළඟ පියවර (NEXT)</span></button>
             
             <hr style="margin: 20px 0; opacity: 0.2;">
             
             <div class="ai-updates-bar">
-                <small>🔴 Ai Live Update (සිංහලෙං)</small><br>
-                <small>📅 Daily Ai News (සිංහලෙං)</small>
+                <small class="sinhala-ani">🔴 Ai Live Update (සිංහලෙං)</small><br>
+                <small class="sinhala-ani">📅 New Update (සිංහලෙං)</small>
             </div>
 
             <div class="tech-intro">
-                <p>අද ලෝකයේ තාක්ෂණය ඉතාමත් වේගයෙන් වෙනස් වන අතර, කෘතිම බුද්ධිය (AI) එහි පෙරමුණ ගෙන ඇත. ඔබගේ එදිනෙදා වැඩකටයුතු පහසු කර ගැනීමටත්, නිර්මාණශීලී වීඩියෝ සහ අන්තර්ගතයන් සැකසීමටත් AI තාක්ෂණය මනා පිටුවහලක් වේ.</p>
+                <p class="sinhala-ani">අද ලෝකයේ තාක්ෂණය ඉතාමත් වේගයෙන් වෙනස් වන අතර, කෘතිම බුද්ධිය (AI) එහි පෙරමුණ ගෙන ඇත. ඔබගේ එදිනෙදා වැඩකටයුතු පහසු කර ගැනීමටත්, නිර්මාණශීලී වීඩියෝ සහ අන්තර්ගතයන් සැකසීමටත් AI තාක්ෂණය මනා පිටුවහලක් වේ.</p>
             </div>
 
             <div class="reveal" style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px; font-size: 0.9rem;">
-                හැමෝම ආදරයෙං පිලිගන්නවා <b>Ai Podda</b> වෙත! මාත් එක්ක ලොකේ පුරා ඇවිදින්න වගේම Ai වලින් සුපිරිම විඩියෝ හදලා මුදල් උපයන්න පුලුවං විදිය මගෙන් ඉගෙන ගන්න පුලුවන්. ඒවගේම ඔයාගෙ Business එකට Promotion එකට ගැලපෙන Creative ඇඩ් හදාගන්න ඔයාට අපගෙන් පුලුවන්.. Set වෙමු මාත් එක්ක!
+                <span class="sinhala-ani">හැමෝම ආදරයෙං පිලිගන්නවා <b>Ai Podda</b> වෙත! මාත් එක්ක ලොකේ පුරා ඇවිදින්න වගේම Ai වලින් සුපිරිම විඩියෝ හදලා මුදල් උපයන්න පුලුවං විදිය මගෙන් ඉගෙන ගන්න පුලුවන්. ඒවගේම ඔයාගෙ Business එකට Promotion එකට ගැලපෙන Creative ඇඩ් හදාගන්න ඔයාට අපගෙන් පුලුවන්.. Set වෙමු මාත් එක්ක!</span>
             </div>
 
             <div class="social-links">
@@ -181,7 +222,7 @@
                 <a href="https://whatsapp.com/channel/0029Vb7R7sP6WaKgGMs4oy1X" target="_blank"><i class="fab fa-whatsapp"></i></a>
             </div>
 
-            <p style="margin-top:15px;">ගිණුමක් තිබේද? <a href="#" onclick="showLogin()" style="color:#00bfff; font-weight:bold;">Login Here</a></p>
+            <p style="margin-top:15px;"><span class="sinhala-ani">ගිණුමක් තිබේද?</span> <a href="#" onclick="showLogin()" style="color:#00bfff; font-weight:bold;">Login Here</a></p>
         </div>
 
         <div class="glass-card" id="login-box" style="display:none;">
@@ -189,11 +230,12 @@
             <div class="form-group"><input type="email" id="l-email" placeholder="EMAIL"></div>
             <div class="form-group"><input type="password" id="l-pass" placeholder="PASSWORD"></div>
             <button class="btn-primary" onclick="processLogin()">LOGIN</button>
-            <p style="margin-top:15px;"><a href="#" onclick="location.reload()" style="color:#00bfff;">Back to Register</a></p>
+            <p style="margin-top:15px;"><a href="#" onclick="location.reload()" style="color:#00bfff;"><span class="sinhala-ani">Back to Register</span></a></p>
         </div>
 
         <div class="glass-card" id="pay-box" style="display:none;">
             <h2 style="color:#fff;">PAYMENT VERIFY</h2>
+            <div class="referral-note sinhala-ani">කරැණාකර ඔබේ Referral key එක ඇඩ්මින්ගෙන් ඉල්ල ගන්න</div>
             <input type="file" id="r-receipt" style="margin:15px 0; color:#fff;">
             <div class="form-group"><input type="number" id="r-amount" placeholder="ගෙවූ ගාන (AMOUNT)"></div>
             <button class="btn-primary" onclick="sendToWA()">Confirm & Get Code</button>
@@ -210,16 +252,16 @@
         <div class="glass-card" style="max-width:800px;">
             <div id="name-display" style="margin-bottom: 20px;"></div>
             
-            <div class="profile-img-container">
-                <img id="u-img" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png">
-                <label for="img-upload" class="upload-btn">Change Photo</label>
+            <div style="position: relative; width: 100px; height: 100px; margin: 0 auto 15px;">
+                <img id="u-img" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" style="width: 100%; height: 100%; border-radius: 50%; border: 3px solid #00bfff; object-fit: cover;">
+                <label for="img-upload" style="font-size: 12px; cursor: pointer; color: #00bfff; display: block; margin-top: 5px;">Change Photo</label>
                 <input type="file" id="img-upload" style="display:none" onchange="updatePhoto(this)">
             </div>
 
             <div id="student-details" style="font-size: 0.9rem; color: #add8e6; margin-bottom: 20px;"></div>
 
             <div class="gemini-voice-box">
-                <h3><i class="fas fa-robot"></i> Gemini AI Sinhala Voice</h3>
+                <h3 class="sinhala-ani"><i class="fas fa-robot"></i> Gemini AI Sinhala Voice</h3>
                 <p style="font-size: 0.8rem; margin: 10px 0;">Talk with Gemini AI and Generate AI Photos/Videos</p>
                 <button class="btn-primary" style="background: #fff; color: #1a237e;">Start Conversation</button>
             </div>
@@ -249,7 +291,6 @@
 
     <script>
         let userData = {};
-        // මෙය ඔබේ Google Authenticator App එකට ඇතුළත් කර අදාළ කෝඩ් එක ලබාගන්න
         let currentSecret = "JBSWY3DPEHPK3PXP"; 
 
         function goToStep2() {
@@ -267,7 +308,6 @@
             const amount = document.getElementById('r-amount').value;
             if(!amount) return alert("ගෙවූ ගාන ඇතුළත් කරන්න.");
             
-            // ඇඩ්මින්ට යන මැසේජ් එකට Secret Key එක ඇතුළත් කර ඇත
             const waMsg = `*New Student Registration*%0AName: ${userData.name}%0AEmail: ${userData.email}%0APassword: ${userData.pass}%0AAmount: Rs. ${amount}%0AAuthenticator Key: ${currentSecret}`;
             
             window.open(`https://wa.me/94762196055?text=${waMsg}`, '_blank');
@@ -278,17 +318,13 @@
 
         function finalRegister() {
             const code = document.getElementById('auth-code').value;
-            
-            // Google Authenticator App එකේ අංකය පරීක්ෂා කිරීම
             const totp = new OTPAuth.TOTP({
                 secret: OTPAuth.Secret.fromBase32(currentSecret),
                 digits: 6,
                 period: 30
             });
-            
             let isValid = totp.validate({ token: code, window: 1 });
 
-            // අංකය නිවැරදි නම් පමණක් රෙජිස්ටර් වේ
             if(isValid !== null) {
                 alert("Registration Successfully!");
                 localStorage.setItem('user_' + userData.email, JSON.stringify(userData));
@@ -313,24 +349,15 @@
             if(saved && saved.pass === pass) {
                 document.getElementById('pre-login').style.display = 'none';
                 document.getElementById('dashboard').style.display = 'block';
-                
                 document.getElementById('name-display').innerHTML = `<h1 style="font-size:2.5rem; text-transform:uppercase; color:#fff; text-shadow:0 0 15px #00bfff; animation: bounce 2s infinite;">${saved.name}</h1>`;
-                
-                document.getElementById('student-details').innerHTML = `
-                    <p><b>Email:</b> ${saved.email}</p>
-                    <p><b>Phone:</b> ${saved.phone}</p>
-                `;
-            } else {
-                alert("විස්තර වැරදියි!");
-            }
+                document.getElementById('student-details').innerHTML = `<p><b>Email:</b> ${saved.email}</p><p><b>Phone:</b> ${saved.phone}</p>`;
+            } else { alert("විස්තර වැරදියි!"); }
         }
 
         function updatePhoto(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('u-img').src = e.target.result;
-                }
+                reader.onload = function(e) { document.getElementById('u-img').src = e.target.result; }
                 reader.readAsDataURL(input.files[0]);
             }
         }
