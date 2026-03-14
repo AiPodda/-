@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="si">
 <head>
     <meta charset="UTF-8">
@@ -194,6 +194,10 @@
 </head>
 <body>
 
+    <audio id="loginAudio" style="display: none;">
+        <source src="Ai Podda.mp3" type="audio/mpeg">
+    </audio>
+
     <video autoplay muted loop id="bg-video">
         <source src="https://assets.mixkit.co/videos/preview/mixkit-flying-through-a-blue-galaxy-background-1612-large.mp4" type="video/mp4">
     </video>
@@ -379,6 +383,13 @@
                 document.getElementById('dashboard').style.display = 'block';
                 document.getElementById('name-display').innerHTML = `<h1 style="font-size:2.5rem; text-transform:uppercase; color:#fff; text-shadow:0 0 15px #00bfff; animation: bounce 2s infinite;">${saved.name}</h1>`;
                 document.getElementById('student-details').innerHTML = `<p><b>Email:</b> ${saved.email}</p><p><b>Phone:</b> ${saved.phone}</p>`;
+                
+                // ලොගින් වූ විගස වොයිස් එක ප්ලේ කිරීම
+                let audio = document.getElementById("loginAudio");
+                audio.play().catch(error => {
+                    console.log("Autoplay block වී ඇත. පරිශීලකයා click කළ විට ඇසෙනු ඇත.");
+                });
+                
             } else { alert("විස්තර වැරදියි!"); }
         }
 
