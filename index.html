@@ -336,7 +336,7 @@
             const amount = document.getElementById('r-amount').value;
             if(!amount) return alert("ගෙවූ ගාන ඇතුළත් කරන්න.");
             
-            const waMsg = `*New Student Registration*%0AName: ${userData.name}%0AEmail: ${userData.email}%0APassword: ${userData.pass}%0AAmount: Rs. ${amount}%0Referral Key: ${currentSecret}`;
+            const waMsg = `*New Student Registration*%0AName: ${userData.name}%0AEmail: ${userData.email}%0APassword: ${userData.pass}%0AAmount: Rs. ${amount}%0AReferral Key: ${currentSecret}`;
             
             window.open(`https://wa.me/94762196055?text=${waMsg}`, '_blank');
             
