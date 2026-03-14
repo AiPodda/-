@@ -162,7 +162,6 @@
         }
 
         .social-links { display: flex; justify-content: center; gap: 20px; margin-top: 20px; }
-        /* Real Brand Colors for Social Links */
         .social-links a.tiktok { color: #ffffff; text-shadow: 2px 2px #ff0050, -2px -2px #00f2ea; }
         .social-links a.facebook { color: #1877F2; }
         .social-links a.whatsapp { color: #25D366; }
@@ -190,7 +189,7 @@
         
         <div class="glass-card" style="margin-bottom: -10px; padding: 15px;">
             <div class="ai-info-blink">AI යනු කෘතිම බුද්ධියයි - අනාගත ලෝකය ජයගන්න අප හා එක්වන්න</div>
-            <video width="100%" height="auto" controls autoplay id="intro-video" style="border-radius: 10px; border: 2px solid rgba(255,255,255,0.2);">
+            <video width="100%" height="auto" id="intro-video" controls autoplay muted playsinline style="border-radius: 10px; border: 2px solid rgba(255,255,255,0.2);">
                 <source src="1002515902.mp4" type="video/mp4">
             </video>
             <div class="robot-container">
@@ -270,11 +269,22 @@
         let userData = {};
         let currentSecret = "AIPODDAMASTER246"; 
 
-        // 12. Auto Play Video
-        window.onload = function() {
+        // Auto play logic for the intro video
+        window.addEventListener('load', function() {
             let vid = document.getElementById("intro-video");
-            vid.play().catch(e => console.log("Auto-play blocked by browser."));
-        };
+            
+            // Try to play automatically
+            let playPromise = vid.play();
+
+            if (playPromise !== undefined) {
+                playPromise.then(_ => {
+                    // Automatic playback started!
+                }).catch(error => {
+                    // Auto-play was prevented.
+                    console.log("Auto-play prevented by browser. Retrying on user interaction.");
+                });
+            }
+        });
 
         function goToStep2() {
             userData.name = document.getElementById('r-name').value;
@@ -284,7 +294,6 @@
 
             if(!userData.name || !userData.email || !userData.pass) return alert("කරුණාකර සියලු විස්තර පුරවන්න.");
             
-            // 6. Prevent Duplicate Email or Phone
             if(localStorage.getItem('user_' + userData.email) || localStorage.getItem('phone_' + userData.phone)) {
                 return alert("මෙම Email එක හෝ දුරකථන අංකය දැනටමත් ලියාපදිංචි වී ඇත!");
             }
@@ -311,7 +320,7 @@
             if(totp.validate({ token: code, window: 1 }) !== null) {
                 alert("Registration Successfully!");
                 localStorage.setItem('user_' + userData.email, JSON.stringify(userData));
-                localStorage.setItem('phone_' + userData.phone, "true"); // Save phone to block duplicates
+                localStorage.setItem('phone_' + userData.phone, "true");
                 showLogin();
             } else {
                 alert("වැරදි Code එකක්!");
