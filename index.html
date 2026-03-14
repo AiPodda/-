@@ -1,4 +1,3 @@
-.
 <!DOCTYPE html>
 <html lang="si">
 <head>
@@ -52,24 +51,22 @@
         }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
-        /* 1. RUNNING TEXT ANIMATION */
+        /* 1. RUNNING TEXT ANIMATION -> Blink Animation */
         .welcome-text {
             font-size: 2rem;
             font-weight: bold;
-            white-space: nowrap;
             display: inline-block;
-            animation: marquee 15s linear infinite;
-            background: linear-gradient(90deg, #ffffff, #00bfff, #ffffff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            animation: blink 1s steps(5, start) infinite;
+            color: #ffffff;
         }
 
-        @keyframes marquee {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
+        @keyframes blink {
+            to {
+                visibility: hidden;
+            }
         }
 
-        /* NEW: GREEN RUNNING TEXT ANIMATION */
+        /* NEW: GREEN RUNNING TEXT ANIMATION -> NO ANIMATION */
         .ai-short-marquee {
             width: 100%;
             overflow: hidden;
@@ -77,33 +74,21 @@
             padding: 10px 0;
             margin-bottom: 10px;
             border-radius: 10px;
+            text-align: center;
         }
 
         .ai-short-marquee p {
             font-size: 1.5rem;
             font-weight: bold;
             color: #2ecc71; /* Green color */
-            white-space: nowrap;
             display: inline-block;
-            animation: marquee-short 10s linear infinite;
-        }
-
-        @keyframes marquee-short {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
+            white-space: normal;
         }
 
         /* 2. ALL SINHALA TEXT ANIMATION */
         .sinhala-ani {
             display: inline-block;
-            animation: sinhalaGlow 3s ease-in-out infinite alternate;
             color: #ffffff;
-        }
-
-        @keyframes sinhalaGlow {
-            0% { text-shadow: 0 0 5px #fff; transform: scale(1); }
-            50% { text-shadow: 0 0 15px #00bfff, 0 0 20px #00bfff; color: #add8e6; }
-            100% { text-shadow: 0 0 5px #fff; transform: scale(1.02); }
         }
 
         /* 3. UPDATES BAR ANIMATION */
@@ -113,12 +98,6 @@
             border-radius: 10px;
             margin: 10px 0;
             border-left: 5px solid #00bfff;
-            animation: slideGlow 2s infinite alternate;
-        }
-
-        @keyframes slideGlow {
-            from { border-left-color: #00bfff; box-shadow: 0 0 5px rgba(0,191,255,0.5); }
-            to { border-left-color: #ffffff; box-shadow: 0 0 15px rgba(0,191,255,0.8); }
         }
 
         /* 4. REFERRAL NOTE ANIMATION */
@@ -130,20 +109,29 @@
             margin-top: 10px;
             font-size: 0.85rem;
             border: 1px dashed #ff4d4d;
-            animation: pulseRed 1.5s infinite;
-        }
-
-        @keyframes pulseRed {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(0.98); opacity: 0.7; }
-            100% { transform: scale(1); opacity: 1; }
         }
 
         /* Standard Reveal Animation */
-        .reveal { animation: fadeInUp 1s ease-out forwards; }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+        .reveal { 
+            background: rgba(0,0,0,0.3); 
+            padding: 15px; 
+            border-radius: 10px; 
+            font-size: 0.9rem;
+            animation: dropDown 5s linear forwards; 
+            position: relative;
+            top: -100px; 
+            opacity: 0; 
+        }
+
+        @keyframes dropDown {
+            from {
+                top: -100px;
+                opacity: 0;
+            }
+            to {
+                top: 0px;
+                opacity: 1;
+            }
         }
 
         .glass-card {
@@ -222,10 +210,14 @@
             <div class="ai-short-marquee">
                 <p>Ai ගැන කෙටියෙන් | Ai ගැන කෙටියෙන් | Ai ගැන කෙටියෙන් | Ai ගැන කෙටියෙන්</p>
             </div>
-            <video width="100%" height="auto" controls autoplay style="border-radius: 10px; border: 2px solid rgba(255,255,255,0.2);">
+            <video width="100%" height="auto" controls autoplay style="border-radius: 10px; border: 2px solid rgba(255,255,255,0.2);" controlsList="nodownload" oncontextmenu="return false;">
                 <source src="1002515902.mp4" type="video/mp4">
                 ඔබේ බ්‍රවුසරය මෙම වීඩියෝවට සහය නොදක්වයි.
             </video>
+            <div class="robot-blink" style="display: flex; justify-content: center; align-items: center; margin-top: 10px;">
+                <i class="fas fa-robot" style="font-size: 2rem; color: #fff; animation: blink 1.5s linear infinite;"></i>
+                <i class="fas fa-robot" style="font-size: 2rem; color: #fff; animation: blink 1.5s linear infinite;"></i>
+            </div>
         </div>
 
         <div class="glass-card" id="reg-box">
@@ -247,7 +239,7 @@
                 <p class="sinhala-ani">අද ලෝකයේ තාක්ෂණය ඉතාමත් වේගයෙන් වෙනස් වන අතර, කෘතිම බුද්ධිය (AI) එහි පෙරමුණ ගෙන ඇත. ඔබගේ එදිනෙදා වැඩකටයුතු පහසු කර ගැනීමටත්, නිර්මාණශීලී වීඩියෝ සහ අන්තර්ගතයන් සැකසීමටත් AI තාක්ෂණය මනා පිටුවහලක් වේ.</p>
             </div>
 
-            <div class="reveal" style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px; font-size: 0.9rem;">
+            <div class="reveal">
                 <span class="sinhala-ani">හැමෝම ආදරයෙං පිලිගන්නවා <b>Ai Podda</b> වෙත! මාත් එක්ක ලොකේ පුරා ඇවිදින්න වගේම Ai වලින් සුපිරිම විඩියෝ හදලා මුදල් උපයන්න පුලුවං විදිය මගෙන් ඉගෙන ගන්න පුලුවන්. ඒවගේම ඔයාගෙ Business එකට Promotion එකට ගැලපෙන Creative ඇඩ් හදාගන්න ඔයාට අපගෙන් පුලුවන්.. Set වෙමු මාත් එක්ක!</span>
             </div>
 
@@ -400,4 +392,3 @@
     </script>
 </body>
 </html>
-
