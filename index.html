@@ -51,6 +51,18 @@
             100% { transform: translateX(-100%); }
         }
 
+        /* NEW: AI Brief Info Blinking Animation */
+        .ai-info-blink {
+            color: #2ecc71;
+            font-weight: bold;
+            margin-bottom: 10px;
+            animation: softBlink 2s infinite;
+        }
+        @keyframes softBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.2; }
+        }
+
         /* 3 & 4. Red/Blue Blinking for Registration & Login */
         .blink-red-blue {
             animation: redBlueBlink 1s infinite;
@@ -150,7 +162,10 @@
         }
 
         .social-links { display: flex; justify-content: center; gap: 20px; margin-top: 20px; }
-        .social-links a { font-size: 30px; color: white; }
+        /* Real Brand Colors for Social Links */
+        .social-links a.tiktok { color: #ffffff; text-shadow: 2px 2px #ff0050, -2px -2px #00f2ea; }
+        .social-links a.facebook { color: #1877F2; }
+        .social-links a.whatsapp { color: #25D366; }
 
         .dashboard { display: none; padding: 20px; }
         .ai-tools-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 20px 0; }
@@ -174,6 +189,7 @@
     <div id="pre-login">
         
         <div class="glass-card" style="margin-bottom: -10px; padding: 15px;">
+            <div class="ai-info-blink">AI යනු කෘතිම බුද්ධියයි - අනාගත ලෝකය ජයගන්න අප හා එක්වන්න</div>
             <video width="100%" height="auto" controls autoplay id="intro-video" style="border-radius: 10px; border: 2px solid rgba(255,255,255,0.2);">
                 <source src="1002515902.mp4" type="video/mp4">
             </video>
@@ -200,9 +216,9 @@
             </div>
 
             <div class="social-links">
-                <a href="https://www.tiktok.com/@ai_podda2?_r=1&_t=ZS-94bLsF3g1w5" target="_blank"><i class="fab fa-tiktok"></i></a>
-                <a href="https://www.facebook.com/share/1CCptRphbm/" target="_blank"><i class="fab fa-facebook"></i></a>
-                <a href="https://whatsapp.com/channel/0029Vb7R7sP6WaKgGMs4oy1X" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.tiktok.com/@ai_podda2?_r=1&_t=ZS-94bLsF3g1w5" target="_blank" class="tiktok"><i class="fab fa-tiktok"></i></a>
+                <a href="https://www.facebook.com/share/1CCptRphbm/" target="_blank" class="facebook"><i class="fab fa-facebook"></i></a>
+                <a href="https://whatsapp.com/channel/0029Vb7R7sP6WaKgGMs4oy1X" target="_blank" class="whatsapp"><i class="fab fa-whatsapp"></i></a>
             </div>
 
             <p style="margin-top:15px;">ගිණුමක් තිබේද? <a href="#" onclick="showLogin()" style="color:#00bfff; font-weight:bold;">Login Here</a></p>
@@ -214,8 +230,7 @@
             <div class="form-group"><input type="password" id="l-pass" placeholder="PASSWORD"></div>
             
             <div style="margin-top: 15px;">
-                <p>Video Request</p>
-                <button class="btn-primary" onclick="window.open('https://drive.google.com/drive/folders/1rpvgZi5J3-xtxnKQZ9sgbk4_OV5ddDSZ?usp=sharing', '_blank')">NEXT</button>
+                <button class="btn-primary" onclick="window.open('https://drive.google.com/drive/folders/1rpvgZi5J3-xtxnKQZ9sgbk4_OV5ddDSZ?usp=sharing', '_blank')">Video Request</button>
             </div>
 
             <div class="info-red-frame">
